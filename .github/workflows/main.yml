@@ -8,13 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Node.js 24 환경을 강제로 사용하도록 설정하여 경고를 제거합니다.
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      
     steps:
-      - uses: actions/checkout@v4 # 최신 버전으로 업데이트
+      - uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v5 # 최신 버전으로 업데이트
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 더 안정적인 최신 파이썬 버전
+          python-version: '3.11'
           
       - name: Install dependencies
         run: pip install requests beautifulsoup4 lxml
@@ -27,5 +31,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add index.html
-          git commit -m "Update news" || exit 0
+          git commit -m "Update news dashboard" || exit 0
           git push
