@@ -5,7 +5,7 @@ import urllib.parse
 
 def fetch_google_news():
     # 1. 설정: 검색 키워드
-    query = "반도체 스마트팜 벤처투자" 
+    query = "벤처투자" 
     encoded_query = urllib.parse.quote(query)
     
     # 구글 뉴스 RSS URL (검색어 포함)
