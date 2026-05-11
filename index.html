@@ -4,100 +4,295 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Google News Dashboard</title>
+        <title>VC Insight Dashboard</title>
         <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 30px; background-color: #f8f9fa; color: #333; }
-            .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-            h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
-            .date { color: #666; font-size: 0.9em; margin-bottom: 20px; }
+            body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f7f6; color: #333; }
+            .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+            h1 { color: #004a99; border-bottom: 3px solid #004a99; padding-bottom: 10px; font-size: 24px; }
+            .info { color: #666; font-size: 0.9em; margin-bottom: 20px; display: flex; justify-content: space-between; }
             ul { list-style: none; padding: 0; }
-            li { margin-bottom: 15px; padding: 10px; border-radius: 5px; transition: background 0.2s; }
-            li:hover { background-color: #f1f3f4; }
-            a { text-decoration: none; color: #1a0dab; font-weight: bold; font-size: 1.1em; }
-            .source { color: #006621; font-size: 0.85em; display: block; }
+            li { margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }
+            li:hover { background-color: #f9f9f9; }
+            a { text-decoration: none; color: #1a0dab; font-weight: bold; font-size: 1.05em; }
+            a:visited { color: #609; }
+            .meta { color: #006621; font-size: 0.85em; margin-top: 5px; display: block; }
+            .count-badge { background: #004a99; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>🔍 "반도체 스마트팜" 관련 뉴스</h1>
-            <p class="date">마지막 업데이트: 2026-05-11 07:45:31</p>
-            <ul>
+            <h1>📰 VC Insight: "반도체 스마트팜 벤처투자" 뉴스</h1>
+            <div class="info">
+                <span>업데이트: 2026-05-11 07:58:09</span>
+                <span class="count-badge" id="news-count">검색된 뉴스: 53건</span>
+            </div>
+            <ul id="news-list">
     
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE0ycFlBMzFRMk5UbzlfdnA1OXdsV3BtSDd4MFdRdThLbGtPOXBWYlY0ZDN6N0c4dkFEU2FndzRaUTdaM3lrUjk4SG0zd1V2Q2M?oc=5' target='_blank'>충북도립대, 내년 신입생 부터 ‘전기기계반도체와 묘목스마트학과’ 중심으로 전면 개편 - v.daum.net</a>
-                <span class="source">v.daum.net | Tue, 28 Apr 2026</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMikAFBVV95cUxOM0hOd1p5UG5OOExIS3ZjU3BPVW10NHdIci1JWUY1VlVmRkhvMlNSNDRIekV5RU1hN0RNODEwRUFySHRHT1lmVnNXMlBWTTRVZDhJUUtSLXcwLWI4bmVqblZoMU1qdzE3ZUpGTm9Pc2RTMWh1dy04UVNVOVhpa3RxaEFxeHhxT2Joak8zSk1MYVc?oc=5' target='_blank'>[박은식의 호남통신] 골칫덩이 새만금, 반도체 몽상 접고 스마트팜 추진하자 - 조선일보</a>
-                <span class="source">조선일보 | Mon, 26 Jan 2026</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTE1IUExpZEZicERETzVpSDVxRkF6YllBNFgwRy1EcVEyekIxV3ZFczJENUpLcC1BNkxXNlU3ZzFTY081eGVHa2ozZFRkN251ZzNlYmZUeNIBWEFVX3lxTE5PbE04R3NuR1U0SXgyaGlxclk5NDhYQUw5Ymo3MnM0NHB1aTd2MFh5a19KaFNXYVhYbE1PYWJxelZsOHI5YklyR0tXVFpzdGE5cmhDSElyRHg?oc=5' target='_blank'>“농업의 반도체 만든다”…전북도, 스마트팜 전국 선도 - 전북일보 인터넷신문</a>
-                <span class="source">전북일보 인터넷신문 | Tue, 22 Jul 2025</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFBBYzVFQWhPNUpoTW9iVml5OC03SHB2UDI1dXVuQjBJUmdtdlVkZHlhMkNyMDNMUVBqMG9nRXNPcnlPVVdrRUwzTW8xSVNLS2s5TjZ4V1o1dXFhOFJRWHY4QmVDeUduZDFn?oc=5' target='_blank'>묘목스마트팜학과·정지용콘텐츠학과 신설 - 충청타임즈</a>
-                <span class="source">충청타임즈 | Mon, 27 Apr 2026</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5MMzJGTHMwUzg1TVYyZmlad1Zoc2FEdVo2M2pVZ0xUVVZESHoxSXcwM3FnTl9DYkYxdnBkaVEybS1ZX3FmYl9NaTJzbl9XLV8yZU1Ba0VaLUFKaU5rUnVDSWpYRjRtdlAzTU1NVg?oc=5' target='_blank'>[기획] 반도체 도시로 비상하는 용인, 설 자리 좁아지는 농촌 - 용인시민신문</a>
-                <span class="source">용인시민신문 | Wed, 24 Sep 2025</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE1qdTFfOHdDRElNNUU2Q2tTbnd3QzJGU29tU01tUGRWOEZHWFk3NjZEa0NjemFMRkxiMngwV01oVF9JaDE5OVNqQ1pVODctN2FoTkljY0l6MFhXSlkwUzIwdEdDM0FPMXJoTkHSAW5BVV95cUxQT3A2MVFkRHJVSzdCXzUwSkhaOWMwQjBmcHlTSDQ1Wm84SWFkM1I1b21wdjhuZmxzMnZVV1BkaVBhQ1JmTGplSE1EZUdJSzFEV21CbTc1cGdlUDdRS055bTNnd2dBcWZmeWs3QnYwUQ?oc=5' target='_blank'>신재생·수소·스마트팜·SMR까지…19개 기업 넷제로 부문 사업 신규 진출 - 넷제로뉴스</a>
-                <span class="source">넷제로뉴스 | Thu, 18 Sep 2025</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTE9sdm1NWi1XTDlfS21wOVpMWDVQYzVGSHZTUEQ2dk1jS05sa3FjblJZNHA3SjFVYThPbE1sRnVZTE5JRFR2MDRjNGZ2dTAtR092NDRYWldDd05MNjDSAWBBVV95cUxPSDFpLWFnbmlOT3FOc0pOWU1OY0JfMzJqYmFHaW5ka3NZTFJMWEZQRll1UnVjOEtaei0yOGFfbG9TdVpma3JERDdUUVdiSzZzSjNvT2M0RjBLeHRZY25jSzY?oc=5' target='_blank'>[李정부 성장전략] 차세대 전력반도체 국내생산 2배로…K콘텐츠·뷰티 '붐업' - 연합뉴스</a>
-                <span class="source">연합뉴스 | Fri, 22 Aug 2025</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE9FcHpfQjFfbzJlTlNhOU1IU0ZCRzBSWGtwOXFBMUJtTVdYVkhCeElieWRmaUZIRjVLWDRqekRhb1JaNmRMbHNtM054OGNZQnhZa2FDTzFfUmg1cEhX?oc=5' target='_blank'>이진규 용인시의원, 용인 반도체 산업단지 주민 보상안 논의 - 뉴스핌</a>
-                <span class="source">뉴스핌 | Mon, 30 Mar 2026</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE80ZVAtbkZCeVctaE5SLThDdjV5Y0tIa0dZdlhzeUxCQmlwRmx1OVA1Z3NmMWFoSkRJWWdDYjh0cmRRTTh3VVc5UWhFOUd3enZ3NVZYSzRQcmZTZw?oc=5' target='_blank'>[청년 D집다] 스마트팜 3세대는 반도체 강국 주도 - 농민신문</a>
-                <span class="source">농민신문 | Sat, 29 May 2021</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE1VVXJFWmlYT0YwcE1XUlhla3JQNG45NmhOSXItVUpNS2h5VHNTQmxsVW9Ka2pMMUlwZjJmT2xLaC1ZdUU4NDFOSkNCT2xnelk5ci1nb0EzR1czeWdIS1hN?oc=5' target='_blank'>스마트팜·반도체·자동차 특화 교육 확대… 전북교육청, 글로컬특성화고 3개교 신규 선정 - 전북미래교육신문</a>
-                <span class="source">전북미래교육신문 | Tue, 08 Jul 2025</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTFB1V0hyY3dFdFkzSjQtRVhEaTQ5MVlsUDNRV1R6Q3B1U0w1X1hQRktjWlBOdUlSVkRrejBfdnc0LUdHczdpZnBMakFaNjQ1d0lLZTlwMGY5NVRBTExzcXc?oc=5' target='_blank'>삼성전자 반도체 연구원 출신 설립 3세대 스마트팜 기업 마스팜, 크라우드펀딩 진행 - 뉴스와이어</a>
-                <span class="source">뉴스와이어 | Wed, 11 May 2022</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE8xT09RLTE0Z0g4RGxTZVg3T0ZyeGVKRjBqT1RRRk1HeExRbVo4VGdsQlh0azRTcUpKMGpwdzh1TVUyZzY5YlN0VmRMbldBMTRGV2ZWZ3NXellBUGRONUs3ZGxRamlqRk8yUXNfOQ?oc=5' target='_blank'>[투데이 窓]반도체 기술로 만드는 '한국형 스마트팜' - 유니콘팩토리</a>
-                <span class="source">유니콘팩토리 | Sun, 01 Jan 2023</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFBDdzJpUUdlbGlPUDJjRjU0TnU5TUZQTjlSVmxLTGtsMEl4M3RscmRKRGUyejFpWUdrcWVfVW1YMWNVOW9kUl91UHF0NmExQQ?oc=5' target='_blank'>AI, 지능형반도체, 스마트팜학과 등 대학 첨단학과 신설 - 전자신문</a>
-                <span class="source">전자신문 | Thu, 15 Jul 2021</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBvdi1IUXRfcXNxbjY5ZEJ1Wjg3dWVPT0gtcENSMW9MbEJLZEs3SDVyZ1c3d3BtQnhHTE5FX3Q5QlFjY0hjeVZjV3hIZFNPV1puX3Nna3JDVThoVjlvYkxyc0NQeHZpazQ?oc=5' target='_blank'>스마트팜에 들어가는 자연광 LED - 지티티코리아</a>
-                <span class="source">지티티코리아 | Thu, 26 Jan 2023</span>
-            </li>
-        
-            <li>
-                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFAtSzV5RlQ5ZWtXZUxJbWMwT1lfeF9kc1pnUkZTUHI3M3Q2Um54NnRFZmkzYUlmX0FPeERaT2Z2MmpCU0JZUEJuUUU4bGNNRk1Jc2NBSnlR?oc=5' target='_blank'>美나파벨리 포도나무에 한국 반도체칩?…식물 “속 읽기” 범위 넓힌다 - 중앙일보</a>
-                <span class="source">중앙일보 | Sat, 04 Mar 2023</span>
-            </li>
-        
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMigAFBVV95cUxOZjVHNDNRNlljVF8xTGFIS0VrQTFrdllqQlI4QWcweVN4cnpINDhweFVVRXVhanpRNXNlM1BrdWc2QWZVem1mM3AxSXQ5SkRPdm1fMUR3NGRMWmFfdmlqeW0wRlZBaDk2aUstdzA4Q0M4Sk9EeHNBSmRZT01SeFozdQ?oc=5' target='_blank'>[VC’s Pick]반도체 뜨자 수처리도 관심…‘지앤지인텍’, 투자 유치 - 이데일리</a>
+                    <span class="meta">이데일리 | Sat, 09 May 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMikAFBVV95cUxOM0hOd1p5UG5OOExIS3ZjU3BPVW10NHdIci1JWUY1VlVmRkhvMlNSNDRIekV5RU1hN0RNODEwRUFySHRHT1lmVnNXMlBWTTRVZDhJUUtSLXcwLWI4bmVqblZoMU1qdzE3ZUpGTm9Pc2RTMWh1dy04UVNVOVhpa3RxaEFxeHhxT2Joak8zSk1MYVc?oc=5' target='_blank'>[박은식의 호남통신] 골칫덩이 새만금, 반도체 몽상 접고 스마트팜 추진하자 - 조선일보</a>
+                    <span class="meta">조선일보 | Mon, 26 Jan 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE4zUlhHMG9LZklpdVYxS1lPNGhTdnY2UjhGNGtaVW4tejhvWHltYXF3NUptdXN3YldWOVNtWXk0di1GdWVjNFU2enBjT3FDdjNUMjUwVmxxX0N5WjVWVlpuaUUyQ042X0JlRnRFeg?oc=5' target='_blank'>153조 몰린 국민성장펀드, AI·반도체 50.9조 투입 - 유니콘팩토리</a>
+                    <span class="meta">유니콘팩토리 | Fri, 12 Dec 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTE9sdm1NWi1XTDlfS21wOVpMWDVQYzVGSHZTUEQ2dk1jS05sa3FjblJZNHA3SjFVYThPbE1sRnVZTE5JRFR2MDRjNGZ2dTAtR092NDRYWldDd05MNjDSAWBBVV95cUxPSDFpLWFnbmlOT3FOc0pOWU1OY0JfMzJqYmFHaW5ka3NZTFJMWEZQRll1UnVjOEtaei0yOGFfbG9TdVpma3JERDdUUVdiSzZzSjNvT2M0RjBLeHRZY25jSzY?oc=5' target='_blank'>[李정부 성장전략] 차세대 전력반도체 국내생산 2배로…K콘텐츠·뷰티 '붐업' - 연합뉴스</a>
+                    <span class="meta">연합뉴스 | Fri, 22 Aug 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiSEFVX3lxTFBUQUVTWG5WdWhicFZETmgtYWdKX3VOdVdSSk9qTHJwRVhDa05FMFRsX2xsajFpYkMwMTN6SHFfNjFCMkJuVmIwNw?oc=5' target='_blank'>투자 건수 33% 줄고 금액은 그대로…2025년 스타트업 ‘빈익빈 부익부’ - 플래텀(Platum)</a>
+                    <span class="meta">플래텀(Platum) | Thu, 01 Jan 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5MMzJGTHMwUzg1TVYyZmlad1Zoc2FEdVo2M2pVZ0xUVVZESHoxSXcwM3FnTl9DYkYxdnBkaVEybS1ZX3FmYl9NaTJzbl9XLV8yZU1Ba0VaLUFKaU5rUnVDSWpYRjRtdlAzTU1NVg?oc=5' target='_blank'>[기획] 반도체 도시로 비상하는 용인, 설 자리 좁아지는 농촌 - 용인시민신문</a>
+                    <span class="meta">용인시민신문 | Wed, 24 Sep 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE9lSGtBcE1xSlg1cmVTcXlsUi14Z2ZaR3ZLaUphQjVOZzhGa0owUjN2MUxfYlQ0eVdIZml2Um1xWkgwU2k5aXFadzdYbHBrVlJhT1RZUDlWMnY2Z0hpNFlwQtIBeEFVX3lxTE9MbGN6NXIzSlhzTmZDaEEtN1RYTW43eUtCT2pCYzRpc1ZlTS01QmVRaU54RGJxclBqeGxTQkR3TkYyUUE0WEwtcU9Ucl84eHFfaElnNU81bEZ4QWdfeHpfLUU5Q2tvYWJtV2s3N3BLVU1xQU55bVpVcQ?oc=5' target='_blank'>당정 "반도체 2强 도약 뒷받침 기본계획 추진…방산·K컬처 등 육성"(종합) - newsis.com</a>
+                    <span class="meta">newsis.com | Wed, 07 Jan 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE41Mk43NklyQ29zMm91NFFGaFRFbEZhZkFoblRaVzJTVXJGbmJyUXl3X3Q3SzRDNWozVXp3S0ljZExEY1JIaG1Xbm5nNFp1RHV0bm5kaTMweDA4R3RQeVlBUWhBaGRLVVVYbmfSAW9BVV95cUxNdkRWVXpYaU5SbDNOeDNNV25lTlRuVDN0UzM0QU4xVS1XRzlkM2hUaTlCVkVHU3hkTXRQUUZWLU9QRk0wQzZNUjVKT1pQXzRleVUzdU1MTnprekZoMVJfRGMxc2p2N2Jtc1NVR282OVE?oc=5' target='_blank'>스타트업 M&A만 3건…목돈 움직인 11월 넷째주 벤처투자시장 - 머니투데이 - 머니투데이</a>
+                    <span class="meta">머니투데이 | Sun, 30 Nov 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTFBjTEh3b0VGYWpvaGdOa2sxMTNKNFBnSmdWeV9QTWlwR3hDQ3UzMGV0bC1UQkNPTFpnWWdjYjJzXzhEczB3N2ZnYkcyb0NXUjdBWXBtRA?oc=5' target='_blank'>‘고덕 유보라 더 크레스트’, 삼성 반도체 투자 본격화에 실거주 관심↑ - 이투데이</a>
+                    <span class="meta">이투데이 | Tue, 26 Aug 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFBweW1iTWJzVjh1RzFMT1VfSmVRWFBwYnJvMENES2thNnE5STN2LTN4cjBjWEpkYUF4XzZMdGN1NlBKeS01dnllNzRtUkl5b3lXNGR4TFNRd0VLYUVXT0M3RnMzMDBkME1ReHc?oc=5' target='_blank'>원익홀딩스 주가, 급등세... 배경은? - 금강일보</a>
+                    <span class="meta">금강일보 | Tue, 09 Sep 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE8xbTQ1TEJPcHZuRVJWZHFMTWJZY2pPUURoTy1aRjNfeFp3NnhQUnpYT3BRRzhjMGpybXZBSnFkTi16bGNJUzBkNnJPMWxxaWFISi12RUFoSVpzbWNDMnQ0RmE4S0dOeWQ2WXM4Sw?oc=5' target='_blank'>반도체 산업에 1조원 지원…5대 신산업 분야 집중 육성한다 - 대한민국 정책브리핑</a>
+                    <span class="meta">대한민국 정책브리핑 | Tue, 01 Nov 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE53UDRNYUtzMC1CXzhjblRNVTh6T193Q2xGQWtEazFydTREdFotN241cUs4RGpJX1hCYkRUdUR4N3VHMUctSnIyWG9saFNfbnlURmZtb0VVSkZiM25LTExJdWVOU3JsRjgzWXVYOA?oc=5' target='_blank'>'국대 AI'·반도체냉각·터널속 GPS…폭염 뚫고 '뭉칫돈' 투자유치 - 유니콘팩토리</a>
+                    <span class="meta">유니콘팩토리 | Sun, 17 Aug 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTFB1V0hyY3dFdFkzSjQtRVhEaTQ5MVlsUDNRV1R6Q3B1U0w1X1hQRktjWlBOdUlSVkRrejBfdnc0LUdHczdpZnBMakFaNjQ1d0lLZTlwMGY5NVRBTExzcXc?oc=5' target='_blank'>삼성전자 반도체 연구원 출신 설립 3세대 스마트팜 기업 마스팜, 크라우드펀딩 진행 - 뉴스와이어</a>
+                    <span class="meta">뉴스와이어 | Wed, 11 May 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiWEFVX3lxTE9SeDh0NFZZWE9lUXQwRmhhZ1hVVWVGNVpoWnlBRUdSVVZFT2Y0WE8zVmlvdUZfNERObDJQR0ZwN3ktZ0dKd2hPQWx6RHBCQ2FTeDdmY2lqaVI?oc=5' target='_blank'>90억 들여 키운 '우듬지팜' 상장, 미소짓는 농금원 - 딜사이트</a>
+                    <span class="meta">딜사이트 | Thu, 17 Aug 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTFBBM2dZMlpzRmZRZWVWX1lsYmtDZzcycXlLMnNDUTRSdGhTd1FhZkJhd1lpc2FvNlJldU1QNXhKODhFTTcyU3hKbFl0Y205dzByQjJ1cm1nMk84dw?oc=5' target='_blank'>정부, 농식품 신사업에 뭉칫돈…‘유니콘 기업’ 키운다 - 농민신문</a>
+                    <span class="meta">농민신문 | Mon, 27 Feb 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMixwFBVV95cUxNU0llZF9Qa014bnlpdktqalV5VUQzZDJpUTlCbkxwNEJMSzBoWjdldVRzeTFjYlZvRl92UmlPWGpkMkRDcmZHekF2TE5zVDctNDRrRlctUHhxMXd5b01jYUNodmtEc3pGVnAxTnQ4YnBWdk5Gb2hVTzJmdGZyRXFSeVp2enFLM2NzU1R6YzVkeFdoUjZkUlJRV3hsaFh4UU9pOGhQWTdtSVdRWWtGMy1RV1ViSHdVU0hTOWtXQjhyazFxYXVTZjlv?oc=5' target='_blank'>반도체 산업에 1조 원 지원 5대 신산업 분야 집중 육성한다 - gonggam.korea.kr</a>
+                    <span class="meta">gonggam.korea.kr | Thu, 03 Nov 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTFBKM2doRFNFV3NvdzdjVWd6ZGFramE5cllELTEzUzlTWFVaU01sQ2JNbEtKN1dzSjdBUFJ3X29ZbTdXeEVGRl83WUQ2WmVjaW9SVG5rRlcxdnBtUE0?oc=5' target='_blank'>우듬지팜 IPO 추진, VC 투자회수길 '활짝' - 딜사이트</a>
+                    <span class="meta">딜사이트 | Sun, 16 Mar 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE0xelg5Y3NxNTZqeWxVdTh0dWMtSHZsT3dkZ1dVZmRrblZCWDg1RW1ZZndmSzMxRUVKQUJId2R3NG5fZTBqMWwwNlBjamRGRXRDRl8yQjB3UnJZcGUydE13Ry1WbjhuMDVqV3VvRw?oc=5' target='_blank'>'몸값 1조' K-유니콘도 첨단시대....AI반도체·엔터테크서 용났다 - 유니콘팩토리</a>
+                    <span class="meta">유니콘팩토리 | Fri, 13 Feb 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFBrY3gtTjRXa0tQV0d3b1VEcmdGN0FFWWFTbE0wMTlHWUNpcFdlbVlxd2FKYVNZS3g2d3k1NWNOcF80c0RSaHFXQXBUZGkxNjdSbkliSncyRmktWlUtQ1oteG1qZUhtdUd5NGfSAW9BVV95cUxPbERqd0pQbWZ3aGtnemJDRm5CaFNCMUFrVUd6dFVNTTU1MzZ5QVJYMFBGNUlSTjlOdmEyT1VMSDluRkV0QzdKR19tZ0Zuak40RWU1cFp0OUJxMEp2a0dOMS1DaTg5R181TDhUOWRGNXc?oc=5' target='_blank'>"토마토가 비명 지른다" 외신 '깜짝'…세계서 러브콜 받는 이 기술 - 머니투데이 - 머니투데이</a>
+                    <span class="meta">머니투데이 | Thu, 07 Dec 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTE9Sc3E5Q0FldnRjNk5BT1F1czd5U3FUbHc2MDh4dTI4WlhRTzhjSFhqVXhGbUJMdTdZSlpWdk1DQW41VDBrX1dCMEhXU0RmTEZLSzhmYUtUc2R6aTYwN0E?oc=5' target='_blank'>케이디엠씨, 시리즈B 투자 유치 “쿼츠 소재 가공설비 추가” - 헬로티</a>
+                    <span class="meta">헬로티 | Mon, 18 Sep 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE4za0NRdEo5dzF4ZXJWU0p4UkFhOE9RMmhvdmJ5bHhpaTN0Y0JLN1hacW1HM2cyYlRfa3p6Q3JvME5NdVdDSV8xN3RCQnBxZw?oc=5' target='_blank'>K스타트업, 싱가포르 상륙…2.7억달러 규모 글로벌펀드 결성 - 전자신문</a>
+                    <span class="meta">전자신문 | Mon, 26 Aug 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiSEFVX3lxTE83SHVsNmg4clpLVmpHN1JFd1gzRHhNQnljTkRxUEU0VFUwdFBlWXowSlVYOVdWdU01RWxqdUNpMWhEQkRMaVJYYg?oc=5' target='_blank'>김혜연 엔씽 대표 "농식품업의 파운드리 비즈니스로서의 도약과 혁신 보여줄 것" - 플래텀(Platum)</a>
+                    <span class="meta">플래텀(Platum) | Thu, 12 Jan 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1idk16RzNUM2lMcHpPSlBsYWhBWUREMkFzM3VLRHpWVzExaHFNai1wZ2UtZElzSHhGUG5IM3F3V2RrT2FIeF93aGdmS2dOSGkyRjZraDZBYnhqZVRvYnNrRkN6dmZDTkE?oc=5' target='_blank'>AI-딥테크 중심 'K스타트업', 싱가포르 뜨겁게 달궜다!... 2.7억달러 규모 글로벌펀드 결성협약 체결 - 인공지능신문</a>
+                    <span class="meta">인공지능신문 | Mon, 26 Aug 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiiAFBVV95cUxPRE1vZGpKNnVZM3I1ODExOF9sSGp5NlNMZW40WXdNME9Qc1ZmT09uV1JUU2dZbTc3UDNndUZobjJKTm9qczZ5QkdFdGZBU2I5R3hCek1MTFdWbDZ3ZGF4UGJXb1p1YW1GM0puQl9Rd2JMYzNFM1ZlWlItZDhtM09URmVDM1Nrdlhi?oc=5' target='_blank'>‘매출 1000억 달성’ 벤처기업 869곳으로 늘었다 - 조선일보</a>
+                    <span class="meta">조선일보 | Tue, 28 Nov 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE5LQVVIREJGT3J5YTkzVTlNVVFBLUQ4OW55MGN2QS1aMUpOaTI4dGN5WF9KaHlOMUtVRFVCcWtBM2pvNzNkTTJOUmN6SFhKNlc0MzVWVHBmODNMUdIBVEFVX3lxTFBLVmtMdFgwbVZvOWZ4ZXFQUXJ6NWtvaWZQVEpqNm1mdkVJYmhobC1OVDBhRFl1VlRtLTVLcHppZlY2V2R0Y2ZGUGxOY1VORURPSmJ4OQ?oc=5' target='_blank'>정일부 IMM인베스트먼트 대표 "내년 벤처 투자 핵심 키워드는 수익 증명과 위기 관리가 될 것" - 한국경제</a>
+                    <span class="meta">한국경제 | Wed, 21 Dec 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5rS1VlNG81Q1MyLUhQdElJZC1PajdKX01fSnpWNURTeWdDai1vdUtYZ19GVHR6Vlh4WWpIUXhJWm5YWXF1bDN2Y2dkVXd3VHV0d3JMWDZ1X2lNNmFoWHg1cmJkNl9KNTRPMERkNQ?oc=5' target='_blank'>기업 '링크드인 세일즈' 돕는 메텔, 중기부 '초격차 DIPS' 선정 - 유니콘팩토리</a>
+                    <span class="meta">유니콘팩토리 | Fri, 10 Apr 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE12cTRRVWNvSUJqbHdJYm1vamRSVFhQdE9pRzJWZzNpTWg0U01zWmtjYmhHNWNJbnV4QVl6RW1EQXFtUlRKVW1KN0hyU0NFUFE2T1hz0gFTQVVfeXFMTXZxNFFVY29JQmpsd0libW9qZFJUWFB0T2lHMlZnM2lNaDRTTXNaa2NiaEc1Y0ludXhBWXpFbURBcW1SVEpVbUo3SHJTQ0VQUTZPWHM?oc=5' target='_blank'>1000억대 유치 벌써 10곳…스타트업 투자시장 뜨겁다 - 서울경제</a>
+                    <span class="meta">서울경제 | Mon, 11 Apr 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiV0FVX3lxTFBzcjkxTkdRWkxGbEN2YkYzc2lkcGo4RUd5Z1NOSHV2SWN3MmYyTlZhUk43c3RGdmNpcUtoSTNuSnc1Q1J2WGFhamhFNVRNdmFBNTlCRzRrVQ?oc=5' target='_blank'>유통 대기업들, 스마트팜 '엔씽'에 수백억 투자 러브콜 - 딜사이트</a>
+                    <span class="meta">딜사이트 | Tue, 26 May 2020</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE5DOFF4RnRpa09vc3RUODBEUklLUEZHcWlfeDJLSkM0U2pka3dieG13T3pyOUZEUFZqT0VKcFdyZzRHTHBHMUtWMGJnT1lEZw?oc=5' target='_blank'>[시스템반도체 유니콘]다모아텍, 스마트팜용 무선 토양 센서 개발 - 전자신문</a>
+                    <span class="meta">전자신문 | Wed, 19 Oct 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFBPUlVhZ0dBWE5jN2YtQ0h5YTdVd1A5aXVRd2Rfa1haRDZkX3VoaUlaenZYb2RwdkdQMGhTWXE2emdTZFhyaTBtVkxMUkYzUQ?oc=5' target='_blank'>AI, 지능형반도체, 스마트팜학과 등 대학 첨단학과 신설...신입생 유치전 - 전자신문</a>
+                    <span class="meta">전자신문 | Thu, 15 Jul 2021</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFBDdzJpUUdlbGlPUDJjRjU0TnU5TUZQTjlSVmxLTGtsMEl4M3RscmRKRGUyejFpWUdrcWVfVW1YMWNVOW9kUl91UHF0NmExQQ?oc=5' target='_blank'>AI, 지능형반도체, 스마트팜학과 등 대학 첨단학과 신설 - 전자신문</a>
+                    <span class="meta">전자신문 | Thu, 15 Jul 2021</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMib0FVX3lxTFByY05Md2NYbHpiVVN5cFQwVEFrOV90ZE1FeVotRnBXTVpXVUF0LVMzOENBRzBlendSMDhSQzV2OEdJQlA2WHFKNUxGaG5ha2E5d1ZLckUwaHVNTnpVUDZTRlI5Vkx6VE5LV2RjVnpQZw?oc=5' target='_blank'>[Hi-Start-Up] [넥스트온] 재배 작물과 솔루션 모두 수출하는 글로벌기업 - 경남대학교 대표</a>
+                    <span class="meta">경남대학교 대표 | Tue, 11 Apr 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTE1KOWJZX0h3WlIyRU1DQ09QSzF5LUdwSGpQa0VEYWMwM0pqczdzSnpxanlZTE1fNzUtXzlQZWVPM1R5SnpsNDBnMTZ4SmxZU3JOMmFqbzB3?oc=5' target='_blank'>4차산업혁명 분야 고용 효과 높다...클라우드가 최고 - 지디넷코리아</a>
+                    <span class="meta">지디넷코리아 | Mon, 06 Apr 2020</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTFBNY2tKd3BTQ3BYZnVqakJrTTFSTUx6WmZDNjh0YjF1NWhNaGdPazhQVGRma3BseVBnR0I3bW9Gekd3UVFGc1E?oc=5' target='_blank'>전북자치도, 창업기업 스케일업 위한 ‘벤처투자 라운드’시동 - 케이에스피뉴스</a>
+                    <span class="meta">케이에스피뉴스 | Mon, 30 Jun 2025</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMigAFBVV95cUxNUkVUTElveHRyRF9pMEtSVFZkR0lock9VSDB5djF6cHRJdjllQWVYazVLYUpRb1JrT045QVFmOFNHbEdzV205Ump1NHExSXdsSDRRb05fZ1FSSnp0YzlGdGhMcG5OSW9XMlk4aGJCUjBRVERVMkNNUlhBNmgyMkxxcA?oc=5' target='_blank'>벤처투자 큰손들 사로잡았다, 마법 키워드 ABCDEF - 이데일리</a>
+                    <span class="meta">이데일리 | Wed, 11 Mar 2026</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFBwTUF1dVZWeVhrTEVCTWhkQ1ZNVFdnVk90VXJHT3R6QmZGMEJLRzhaV1hDUlA1NDc5QmVHXzUwSzBZUHJvZ3lyNFJnVVpqYWhONkVfOFhR?oc=5' target='_blank'>왕년의 삼성맨 18명 뭉쳤다…“스타트업, 초격차로 만들어드립니다” - 매일경제</a>
+                    <span class="meta">매일경제 | Fri, 24 May 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFBUWUdIY3dMMHVOUXBUcWVqczFIQkgtQ0dUUC1rTkhRUklYNmlXU1hHajh4TDAxcGFrSDJIRGJEb1AxbmRHZnl6LTZXQWhXazhBd242ZjVOa2JaT01TY1ZCNEo3dlhKYlVLS2c?oc=5' target='_blank'>경북도, 지역 유망 스타트업·中企 투자설명회 - hidomin.com</a>
+                    <span class="meta">hidomin.com | Thu, 28 Apr 2022</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE5SMTJ5MVNNOXRKcS1jTUQ0YnBUbkVCWVhNUzJhYXN1YXl5ZkRfTURmY3VSaU03WVJsLWFrZWJUSEdpS2ZUQS1vYlVKV1h0QjlycGFKMHJZRVFQUmpX?oc=5' target='_blank'>국가대표 스타트업, 싱가폴서 하루 만에 53억 투자 따냈다 - 뉴스1</a>
+                    <span class="meta">뉴스1 | Wed, 02 Oct 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE5RZVdzZE5NYVVrcVFNdkFRejFrcEVXZm9SU0JDa2o0enNPVDB4bVJqMlRWWmFlYmtQY0pqRmtWRUhSTFNlY3ZTY0hLSWM1LURFQnFCOE5BUndfMlR3amgzSXdoV3p2Y2JNeXfSAW5BVV95cUxPUVBBZWZDZWZQWnpMNFVudUJ1bmdlbmo1b1JsN2lMaXpndjhDelNEVUFsOE9FRW81UVJkVjB2V2tHN1NmdGZmS0hoRjR0ZWtra1pTZEdYM19iLTNLZzZOdXBHLWNqRF9MbjVlQ21KZw?oc=5' target='_blank'>에코프로HN, 이차전지·반도체 소재 사업 확대 도모 - 중부매일</a>
+                    <span class="meta">중부매일 | Thu, 05 Sep 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE5JNzlqNV9UZEM4UW93VEpYOVZ3Rk03X0g5THJ5cXlrMnUzUWFiWVVvV2UtaHhraHc4aF9jTHJqVUNsZVNNMnRoSlRtSWdUQVBpTlNzT0w5QjBjSkhHLUJNY3Vac3hrbEst?oc=5' target='_blank'>[조간브리핑]소아과 찾아 50km··· 지역이 사라진다 - 헬로디디</a>
+                    <span class="meta">헬로디디 | Wed, 15 Mar 2023</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE10M1NKcDRPU0FTMFFzZkpqb1dqV3h3TFp0RkFyQWkzWUNtVG9yOXBIQkRYTDhxMll3Uk81aUZQWW42MVROcFJnb1hicHc5QXp6QUVyNzBlbDM5REhTMGVGSHc5S3dvQU9NcVdB?oc=5' target='_blank'>목승환 서울대학교기술지주 대표 대학의 시대적 소명 변화에 따른 서울대학교 기술지주의 투자사로의 도약 - 한경매거진&북</a>
+                    <span class="meta">한경매거진&북 | Mon, 05 Feb 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTFBxSU9zY0U3ZVFnYXVvLUMtaGFTN2xoT3pMcHRGakxjSmJSYXRPalZCN2hydkV2cU9aWC0wWkdmc3BPTU43WGRhQm1abXV4Tm5zNGszemRGMndiQkFkYWVnMXY0V3hhbzVKWFVjNnJB?oc=5' target='_blank'>아이지, IBK벤처투자∙코오롱인베스트먼트로부터 총 50억 원 규모의 벤처 투자 유치 - 스타트업투데이</a>
+                    <span class="meta">스타트업투데이 | Mon, 23 Dec 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTE5DcmR0MlU1UWFiZjI1U2J4VF94OUFRaWRXRWMxNElNX2p4anR1TlczcEtNR25fUkhZY0ZPZnRGa3R6T09idDFaelNZNzNxSG43MmZRVw?oc=5' target='_blank'>진영, 에어돔 스마트팜 핵심 소재 공급…“산업용 필름 포트폴리오 확대” - 이투데이</a>
+                    <span class="meta">이투데이 | Tue, 02 Apr 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE55aC04R2Rsd3lOTGRPbzBDNW9QanBLcFlxOGp2TnM1dDNmaFZBcEh4eEJKVEY4WUtCQ1pIdm1nZEp4T2trM0NkeG9sQmI5a0N6ZjQ1R290UDV4RVJ6Zk5LQTFxSENabHpzS2fSAW9BVV95cUxQUVZnOGpLWmcwMGo2ZUJBcWFXVk91SThsNkJXR1NWRjV1cFJJemFLVHlaa2szTG4yU1JHVFQxMUtGbFZtUm1JR0FQdEVrc3ZBMlhsaVZwNjFGYTZZX1VnbTZjRVJvS2FjYnVWZkZnckE?oc=5' target='_blank'>리벤처스, AI반도체칩 '리벨리온' 지분 일부 매각...12배 차익 실현 - 머니투데이 - 머니투데이</a>
+                    <span class="meta">머니투데이 | Fri, 08 Mar 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiTEFVX3lxTE93NHFLcFQ3SzZYa2VDNjN6Rm5qc28ybHliOWhKNFdiSnhEdjAtcXJ0OWxyZFZVbHlkS3RERTM3QVRTZy12REhDSHBscnM?oc=5' target='_blank'>넥스트온: 폐(廢)터널을 활용한 에너지 고효율 스마트팜 - 브런치</a>
+                    <span class="meta">브런치 | Fri, 09 Jul 2021</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTFBnajJ0elV4MG9zV3pGeUVETzlad1FkWHpLMm1INHd5Q3d5V3NfS1dLcjJPOFhfYk52cEVKMTBCSlVXdjVZcExDME9XS0h2Q0FzWEo4S0pJNzluc2xh?oc=5' target='_blank'>[단독] 이재용 회장, 베트남 CMC그룹 수장과 AI칩 공동 개발 논의 - 더구루</a>
+                    <span class="meta">더구루 | Fri, 05 Jul 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiY0FVX3lxTE1wTGxsaWxjRVFCaGwzdFBXWHFudDVWVkVJN2lfLUhpWURGcWROenN2QWc4bXBQWDkwZnRLNW9pd0xXaEh6YUNSRXFKUXh0bTVRWlluTjNVUUh2VTRVd2wyUHFwaw?oc=5' target='_blank'>부산벤처스·퓨처센스·마블러스 3자 MOU 체결…"시너지 기대" - 프라임경제</a>
+                    <span class="meta">프라임경제 | Sun, 21 Nov 2021</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTE5Fd3hHS05pQWlQR09rZzBxbUk3SFJ5emJ4aVJmUDlGMDJ3ZElzRFBCWWd2dVRTdkswcEwyb2tIdFo1S2s4dXNmUlRFYmtMSVhzNzFudA?oc=5' target='_blank'>[단독] 한국판 뉴딜펀드, 盧정부 모태펀드 판박이…혈세 낭비 논란 - 이투데이</a>
+                    <span class="meta">이투데이 | Wed, 07 Oct 2020</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE5TTHVLdmRrN29EZWd2NmdMa1hrQ0d5LXNkMjRrTFNiRG5nclc5NFk5UXlXX0JRNXhJT0RLSWFDQ3BfTWgxOEVrWGRrTnU1VllYRFZUcWlKcVpjc2VlNmQ3RzVoeS1kUklm?oc=5' target='_blank'>한-아르헨티나 스타트업 온라인 밋업 개최, “혁신기술기업 중남미 진출 지원할 것” - 테크월드</a>
+                    <span class="meta">테크월드 | Fri, 17 Jul 2020</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE9vTzVPLTRWNGtNWFJFaFFIUTFoc1JQdVlXOVNFc0JOZlRTc09rT3Z3REZSY1hnNHhKSUxDdnJUY1dJT3NNRnlFekhOUmxFa3pVOGJEcFRRSGxiVkx4Wktpd0d1T0xVTXhIeHVuLXpaU0Q?oc=5' target='_blank'>중소기업 R&D 지원 손본다..4차 산업혁명·혁신성장에 매진 - 아웃소싱타임스</a>
+                    <span class="meta">아웃소싱타임스 | Fri, 16 Aug 2019</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTE0xbmU4bzVPT00yQl84UTJpaE1LT2JrV3dOZGNNQ2t2djgwQXd3VG5lYWU5bm5yNnNxd0ExLVBDZEh1OHZBUDdWbXNTSjU3ZmJtanM2Nw?oc=5' target='_blank'>대통령실 "한-우즈벡, 핵심광물·고속철 성과" - 이투데이</a>
+                    <span class="meta">이투데이 | Fri, 14 Jun 2024</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE1pX1IzZVdhdERWeURDR0JwNnZESVQ1NkdhcFJld0kzaUhZZUtyWHMtT25GcFZyNkk4bUVETi0yQWRoMndrMGZMTFg4UllITWo3eFA1b1FXRFBsb0xSdFdDX3l6VFhqdGVRMHJzZi13?oc=5' target='_blank'>문재인 대통령 “경제상황 엄중한데 정치권 갈등 안타까워”(종합) - 아시아투데이</a>
+                    <span class="meta">아시아투데이 | Mon, 29 Apr 2019</span>
+                </li>
+            
+                <li>
+                    <a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxQdUtUOTkzbW94MzVONGdwNldVd3E5Vm9lQU9jNWhMZ1NPMUM5MlJFM0NYUTV5dHFhSkRpeFU0REcyR1BEZVFZTjF6UGxEU0FTV3J2N3prRGpydkNDbUJlRWJna2JqRmh6NUtKVlB0bkFvaTRWZ1pTcnVtVDJtbUxCTmo5d1RtaDhzTno4eWI5RnI1NjQ?oc=5' target='_blank'>반도체 공장이 '식물공장'으로…파나소닉 등 글로벌 IT기업 '각축' - 모바일한경</a>
+                    <span class="meta">모바일한경 | Fri, 12 Feb 2016</span>
+                </li>
+            
             </ul>
         </div>
     </body>
