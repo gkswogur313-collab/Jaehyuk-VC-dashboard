@@ -32,12 +32,15 @@ def fetch_kvca():
                 found = True
                 title = a_tag.text.strip()
                 raw_href = a_tag.get('href', '')
-                if raw_href.startswith('http'):
+                import re as _re
+                po_match = _re.search(r'po_no=(\d+)', raw_href)
+                if po_match:
+                    po_no = po_match.group(1)
+                    link = f"https://www.kvca.or.kr/Program/invest/listbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&page={page}&po_no={po_no}"
+                elif raw_href.startswith('http'):
                     link = raw_href
                 elif raw_href.startswith('/'):
                     link = "https://www.kvca.or.kr" + raw_href
-                elif raw_href:
-                    link = "https://www.kvca.or.kr/Program/invest/" + raw_href
                 else:
                     link = base_url
                 lp = cols[1].text.strip()
