@@ -90,7 +90,6 @@ def fetch_google_news():
     # 뉴스 아이템 HTML 생성
     html_items = ""
     for news in news_list:
-        cat_class = news['category'].replace('&', '\\&')
         html_items += f"""
             <li data-category="{news['category']}">
                 <a href='{news["link"]}' target='_blank'>{news["title"]}</a>
@@ -106,7 +105,7 @@ def fetch_google_news():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VC Insight Dashboard</title>
+    <title>Venture Capital News</title>
     <style>
         body {{ font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f7f6; color: #333; }}
         .container {{ max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }}
@@ -121,6 +120,14 @@ def fetch_google_news():
         }}
         .filter-btn:hover {{ background: #e8f0fe; }}
         .filter-btn.active {{ background: #004a99; color: white; }}
+        .btn-count {{
+            display: inline-block; background: rgba(0,74,153,0.12);
+            color: #004a99; border-radius: 10px; padding: 0 6px;
+            font-size: 0.8em; margin-left: 4px;
+        }}
+        .filter-btn.active .btn-count {{
+            background: rgba(255,255,255,0.3); color: white;
+        }}
         ul {{ list-style: none; padding: 0; }}
         li {{ margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }}
         li:hover {{ background-color: #f9f9f9; }}
@@ -138,26 +145,25 @@ def fetch_google_news():
         .cat-MA       {{ background: #7b1fa2; }}
         .cat-분할      {{ background: #c62828; }}
         .cat-신사업    {{ background: #00838f; }}
-        .cat-기타      {{ background: #757575; }}
         .result-count {{ font-size: 0.85em; color: #888; margin-bottom: 8px; }}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📰 VC Insight: "{query}" 뉴스</h1>
+        <h1>📰 Venture Capital News</h1>
         <div class="info">
             <span>업데이트: {now} | 기간: 최근 2주 ({after_str} ~ {today.strftime('%Y-%m-%d')})</span>
             <span class="count-badge">전체 {count}건</span>
         </div>
 
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterNews(this, '전체')">전체</button>
-            <button class="filter-btn" onclick="filterNews(this, 'VC')">VC</button>
-            <button class="filter-btn" onclick="filterNews(this, '투자유치')">투자유치</button>
-            <button class="filter-btn" onclick="filterNews(this, 'IPO')">IPO</button>
-            <button class="filter-btn" onclick="filterNews(this, 'M&A')">M&amp;A</button>
-            <button class="filter-btn" onclick="filterNews(this, '분할')">분할</button>
-            <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업</button>
+            <button class="filter-btn active" onclick="filterNews(this, '전체')">전체 <span class="btn-count" id="count-전체"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'VC')">VC <span class="btn-count" id="count-VC"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '투자유치')">투자유치 <span class="btn-count" id="count-투자유치"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'IPO')">IPO <span class="btn-count" id="count-IPO"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'M&A')">M&amp;A <span class="btn-count" id="count-MA"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '분할')">분할 <span class="btn-count" id="count-분할"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업 <span class="btn-count" id="count-신사업"></span></button>
         </div>
 
         <div class="result-count" id="result-count">전체 {count}건 표시 중</div>
@@ -168,6 +174,25 @@ def fetch_google_news():
     </div>
 
     <script>
+        // 페이지 로드 시 각 버튼 카운트 초기화
+        window.onload = function() {{
+            const items = document.querySelectorAll('#news-list li');
+            const counts = {{}};
+            let total = 0;
+            items.forEach(item => {{
+                const cat = item.dataset.category;
+                counts[cat] = (counts[cat] || 0) + 1;
+                total++;
+            }});
+            document.getElementById('count-전체').textContent = total;
+            document.getElementById('count-VC').textContent = counts['VC'] || 0;
+            document.getElementById('count-투자유치').textContent = counts['투자유치'] || 0;
+            document.getElementById('count-IPO').textContent = counts['IPO'] || 0;
+            document.getElementById('count-MA').textContent = counts['M&A'] || 0;
+            document.getElementById('count-분할').textContent = counts['분할'] || 0;
+            document.getElementById('count-신사업').textContent = counts['신사업'] || 0;
+        }};
+
         function filterNews(btn, category) {{
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
