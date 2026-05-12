@@ -1,535 +1,737 @@
-
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>VC Insight Dashboard</title>
-        <style>
-            body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f7f6; color: #333; }
-            .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-            h1 { color: #004a99; border-bottom: 3px solid #004a99; padding-bottom: 10px; font-size: 24px; }
-            .info { color: #666; font-size: 0.9em; margin-bottom: 20px; display: flex; justify-content: space-between; }
-            ul { list-style: none; padding: 0; }
-            li { margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }
-            li:hover { background-color: #f9f9f9; }
-            a { text-decoration: none; color: #1a0dab; font-weight: bold; font-size: 1.05em; }
-            a:visited { color: #609; }
-            .meta { color: #006621; font-size: 0.85em; margin-top: 5px; display: block; }
-            .count-badge { background: #004a99; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>📰 VC Insight: "벤처" 뉴스</h1>
-            <div class="info">
-                <span>업데이트: 2026-05-11 08:02:02</span>
-                <span class="count-badge" id="news-count">검색된 뉴스: 100건</span>
-            </div>
-            <ul id="news-list">
-    
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE9OMmd2NnlPUWpxY0tIMjUxME0zcHNvdnJmX01oZWRnVEdEMzczTUJ5dnUxYlZrQ21LRW43YUlINVZuRjl5SE1vMXpRcGFIRzVQRmVyYi00MzI4RnItdHotdXJhWG0?oc=5' target='_blank'>[인터뷰] 이재관 "지역이 벤처 키워야…지자체 직접 투자 필요" - 서울경제TV</a>
-                    <span class="meta">서울경제TV | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1HWGxMUkM2ZjEweEgtdmZERDdPMGo0MGllY1FFZmJEaDhkRUI0NmVYNWNUd1djcUFqTE5vOHdvX1lqUUIwVnVSdmtpdUsyZTJ5RkJwNlZRYWM2d3I2STlsLW00bkt5QjZvUG9FYw?oc=5' target='_blank'>5대 금융그룹, 벤처·스타트업 성장 지원에 1조 원 공급 - 대한민국 정책브리핑</a>
-                    <span class="meta">대한민국 정책브리핑 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFBDQWlWSXF4RDN3dldVRVRyTkZoTnQ1LUJ3UFJjVW13SldtQjZXNWdadUtRemZveUJyYkZuV1RUWllRTDdwNFNMZlB6UnBhdw?oc=5' target='_blank'>중소벤처기업부, K-스타트업 그랜드 챌린지 10년…“해외 스타트업 한국 정착과 성장 플랫폼으로 자리매김” - 전자신문</a>
-                    <span class="meta">전자신문 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5WZkp0UHc4bjlWcjZGTjJrb0xqMm50c1NMX3h0eTUxWFNZbXQ2QjhDT2F6T1V5Wm00VGJJcVBQSWJ0OWQ2OTFtZnZqNGJyR1JBSTR4bDJGOXlSODFZRmxvQktMa21oemstVXlPbw?oc=5' target='_blank'>[씨드투유니콘2030]⑬벤처 엑시트, IPO 너머 M&A 대동맥도 뚫어야 - 브랜드뉴스</a>
-                    <span class="meta">브랜드뉴스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE5SZU56dE1KSEhpVzltbW1tSldLZGhxX0ZBamsxTEQ1TkFwbXhaZXJSNnREQUhrLTJIY0tOaVg2ZU1FREdqZkQ2WXRVbm9DNGVWelRjbGJDS3pkQXNTcjgw?oc=5' target='_blank'>「AI+ OpenData 챌린지」참여기업 모집공고 - 벤처스퀘어</a>
-                    <span class="meta">벤처스퀘어 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE14bHhVMVVBOXFlTXBEN2d0czYycHZxMF9QZUNlcXI4WkxZT3RJRXFZdDJ3dW9DbGRFcTBpM25IMEg1UU1pNjFDZklnWTNta0RhV19UVnFTRXhtdHF6U1FLTnZsajYwX1d0N01r?oc=5' target='_blank'>전북벤처산업발전협의회·대덕경제재단, 소공인 지원 인프라 공유 협약 - 위즈뉴스</a>
-                    <span class="meta">위즈뉴스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMikAFBVV95cUxPaWNLMVlxMXhOajRhZHN0ZF96MU1iV0tQZkwwZG5xTTQyZkQ2Z1NEMUJOQU9QaXNfR3lFcFQ5VGdlaWVMUDZhWXg3ZlltWHlXa3BBUzVkanBYSldqQTRBaTlPc1gzeXJOV21wZUw5cGtmVTJ4c1JIVUx1ZTBhLWZiVG53Qkk0Y3hqZ29hbkpTWWrSAaQBQVVfeXFMUHFQc1hnVm8zU2FHS3dXUkM4U1Vnclg0YW1zVm9ZTTJwSzRvWjEyTzhSM0pWLXRBNFVsc0c3ZVE4c1lyVENhMWVQaUJHSVNMc3M2VmxQRFZWS3hBaExrNHl5SzZ0R1lrYjdqM3RZQTk5N0JzNDBMM1g3OUpqRnJ1ZVlkXzhLQ3k4MUR4V0hMSDNEODQ3bk00N2ZXR1BSVWFxd2dNeDQ?oc=5' target='_blank'>인구감소 지역 살린다…중기부, 지역특화발전특구10곳 맞춤 지원 - 조선비즈 - Chosunbiz</a>
-                    <span class="meta">Chosunbiz | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE8xbWxHQURiVG9uMllFMEZGSzktV2JXMlA2bm9jNTFuNFB2NnZVQjJfMGcwU2podklScXh1WlZCYWFPQi11MVNfUF9mcHBRS3pJeFhocVpUSjhFUdIBX0FVX3lxTE52V3RIMjlLLXN3eFlJM1dXcGhTNVRuY0hsRWttRklJNGxoUHU4b2FzYlF1TDlyYXZmY2ZjTEkyT0ZfcjlxVVpNcWRYWEJGeTNQcm5JR0FISXE5YTAxcTgw?oc=5' target='_blank'>하나금융, 경희대와 ‘5기 소셜벤처 유니버시티’ - 경향신문</a>
-                    <span class="meta">경향신문 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE9fNFFMVFY1bFhTc3dfb0lldkl1cDF3RzJYVWpNZkJicTVUUlJWSGhBR3JLdUhfendYaEgzUk1OVVJ6UUwtSG5CVWhpZUZBZDhhZU92YUZQM01peE16V0tCcmZJZHo2RE5BOE1ETzR5azJ1bXfSAXdBVV95cUxOd3h5MnZjU2xsWjFNQUhTMDNzckFuRkwtTS11UXRrOW91Q0YtQWRnb0FqS1JSRS1pYkdvQ1dtN241M3BPVVFzSDI2a0RxRlotS2xSZ1lxYUNaa1lVTUpWVUU4SW1RSXBJZ1pnbXFWVzdobmxVdXBiVQ?oc=5' target='_blank'>경인전자, 벤처 인증 달고 ‘환골탈태’…스마트홈 시장의 숨은 지배자 - 핀포인트뉴스</a>
-                    <span class="meta">핀포인트뉴스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE14RUh2UW5scElydUduZ25HVUlYUGl4ZDFPTlJnVnFnbjd6dUtZRjA3Q1JZV2M5SnhHSVRVMWV1Wk5KNTk1emthUXY4dTdBUTdCemszb2RXWExwMTZrQVRrNnJvNHlWdw?oc=5' target='_blank'>중기부, ‘모두의 창업’ 첫 합격자 130명 발표 - 벤처타임즈</a>
-                    <span class="meta">벤처타임즈 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFBrMkdTUGI4bVU0c254TV9PYTVsMDlEWHZVdk8wVnhQUW5Hd0lWWjBnWnRGNjdobmhCekh5dWZCMHpqbkh2cnJMWHE3R3liUnJqY1FEVjF3?oc=5' target='_blank'>벤처캐피탈이 뭔가요? VC가 처음인 당신을 위한 벤처학개론 | 시리즈 A,B?, 창업 자금 흐름 정리 - kakaocorp.com</a>
-                    <span class="meta">kakaocorp.com | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nblNTQVVHREl6YXUwYTlVTmpSNkxRNzl2SXRDQ3owWWhJNnhiNGRSSkJKM3lpOUxRTmVJemc0MmFONk94MkV2cXBaVEp3WjA?oc=5' target='_blank'>페이브먼트 ‘셀레트립’, 초기관광벤처 선정… 한국관광공사와 협력 본격화 - 와우테일</a>
-                    <span class="meta">와우테일 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFAxLXl4cnYwWTd6RHlLWktKMGR0bFFSV0FuNUNlUFFhdV9nU3BEUjdUdDNRSVYzSkhtWnZoQkZuOUNfMV9LZk5YZWZteno1Z0F2enVWMzRZRThYOUtfVXJHSV92bGVjS1U5Mmc?oc=5' target='_blank'>로우파트너스, 한국벤처투자 모태펀드 '충청권 유일' 선정 - 헬로디디</a>
-                    <span class="meta">헬로디디 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE9DdmNhYWlLVkZ4eWpZdHNXQ3Q4eXE5anNaU2ZpODJNeVVqX0Y2VUJWUy1RQnVWbFBZV2FoUExJQWJXOFVVdXJjUnJ1TUhsc01YcEZ1cDZxdFdnT1pCbFI3eEdMVUZhYzM2a3fSAW5BVV95cUxQTG9ZNnlmeEpoU01mazlsSTB5dFFDaFh3bFJ4UUNSTWlkOVRIbmpYcnI2bF8tOTcyUGt2OWlfZHh2Z2hHci1fQ2w1a2dJQTFQQ0dSRGh6ajhieVp4cF9RZHQ0MXdJYVZ0aE00ekE5QQ?oc=5' target='_blank'>LG화학 청주공장 임시휴업에 노조 ‘반발’ - 중부매일</a>
-                    <span class="meta">중부매일 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE9hUTdGMlZ2cjQ5TURBcDlsZzRxRkdFbWRucnc3MkJxU2ZyX2dsSW52ZV9YdlFkSlNMMVB5TFZsRG5JWW9NbXhLQTlxTWM0OGZIVEktNGFwWkpPUdIBVEFVX3lxTE1qU1ZqMU9RelBkZXVXZVkxZzVrV1B1dGl5TXFHbWY3Q0F1SjJEMWJxR01lUnc1RmdGZnZTTG1ObjVQX2FiVTNtMWtmSXk4V3lkWHJqbg?oc=5' target='_blank'>디티앤씨알오, 신약개발 전략 전문가 김봉태 부사장 영입…“바이오벤처 IND 성공률 높인다” - 한국경제</a>
-                    <span class="meta">한국경제 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE1JSVFDOWtvSmRoZ04wQ01WdHBZd0txLXhYbGRPblNYY2RXY3BfRC1icjZfcV9WbV9ZZzhzY1VCXzFwazVwa2NiX21YM3E2TzFYdGQtckJTNDhCQVJpT1hJWFNtMkZORFRlLXdORTNlZlgwQQ?oc=5' target='_blank'>대덕경제재단-전북벤처산업발전협의회, 소공인 상생 발전 위해 ‘맞손’ - 투데이플러스</a>
-                    <span class="meta">투데이플러스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMib0FVX3lxTE5pTHNVLUU0alpPSVlsVlR1N2VZaVc5MnNqb2Jwd0tWY0hjR2lXNExmRjlUZlBaSUNqcTNGYzlSRmFDY2s1WXluY0xaNlVTTzR2MlItUXRvRlpZTms5ck1NUnJMWEJXVjRvRTd6T0dzVQ?oc=5' target='_blank'>미래에셋벤처투자·아주IB투자, 강세...특히 아주IB투자 12% 상승 - 이코노뉴스</a>
-                    <span class="meta">이코노뉴스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE83UXNWOGVJNlprdG5LUFFKUEp0ODM4YXhEbmlvYVFkWFZlY2xTYy02NVNHaVd6RUt1cXREN29KNXJXbnZwYnNJcDdLWEMyZw?oc=5' target='_blank'>페이브먼트 '셀레트립', 초기관광벤처 선정…K-콘텐츠 기반 관광 플랫폼 육성 본격화 - 전자신문</a>
-                    <span class="meta">전자신문 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE81SWg1cmtlNDlQOXY1ejBHX0k0SVdTdVMxUXR1RDJfalFSWi1jaVI2aFRLREtnNk1KS212ZXBlRlBvSGc5cW1vV2tJVUxYSU4yUjlocDMwYlZBM0YwcXdB?oc=5' target='_blank'>2026 꿈터플러스 Dream-Camp 4기 - 벤처스퀘어</a>
-                    <span class="meta">벤처스퀘어 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMikAFBVV95cUxOYU9jYnVfbHZSOVl3aFVJeFg2VG5nQzFEYUhZclRYUVFEUndhQjJsdjhTa1FETmNtQjFkSVVVaVJ1aUppeXBDbkNlLXpPYlg1ZnB0Yk5VbDZNZDZ3VmN0cG9Jdl9oMmxzcWlyY0Jfam5kNm9ac2l1Qm9JU21hVGhrVl9aMExHYm9vWkhxVlk2UG_SAaQBQVVfeXFMT3RydzIwdW9CaTRjSXh4SnE5YzZsM3JQSHVzZjdTNWNMejlTcFhLUXJBVHlJQmtDd2RlVUMwMXMwYXpjVnlybllWQkpkREhvTUFDQTdTdmlaS0RYNG5BTUN6MThidWRHdk1vbDQ4MGQ2Zk9SRkRsQlc3dmhEdDlzSVYtSTYxZExROGQ3dG83SmxhRUJxajNrRlA5NkhwclVBWG5zVTY?oc=5' target='_blank'>AI 스타트업에 공공데이터 개방…중기부, 오픈데이터 챌린지 개최 - 조선비즈 - Chosunbiz</a>
-                    <span class="meta">Chosunbiz | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE9PcG9oQ1V3S0xtWEY1MnBJQVN5THlHTXd3YkczZGlUWDJjQmdhSUViRDNESHZha1czS29sdGowcnpja01XVmE0X1RobmowVFBVdXFsMFlvMDJNRURxSmQzYXQtT0k?oc=5' target='_blank'>IPO 편중 벤처투자 회수시장 손본다…금투업계 1~2조 투입 검토 - 서울경제TV</a>
-                    <span class="meta">서울경제TV | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1fZGpWZUpkdWhpWXhVaDhOOXVaa3F2ZlN2RUluaEk2TGVZNEhtYTdlbDd5MmxodE5fVVEzajl0dEVOaENYYm5uR0o5NTBJSGVqNlUyNXg2Z0hnUFA0T1JYWjdxOEF6Qm43WmpMYw?oc=5' target='_blank'>부울경여성벤처협회·신용보증기금, 부산대어린이병원에 1200만원 후원 - 파이낸스투데이</a>
-                    <span class="meta">파이낸스투데이 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiV0FVX3lxTE9GOWFSb3lfSUFXbUd1TEk1MG5FX0hGMHBvdUJES1hPXzdEYnlnSHJKNU5fcmp5REJyTW0zSUJfakpJT2tmbzd5NEY1Y0xzdWpMOXplbWZHRQ?oc=5' target='_blank'>[이번주행사] K-뷰티 B2B 프라이빗 엑스포‧제4회 KTOA 벤처리움 입주기업 데모데이 - 스타트업레시피</a>
-                    <span class="meta">스타트업레시피 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE51bXpMbnIxeXExWHd5ZzFES01GZTJ4YjZIcENUNUJzLUNCT2o4Y0t6RFZLY1ZwNk1hOHJXdU91SGUySTQwVVdjakFvT3ExUQ?oc=5' target='_blank'>[전화성의 기술창업 Targeting] 〈394〉 [AC협회장 주간록104] 벤처투자법 개정, K-벤처 생태계의 새 설계도 - 전자신문</a>
-                    <span class="meta">전자신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5iRDlNZmN3YWRfSzZZZ3pUNFdER2c1Rkt3Q09hemRIalY4bHFMbWVKd0dPNHhKNk0wZnNjR2dlRzJzOE5zUVM3b2xQdVRncTA?oc=5' target='_blank'>“강원권 떠난 벤처기업 10곳 중 8곳 수도권 이동” - v.daum.net</a>
-                    <span class="meta">v.daum.net | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE1ZVkh6MjhZcnJmNHQ3M1ROU1Nhb1NocGEtYzJDUFk1Mng5TzBMakhXeGotVFhic3VsYzdyRWZ2R1hUY3o3YzRpTDMyMUI2UWlHdXhDek1OQ3VqUVE5cHlnRFZxcVd2Zw?oc=5' target='_blank'>SK이노베이션, 'AI 임팩트 솔루션' 참여팀 모집 - 벤처타임즈</a>
-                    <span class="meta">벤처타임즈 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiUEFVX3lxTE9OdWczTlh3bndzanZOX0FoNk9RaFRFRXVuQXVrdlhYOTh1MjRDVk9aSkF6bFhfOVlPV0FmaEpGalNaYzhxdTFiZVlQV2c3YkNR?oc=5' target='_blank'>'12년새 7개' 바이오벤처 신약 상업화 활발…얼마나 팔렸나 - 데일리팜</a>
-                    <span class="meta">데일리팜 | Sat, 09 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTE11Q3ZhR1NtSlJZOTBsZUlSdk5HMnRtMnZfWERLUkVsbXpBTjlCTmE2WTI3M19ESFhPLU16MUFnZzhOZnQ3WnpXaXhhTkZOV2hDeW8xNks5c0VBVnFDd0HSAWNBVV95cUxPM1lLVExaOGxlaTQ4akZZZTVtRDJiQngybHVEdkhvMjRFRmZIVTlRd2ZySVl6bHQyZGlORjJsSGFSTE1iaGhMRmZ5SFpyQ1MzdU5Kd3AzTW9NRFNpRzhyMV9MWms?oc=5' target='_blank'>파크골프에 AI 더한다…한국파크골프재단·서울벤처대학원대 공동교육 - 스포츠경향</a>
-                    <span class="meta">스포츠경향 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMickFVX3lxTFBDUXhIcnpRcm40Vk9TU0FVYTJaWDBmYWtWT3hwTDdGdjNVOE5YXzltc2pLeWN3eTRGWHVuMlpUdDlVbTgzaUFiV0F3VDdaa0NSS01FdW9aVVRTSjdrR2dERFd1SlUxclBDWkxvNWNXaUxPdw?oc=5' target='_blank'>서울 동북권 최초의 AI 특화 벤처보육시설 출범...혁신 스타기업 육성 - 중앙이코노미뉴스</a>
-                    <span class="meta">중앙이코노미뉴스 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiiAFBVV95cUxOdGNYbDlfYTBCZEJVaGFHajg0RzVqS1JhWWZkUi1VekdGcmhzaHNldVMxbzJOSjZ0SmJyRDYtYVk0bkU4YWUtdldSVXBhMFhoZGpIaEtjVVhRdmpqelpteVZyWmx2dkVra1NHaUtUaFJObjBCMkoyRHJ1MGdhaVhsRmdmeGFiYTZk?oc=5' target='_blank'>4월 벤처투자도 1兆 돌파… ‘AI 스타’에 뭉칫돈 - 조선일보</a>
-                    <span class="meta">조선일보 | Wed, 06 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE91VDFwSzNCcGxDWklBbmNvQ19FWER4eURvYXVNM3RnUW44NkRkNFgwdWNZalVSaTl2M3VjUDMwS0thU3pFbVVyLXBEMER2REhJVlV4d1ZUSC14ZFdvLUlfV1dHdGVHU3VmVFE?oc=5' target='_blank'>중소벤처기업인증원, 전북신보 ESG 최고 등급 평가 - 뉴스티앤티</a>
-                    <span class="meta">뉴스티앤티 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBtSG1qUlkybUljc2VDUkdpSlQ4QlFTWWNzcVBhYkZXZld0bnBrem9ZV0xXSUswRWRNN2pLWGNmT1V3QnVudjA3U3hnQlNYSk5CZ1ctMktubFZEakc5b3NJQTdVbDJJNnNxdHNZ0gFvQVVfeXFMTU1ybHVJcldrT2tuck9teUY3N2piR05pQWRuWF9aRjZLaXhwMjdVV2lsQWR3d1hjMkJjMjk5NlpqVVQyOXVGSzlvYWpZaDR0ckd0V2tUQ1pYbHUyaFctbnJpUmZaY3k0UER4NjhZUWQ0?oc=5' target='_blank'>제 기능 찾은 ‘생산적 금융’…정부, 침체된 벤처시장에 금융권 동원 - ntoday.co.kr</a>
-                    <span class="meta">ntoday.co.kr | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBjc24tUnJZc3I0cGZQbm1rVWxFbV9hYkFwaXJRclV2Y2VGVGNpRWdzYUJlbm5wT2ZLSmlya3ZucVE3RVVSTG5GeDFwZDFDcmtFVThreTRuQUtOYmN1UjdSVkJxY1FFOURKTzZJ0gFvQVVfeXFMT3NPS3o0anVFbUtPdXNZQ25nVGFzb2llZHZQMG1KdGpRYVNILWlFZVRfZVNXbDFxajctbjNGcGYwXzY3R3hHUm1UaXlsOFFaOVJfb3NrY1BleUFkaDRJUWJELV80WFFYRUt2SndMdnlJ?oc=5' target='_blank'>그렙, 기업용 AI 역량 무료 진단 부스 운영 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE1obURVWkQ0V2JlRzBzRnlSdGNVTFZqVVp1RTNxZkZPcmRiNGtUSFJJaGhBWHc1UlBDcVIwY3ZZVUhpa0JoQWFTNDdyeHU2b0I2REtwcGZsOUJsUHZvS1VJVlBFdk1JVFVscVE?oc=5' target='_blank'>중소벤처기업진흥공단, 온라인 수출사업 지원 참여 기업 모집 - 경남도민일보</a>
-                    <span class="meta">경남도민일보 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBycm1nbzI1a0dpMzlpX0hRMTBWcWpPZ3U4a2VTMTl4bmR5MEl0SHcyQldBalB6TkFGUWZuVUUyLXFrOUJtdnE5TmRJcXdudEVSZXh4alJydjdCa3cyT2Q4YXViajNCTTk4OUU00gFvQVVfeXFMTS05TXhBX055SHJMZFJFT0tvTDAtNE04YWlFUW1ZNFVkaEYzUUZKMy1qdDVuY05jSmt4bnZXX1dGZElLdjQ5UEZjMzJfUmRtX1hKdXlYSS02UmNVRDltU1BBajM2ZGc0MmtYeGVZTF9n?oc=5' target='_blank'>우리이앤엘하루틴, 미니·마이크로LED 특허 확보 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMieEFVX3lxTFBFcEdVTmZ6UFBYSDZ5MVBfNU1aNmpXbWlad1hjY212RURoYm1reVkyZXkwT0YzYjBGQ1Z1VllCenpGWU45RzUtWE9QZWtUM2ZnV1RsUlBHZnlPMkRzMXdmSEp3OTJRaGFvWnZ0cWh6a2dXQm9fRV9QYQ?oc=5' target='_blank'>"중소벤처기업 선별해 지원" 중진공, 기업평가 전문인력 발족 - 네이트</a>
-                    <span class="meta">네이트 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFBpRXVJRVR6aGFkUnZFZXdNUmc3OEVGb0dlbjBOcUUtLU84OTB6ajVpNno5QXJmYXNtNTBmemtnVWRueWdVaVVlRVY5QXpYQUFoTjBKN1JDVVRRMzRGVGdyMm11VjVSSUJPOXc?oc=5' target='_blank'>창업도 수도권 집중…경부울 떠난 벤처기업 10곳 중 6곳 수도권행 - 경남도민일보</a>
-                    <span class="meta">경남도민일보 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFA2S0RvZTl2XzB1NE5YeTkwNllxX2JHYUM0ZWQ2dmFsQzlwbFlKbjhwNkotdERObHhlMVdrUUZ6Yld2eUZKcmg1cE9ZUTc4Zw?oc=5' target='_blank'>전북테크노파크, '중소·벤처기업 R&D 기술 사업화 지원사업' 2차 접수 - 전자신문</a>
-                    <span class="meta">전자신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiogFBVV95cUxOdDIzdGg0MXlnOVF3Uzh4Z2s1RU9Ba3ZIU0Qwbm5KNFM2T0RaSG4yZTVtUTlMY3hrdVpPUE0tOTV3M21FVkw3ZkdFNkQxSEJ3dWVwZ3hpWE9KMU51OW1QTkdZeVBRX2JQYXBBYnpDSU5EWEhfV2hIQ1h3dldBNkRqT2ZWalQ4NHdfcXNZMEpMMDRBaTZrQktJS0RHTjVZUXJRWVE?oc=5' target='_blank'>하나금융그룹 주가, AI 벤처 프로그램 5차 출시로 1.82% 상승 - Traders Union</a>
-                    <span class="meta">Traders Union | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE9LbjVIRXZIbEJzeWdiUFFKSW5FZTFBeERibmNqblJrdU9zYXl6RVBaajdJVkNmekllckpYMnZDMFRnOG9rUi13ZkNkUWhBa0E5clNsTzZxOFdNY2JRdFpOb1FYN2ZYZ3l2NDBFMg?oc=5' target='_blank'>왓츠랩, 중기부 ‘산학연 Collabo R&D 2단계’ 선정 - 데일리경제</a>
-                    <span class="meta">데일리경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5HSVlicWJqMzZmVFVrWHNWaU1SMWNnOWQ0NjVqWEtnZGxnSll2VW00MUFjbGRjSlNjMWhmZ0ZTTkUwZVZMSVk3OWtheTdtcVU?oc=5' target='_blank'>경희대-하나금융그룹, 하나 소셜벤처 유니버시티 업무 협약 - v.daum.net</a>
-                    <span class="meta">v.daum.net | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE9FSHJCYk12WFg5OFF4WFBSd1BaNTN5Q2N4am5BbmZKMFlmenQxSnJSQm5Rc2JfcnUzT0RrSWMxdjI5QjBGR04zaFZjR0hPNWhBWENaalRPMm9NaVJIcWNBcHRsSS1EQQ?oc=5' target='_blank'>스타벅스, '악마는 프라다를 입는다2' 협업 커피 출시 - 벤처타임즈</a>
-                    <span class="meta">벤처타임즈 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE9WTi0yX1VLSTVPZFE5WkZKc2RQbW9OVXhMRUFOTFJ5RWFlR2ZNcHpvbUZZdWRtRVA3QTNVZjhfVE9TYnNyekRSdXp5X0p2eDZHSXBVbWpHYXFXTVdQOEJnNHRHWlJGbHVUUWFjSHpB?oc=5' target='_blank'>17조 벤처펀드 만기 몰리는데…증권사 늘려도 ‘회수길’ 막혔다 - 아시아투데이</a>
-                    <span class="meta">아시아투데이 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE8zU3U1d0VQVDlkUUFvUkRMVG5vVW43blhkeFd6VmZNZTV0Q3p2Qko1M2IyV0FuaHA3MExWRE02N0FobzVOQ3R1ZXZQSlB4UUxRcTBheG8ySnQ3b2QxZ0I4QWR6Qm9kWVFxY2ZESQ?oc=5' target='_blank'>알체라, 피지컬 AI 월드 파운데이션 모델 기술개발 사업 참여 - 데일리경제</a>
-                    <span class="meta">데일리경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiWEFVX3lxTE1aRi1NSnRSTG1HRVdTdnhFWGhpbGp0RXliMl84c19TLVphbzZWMmhvVUp6N3Y5bU9XVGs4d0hXbnVGVjVheHJPYTZvYzVkZkR2aVdZQ2EtMXo?oc=5' target='_blank'>[유지윤의 벤처직설] 창업은 정말 ‘쉬워져야’ 할까 - 뷰어스</a>
-                    <span class="meta">뷰어스 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9KM3dFWXplbURBenB3TXlFZ2RhazRNdmJFMnhxUFFaOWotdmxUNVg1c3ctRzRfZ3d0UHZZZTlfX3dDcng5Nlg5UVRteWNRMDBnUU5XblNlUnNXZ25WVnAxLTJuTWZwWUpHSWNB0gFvQVVfeXFMTlFncGluLXE4YXdXcDhRWm1uRy1fWlhPTVhpRTJTcUl1OUdZZVloWl83OFdkZExNWnNLeEJlTG9HejloUW0tMFhkaG5TZ0x0WUR4ZzVpaUo0QnV0THZqZk1yV254M3lpWnRwT1BxS2pj?oc=5' target='_blank'>토큰아시아코리아, NYSE 상장 목표 미국 진출 공식화 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5vSVRzNFphbmNQUU95RGF2ZHRKenFCNlVvM3p6VXhacVMyWUxKbGI2MG5lZnEwcDZlT2hEelRwdnJ4dzJ0WkVsdlVzdW5XTVZTaHE2WnFjcEpRbi1LUzdOWEdjVUdnaHpFazM5RtIBb0FVX3lxTE93cUEzV1lKb0hFaFFYRVdmRllROEtJQXRQVnBycG1uUWlQNFdEbFNXR1JEekM2eE5ibUliZnZKeGdwUlVXMEk0ejFZVGJLMWh0NWFXOHpaRjg3LTA4RzhwY2hhTDk2bUU1eEVGRlpxaw?oc=5' target='_blank'>플레이오토, ‘AI 상품명 최적화’ 기능 출시 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFBvVDBDRy1yaG1KaW96dHFoY3MyeENyTTZjQ3FZT0ZrODJVU3JCUTMtRXRrZmZ6U2JCRDJzcTNDZUFWeWR2OWNBNVBmU0tfanQxRUNKdW8wNjlUZUFuLWU4Q1B5LUw0ZGtl?oc=5' target='_blank'>‘하나 소셜벤처 유니버시티’ 5기 모집 - 환경일보</a>
-                    <span class="meta">환경일보 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE1IX21HQXhMYzVwRmVYUk5abDEwWDFqTVk3Ulg5MUVjdmc2N0xURGdERVN2RlNHSlNGYnRZa3FBWF9VUmtpMG5rV2dJVmZKbk1MRkU4VGxSV0gwNzFyclJTeWJITnBmMi1Sa1k00gFvQVVfeXFMTkktQlRvSjJWMjU5UG54OGVyQ0FLU3BYbjFKYlRRb09UeWliY1V5bzhhWk54NUhrWXpVSWFTbWpiVDFGMlI4d1hmclNpVGhyV1FneXhtcnhSYjByRXpMMU4zc1hHd0NCYWoyQ2p0S25n?oc=5' target='_blank'>아이소이, ‘슈퍼 아이소이 위크’ 진행 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE80ak9oV0JwRUwzLVMyYUFWWjZGSDg3eDlWV3Y5eWEtc3VGcUVIT2MtbGRGRl9kd1llNDVQSGh3c1NadzRYQ2M2NFFaOEVsY3ZNdEttUkM5UjBUTzc3OHRhUkpwWjZadw?oc=5' target='_blank'>이인성 블루포인트 벤처스튜디오 그룹장 “연구실 기술 발굴해 ‘기획창업’ 이끈다” - 월간수소경제</a>
-                    <span class="meta">월간수소경제 | Wed, 06 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBtX0FmTXFEcWRvclNPY0ZublNtUnNhQmZHVWZJOF9TMEVnZnpNREh0SjRuV1pha2xNeEd1eU1sTE1PTllyb2gwTmxqZWdzcExlcXFBUFlGYXV3NmpuUXZMaGh2T3dHbTDSAWtBVV95cUxNSXhHTGppVWdoMWtIWlppTnhJWURmVHhpcjc1aEtqQmpYdjdHZ3d2bkpxWE02RklQZktBUE5MbC1VaHg4dFBkVWYyT3FxN0V3T1JYZENaN2NsanZBVlRkMWg4ckRlbS1BVmozcw?oc=5' target='_blank'>[금융지주 벤처투자③] 하나금융, 그룹 차원 IB 딜 채널 구축 - 현대경제신문</a>
-                    <span class="meta">현대경제신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE13VGtzZVk1b0F1WjVxa0lKMXVXeGNXckwyNWVGaUpxdG5WekJoQWtPMTIwMk0xVGtGdU0yR0h5TUlkeGtUZDItYUFFSWtCNmJUbXBZZk1KZ3B0Z2tRbGs1d2pKell6QWFaOTNycktES3RGZmc?oc=5' target='_blank'>하나금융 경희대와 '하나 소셜벤처 유니버시티' 5기 모집, 청년창업가 육성 - 비즈니스포스트</a>
-                    <span class="meta">비즈니스포스트 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE95OUpscjBtelc1dnRJTW1XMTJrd21GSWhCMm43R2tYZ0thZ2R4ZWJxVEMxUm5aeTJ0ZG8zWXJGa2s3a2hIcnVGOUdKNGhDcnlka0Q0Y2c2Y0tMZjVqRW1JYzREOUFud1hxN0oxMNIBb0FVX3lxTE5YV2lQbWdSUUw2YVR2Q0RWR2M0b1E4M1NCbFY1dEpuQ1pGWjlyS3pQTkRrcTRnZC16NUlOMEh2bXExc0xLaG5BM2VRZDQ1dUQtcU1jQ0VROU1RbGQyM0tEQV9SUnR5cklDMmtBdlgwOA?oc=5' target='_blank'>한국음악저작권협회, 조직 전면 개편 단행 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE9zRWtXaGVUYmpaVkFGQUlEbHVFMmxPc0thVm9pakNuZkhxRFRQbnUxQ3hiM1RyalRvQnBJZVBJTFVrNEpYRFRqb0NKZW1udlBHM0V5dTVJeTY1NXFZQVNJRDR0alJVZDJJLWdBSdIBb0FVX3lxTE5IcVRPN2wzQW90eHIwenNQVWptSzZTZ3pKOUdWQ3l2bWs1Z1J0ek9HaGVhdkc2RkItdEJwUHB2cXpHOENfa1BORGphWkZ5WHVsSTc5dEZ6a2gweEJ3ZmVKRFgwdVVIM0NKSml6RGE1OA?oc=5' target='_blank'>온리추얼, CBE 2026서 글로벌 포트폴리오 첫 공개 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTFBMS1VnWDlFaVdWOE81LTVkYjlLVVlMd20xNnFfQWR0Z1BRY0J6VVJjNTZLQTV0Y1RtSFp4TG13WjZVZTlHOXdYMWMtalRBRFJKdTBqQlMxWDRnRmPSAWBBVV95cUxPOGRqeFVhNXhNbWdyX0JKN2FsQXIwUWhmZGNETDIxNHdFVEFTbXVUcUpEZkstM3ZLRHM4b3lnTjVoVldIemRxTUt2RklLYnRBUEE4MjBYb1gtV0JvNV9URWs?oc=5' target='_blank'>창업·벤처기업 수도권 비중 57%…"지역 공동사업 체계 시급"(종합) - 연합뉴스</a>
-                    <span class="meta">연합뉴스 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1kbkZpakNVWWxMUVFnUXpBblR3MFBWN0IxazZWajBwZkZ3TnFobnFoQkgwcEVYNHFsdk13ZVpmcVhLeDhBaC1qQmVNR3BVYjhzMlp0cGVDVFpoTnI2OFkxQ3k0Vk1WTmx1V29HedIBb0FVX3lxTE1CSXBKeVBzSmZ0dHZCalpDcUhhMUhLMjNYR0tkVTFBd2kxcjJfTDFJUHhIMXZJWVRDeVZCcC1xWnVnWWh0YTNPWXVfdUdMQXc0S2FGNkhycEt1SzhBLXgzbXNnOGhmd1NPM256aW9xRQ?oc=5' target='_blank'>알바몬, AI 중심 앱 개편 후 지원 350% 급증 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE40d0RZbzZJZXphM0lzR05pTGFBMjNRMWVhQ05OSEZleFU4S0R6VTc5MFFVd2h2SmE4T0kwVEVBb3FKT2xyUWphaFFaU1VyWXhxNnM0UXVyYWZyTkRWOW1GMGRkdTZHd2tsa1dJ0gFvQVVfeXFMTmxtV0JwVThYNjQyQlVuaFFOeG1Mc0ZKNUMycWdxVUFiQjlPQmpoQ3hQSEE5UFZtT2pON3hHb1NlRWo3RlZyS2txWUlCeWxyWTUzR1dWT3dJWXY4b09PVEZwWU1vV3Rjb1RpbzhGei1r?oc=5' target='_blank'>딜 “AI 역량, 커리어 성장 핵심으로 부상” - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1WdU1LQlRlMnBmZ2kwZk5wcnl2eTFYMVhTZmhPalRQSUZsNlNFaW1ndW9ZRnhyOF9UekxKdW1VLWpMb0h3WHp2cS1qcHhic09GOW9YWThHOEZIZ1UzcVV6MFlFaEstcTh5?oc=5' target='_blank'>대구대, 중소벤처기업부와 ‘대경권 청년창업 토크콘서트’ 개최 - 대경일보</a>
-                    <span class="meta">대경일보 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9KcjZ4a3R3ZWRaVmxCUUlZc1hQaGF5SU5yakFEczV1SldlaGlZbGRCWFpLV2xLUGZuOTl2ekd5RktQNWZQR2V5dkNzVW8tbjRZakFTV253bEttT09YZGk0MU9MTG04R2hiakRN?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 모집…청년 창업을 지원한다 - 라이센스뉴스</a>
-                    <span class="meta">라이센스뉴스 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9iZnFjVHRCbEtUSFlJeUF3QWJGTUZfSEN0UHlFZEFZSDNIRFFVWmJ1ZUxRVVR6UDBZLVZtRVp2eE00RllsR1RlV1hXaVJiSi1Qd1lrRW56N1Fha2hKRmpOV2J6ZkpEcTRFVUJ30gFvQVVfeXFMTkxQSUFHTXhKUHJqZXpkQzNibjFkTC1hTWwzcVh3V05keS1GZ3QzNGxPMnhoWS1QNUZzWkRtYWFUODY4OXFEMG5lXzVidDB4S2t6Vl9wM19wS2lRQ0FNSEJHZDQ4ZWdzRUg1bU5IQWw0?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 5기 모집… 지역 창업 활성화 주도 - 한국보험신문</a>
-                    <span class="meta">한국보험신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE5tQWhIc2tXdnBWa0FudTk2YURNc3VkSUd0b0FSblNVRDFFbXh0ZVVRUDFMdUFhMEVKV0l4VW5kLVdLRTY2Nk1kclIteXdCaVc4Y2I2dDNQSjZXOEp6bVJ1Nmt2RXVhZw?oc=5' target='_blank'>금융업계·대기업, 벤처투자 활성화 나서 - 통신일보</a>
-                    <span class="meta">통신일보 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTE5qcVdMOTBLX2pyZjJIRG5qTDlSd20wejI5ZlN2RDFYd0pqMGtqek5zN0NvUWZmNW8xUEFWMXJmTW9SU05xVElDbElxS083NG1iUm1hWGYwMlBNWFHSAWBBVV95cUxNS1htTnhpa2oxUmdRSzEtcUt3TmJEYno4MEtWaW56SVlPNFpBdFNsWU5mSWpGZWVWOHRvOWxuWkhkOEF5cEZnYnBSd3JBVzBld3Y0UmlhTXJqWTlFV3hpVXc?oc=5' target='_blank'>"증권업 본연기능 충실해야"…벤처 자금공급 중소형證 지정 확대(종합) - 연합뉴스</a>
-                    <span class="meta">연합뉴스 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE9XUjd3Yi1oTm1HeUdQWDkwLTI1SDNFekRpSjNfTnZCTllodEtCME5tcVBBZ01xZ3hRcmNKUzVNSVBieG5GMUh6WWZZTUstQ1o0TmZIQ0FTZzd3UWdqMkVwczcxOGZ1M3VuNEE?oc=5' target='_blank'>KICPA서울지역투명성위원회-서울대 벤처경영기업가센터, 창업자 회계·세무 역량강화 업무협약 체결 - intn.co.kr</a>
-                    <span class="meta">intn.co.kr | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBRaTVrcllOc2lKYm90NnlndWtyOWlKZlNvOFpxWmhHcU8tNldFQUkwV2JVQU0tRFl6WDRXR0stT09RbjNWajMxdEd2MFpQTEE?oc=5' target='_blank'>하나금융, '하나 소셜벤처 유니버시티' 5기 모집…청년 창업가 양성 및 지역 일자리 창출 앞장 - v.daum.net</a>
-                    <span class="meta">v.daum.net | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE9tN3cta1VBNEh2a0lKYkxWQXI4Q29XUkQ2X2ZCM2Joczl4NzIyNHNadjFwRDJ6Q0hoYU43aWQ5Z1RJQXdQVlh3YU1nWFA0WEU1OC03OEh3QWhzTXZJREZWTHNzakExQ3FyTTViZ9IBb0FVX3lxTE1idFhhbmpOOWlXb3Fpc2lqR3dVaEcyYmxVdVRXcUJ2dGlrU0VTODhib1VxakR5Uk1wMjNndFc3Q2dfcm9wZWVrRWVFX0o2TFF1UmVMSmxPR1hJa1dtb2RORlJPVjlQMlROelNTdE9IWQ?oc=5' target='_blank'>제논, AI EXPO서 시니어케어 휴머노이드 공개 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiUEFVX3lxTE9iM1lVcl9GYV8zU1JLSEdYQ3MwOEVQcHhINHRPVVd3RHBqcnZCLXp2MlRUUkxLM0pqU0ZpTW9tN2E2MDFPSTNfWmp6Q1B1dHZk?oc=5' target='_blank'>대학들과 함께 청년창업 지원… ‘하나 소셜벤처’ 5기 모집 시작 - 문화일보</a>
-                    <span class="meta">문화일보 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxNcWR5ZFdScl9mN3RoM3ZOcV9Fay1JSjl2LS1ScTBTSmpzQkszNFhaZ1RXaVNidEF5d25pdDY4UWpvVVNkbmE4UXF0aHY4RkgzVHhJRzYteXZHdUF0QVhCTGhNZUo4eGJhR2I4cHJvakM1QU5ZdnJGQzBlWVJueDQ3MUVxSdIBlwFBVV95cUxOQU9mSHdzdmphLWw5OXJZdzA4LXhzZmtjQ2Q3MnZTbEI1V3RzY3A5a1ZBT1psOW5wTk9lckplZXo3SXlzRVIybnNHSElmNVlhbFhwSXdMM3JHQ3BSUHQ2eXFZZTA3YVdlYU8zZnhFTUFNMWRDTlNaWTBhbER2MHhPSjNzeXFPTTA0dzRWRnZIZGNtVVVzbkVB?oc=5' target='_blank'>미래에셋벤처투자, +8.02% VI 발동 - 조선비즈 - Chosunbiz</a>
-                    <span class="meta">Chosunbiz | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE5aejJCYzlpOGtzeGpqeUpGNXFWV212WU1DNWZUSFUtYVpkSFNGc1V5ZnpMRTNNZW5Ia3dONXhlSEdJSDNBSnhYQ2prVGlBWGVfX1lKeHNzcGNGSm1QcWFIMFQtVm42SFo3VjM40gFvQVVfeXFMTjNxNG1JYjh2MW10LUJ0dWRRTXVuRUZXYVA4YmZFU1I4bzd5dkplSVZtZkg4X1E1cWZtYWJ3UEVYTVg1WU9qMnJrQ2JGanR0NDZURGMyTlNoSy1yVklnVTJIVjVEMnJNVVROdUFrdkJN?oc=5' target='_blank'>르무통, 롯데백화점 부산본점 단독 매장 오픈 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1uSS01OVN6ejdDdkVPY2VIUjlpM0FVQ3I2TlN2RXo5cW9fQ0IwM2ZhQ19JOG02ZzF6T25TNkZQd01RT1ZTQll1TEtzWHZrV2ZsSVhyTG1qUEEyVnF2NFBldTRxWTlXUWpUZU5DOdIBb0FVX3lxTE5wdXppbTBDRVBTN3VyQmM4aFp6LXZ0Uk4tTzdoOXc3bVFOZnlNRXV6dTVwVks2WWhqdDMxejY1UjM2OExWdGZnWkt3d3FxcU9mX3otbG50VzRWaXJobExsendGcWZZcmREZUY3RWg4MA?oc=5' target='_blank'>네슬레 퓨리나, 프리스키 그레이비 4종 출시 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE44ZzJSSS0zcktwcTMxMDFMX1A5akpKS01KR0wzNmt1STJaSC1DTUtnbHRhUUpZazg2QV9iRjlXeElUYmVzOTlEZTVscGRUNHNHcmRaMnFjR004cWJHSnFGekk0bmwtRkV2Z000VFBUc2xTdw?oc=5' target='_blank'>공영홈쇼핑, 중소벤처기업부 공공기관 2026년 5월 브랜드평판 1위 - 에너지신문</a>
-                    <span class="meta">에너지신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1tM0dlejdUNzNwYW95RnFnR2xJbHN0aXZCMXd5QXFXQjRVSy1zdjNMQnV5RHNrZE9iN2RZc2Z0Q0ZHQmUxOTAtVlJrTTQwbEFJYkFfRTRZa2ZvZ0czVHNGcHQ5OU9PRVVXYlFudNIBb0FVX3lxTFBTNnRBMWlkT2FRYzRHOUh6eUtSekpZaEFHbDBjSmVqcnNvZ2hkX0ppVkRleC0zMGpkRWxOX1NfLTN3TDZjcTNrcjBaWi05MWNrSmM5bFp3R3FmMmg5UDlOXzdLRUNRdzlROVljOUdhOA?oc=5' target='_blank'>고스티, 디즈니 협업 ‘토이 스토리’ 카드 커버 출시 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE5SaVZmR2hNekxDeDgtU09hUlVOZEpyTVZTdGVXS3hNZlRWY05GTUdOZ3FfcVd3d3dyakMzWVNtaWZ6MUNGMnFOc1NsZGJiNjBBVGtfVFlyTmU4cHJ6c0ktX3RYcjV1MUxLVkY00gFvQVVfeXFMTnZsMk5LWlVhRDlPdnlacFdiUjd1YlRESEkwNUNwb1k3UTJaWlRVbk8xMjFwdVdyNUNNRFRua3VpaFhkeUlGVk1qZDVDeWVXaGlyOEl3elZwWTJBeWlzYWp2dG1qWGpMeG1qMVd5Z1Vv?oc=5' target='_blank'>쿠쿠, 5월 가정의 달 프로모션 진행 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE9RUkFna1F3S0hCUlZrOVpNT0VzaTkwVjRUaFFkNUFtTlZnb1NlVWJYTkdiRXh3OHBhd3Y4VVlMVmRhZHdOcEZVZnlYZXlmUQ?oc=5' target='_blank'>하나금융, AI 기반 창업 지원 강화…'하나 소셜벤처 유니버시티' 5기 모집 - 전자신문</a>
-                    <span class="meta">전자신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBXaHlEY3U3UEw0YXYzd3JDRWhjaEF3QWxUanA2OHBqdkhoRnRhSlpYb3pHazFnVnBuMVBIZ3FMZDdmUFZ0X2w3YmVZRlM4cUs0OFZtbXVXOEhPMC14eGVzQXp3X25fTC0wWnpv0gFvQVVfeXFMUDd6YkNQNENnVUdycE8tdkx3a1YwRFpzd1VUWkEtMVE5VzU2RWNFR19mWXpLMTNTb0VIMU1OTXRRSUtfMjVnb2lwZVR5V3djdUdRT0JkUlZRTTcxNEFiMHdIdjgxNHVMeXJQalVYNWtR?oc=5' target='_blank'>파나소닉코리아, ‘2026 패밀리데이’ 고척스카이돔서 개최 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9CcHdSLVpmQ2YzSUw2alp4cnVYRG9zTDhNWk1MQ3NVQk0tRi1qbXhRQXpDTGM4YTc3QlpQS0dRMlh5WE8ycFNjWmpoT0RmQ1ExZXdHREdhRUNCTEcxTFh6RmNfWWhxdW52am1F?oc=5' target='_blank'>금융위 중소·벤처 자금 공급 중기특화 증권사 늘리고 인센티브 강화 - BBS불교방송</a>
-                    <span class="meta">BBS불교방송 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE9oeDZKbkFsQURiRGRuTmhxVVZlNFBUcks3dldxTk5zc2VHU3M1RzJTQXhmV3ZydVU5c3R0S3VaWXpvUnJUUTMxNEZ6QXBrLTBKajZDUV9aNFZ4dw?oc=5' target='_blank'>부울경여성벤처협회, 어린이날 맞아 ‘마리아모성원’에 1천만원 기탁 - 브릿지경제</a>
-                    <span class="meta">브릿지경제 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBmS1hGSW1vZi1pamVwc29zWnZSLWd5cnhoSkV1RWVrNXhlVkNEVldNbkhhTUlSdkZ1WWdRTzhtUVVLU05haklfNG9iN0dUaE92M0FOdnU0NUs4TF91RTZISTgyc1N0TTNLWUdB?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 5기 모집…전(全)주기 창업 지원 강화 - 백세시대</a>
-                    <span class="meta">백세시대 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1KVVdyUjRxMUhzNkREcU84MWNPeDlEVTV0TXAyU2xIRk5SYjh2Um5TUEpwLUV5VC1pSmtOT3RoNkE0MWRxaFl2TVh0MmRyZUo1NUYzM2QyREU5dE1GNktQNXdfbmEwdDjSAWtBVV95cUxQMjY5THlUQU5HTjlaZGdLQ1J1U2FRNE05MXJkTEdTZUtyV25zaGQtVG5kOWlWZGpJOGJqN2h4aG5qX3g1UWhDd1ROSkRNMjVUVzVIanM4YmYzWXoyQVJqTjVlVVFGcTJoUklhMA?oc=5' target='_blank'>[금융지주 벤처투자④] 우리금융, 비은행 숙제에 VC·스타트업 '새 성장축' 키우나 - 현대경제신문</a>
-                    <span class="meta">현대경제신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE51bkRhd0xzMDNCVEVrcDJHckFlaFJ1ellBTDJzZFhCZ2s2eTdEN3g0UWhjTUg3dmpvSklzVXM3UG5FNnZ1UTBzRDBJQ3d3ZTZjQ0pwYjlUUTBwMU9ZVDk3LVM1QUlMX05RVUZB0gFvQVVfeXFMTUU4cVloLVk3c3RaM2JJa2RydTY1d3JvNy0xRVZUc2MwOTRITUV0TVp0dFRZUjQwTGNTVVg5eFZYMVp3emFnRW1ndXJ3TXFBcm04ZjNTSXJJMVk3UEJEc0ZpUVV6RkN4eTVUVW1ZNGxr?oc=5' target='_blank'>DJI, 포켓형 짐벌 오즈모 포켓 4P 티저 공개 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE1OLVprTDhQUmJ0NldlSDFzRUlnQ3RLV2ZyYTMyY2dsQ2w0RmstVGU4Snl0c3lSdkhETFJ0dDlEQVpZLVYxRmlLUVNjMlpSS01rYzVYUWlESkROajF4R0VVamRHaDVzRlhKRmc40gFvQVVfeXFMTVlRd3E2Nzk1WF9DOFFEeWdKWVlGVzc2eWZFYXNhOTk3NW1rYlNXWU1KSVFhMGwwMkVXTTJieWJxZ2xwZ3RESXJMNmFoSTNBX0d4a2U3amZQZ2huRjBoNFN5ZlE0VmVFanlDdHpSMGNv?oc=5' target='_blank'>테팔, 6L 와이드 2단 전기 찜기 출시 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBDXy1VSjhUMjVuQUVmOVh5Vk5hdE0zblJCRGh1QlhlODdZWmRnY1pfc0ZvUk5WTjdvOUdFR1hLVnBydDItQnFRSDR6VkhoVWpGRlg4Z1NQTFJPdjA5OG5FVDJqT01JclJtWVdB0gFvQVVfeXFMTjRsRTl6Y2Z5YW5fcVpFcFp0TGxTYUFQRkpWMXJFRDFzY1c1VVMwSEtUQVdnN3I0ejZENVRDRmdCQkpqbnRTTmJDZkZzaFVWRlNjYkZRNUNJc1JTTjVUbkttMDBSbFBUU2NzNzJkbkJB?oc=5' target='_blank'>불스원 레인OK, KIA 타이거즈 한정 패키지 출시 - 한스경제</a>
-                    <span class="meta">한스경제 | Mon, 11 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE8wOV9adk82Y0dJUjJNNTVzUDNud1dFenFzZzcxTzNTVVB4Qm9KczNpRl9tT1JyQmZ3enVaRHFxbUdrOGhwNmlEYlZCMzVTY1FGZEVwZi1ZRWtvRjVQbEx4dUJ6VTd1cHo5LVludHJR0gFyQVVfeXFMUDVkYUg5bW5VelQ2TmFZWTZzYmp0ZGVRT1Fuc25hMVFjV1hpazlyYTJCYzkwOENRX21pRnFaTWRHb1dmay14Z2YtLUl5VlBJMzNJUDVnb25IQkFIOFZyMUp2VGQ3WGduRjVwRUNsbEhoM25B?oc=5' target='_blank'>SK, 사회문제 해결 스타트업 '소셜벤처' 지원 확대 - 폴리뉴스 Polinews</a>
-                    <span class="meta">폴리뉴스 Polinews | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1YRElIZDNHNEZqNFdxZlJ4N1JrQXFxLXplUjlQNXNvMkh2dktlYmFYNk1UZzlGWEZtX2NfelRRX1BjeWFnRWVZMWRPZG9kc0FVeUwxNDJfdnZZRVlkTm41Zl9BRDlPajQ?oc=5' target='_blank'>SK, 소셜벤처 육성 프로그램 ‘임팩트부스터’ 출범 - 핸드메이커</a>
-                    <span class="meta">핸드메이커 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1kbnprRmwwY29GNjB2emV4S2FxN3N1dmpIRGRwMUhRdWtqckhiV3F1ODB5S2libmR0ZXNiRTlfU0h3ZEUtdlB5aDdvSFJpM3NGSDJwTi1BMlRuMHg1OTZrekhhTk9qZ2x6?oc=5' target='_blank'>금융위, 중기특화 증권사 10곳으로 확대...중소벤처 모험자본 공급 강화 - 녹색경제신문</a>
-                    <span class="meta">녹색경제신문 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMihAFBVV95cUxNaXc4aENhQlZObDduTDREX1FkSkJsOUp3ME1fdDFlenEtUTk0VlJYTTJYeXhyT3hwQ082MjA2SUswZkQweFhnNmg1TzRKbjRQd25tRFBJbWpXcHlXWUNYYTVSXzVZSUlBWHBjUjlnVnlyYzNSM20wTXdvUnM5aG1WOTBxeFU?oc=5' target='_blank'>하나금융 '하나 소셜벤처 유니버시티' 청년 창업·일자리 창출 앞장 - 글로벌이코노믹</a>
-                    <span class="meta">글로벌이코노믹 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTFBhUWZUOHBHMTlQOVp0ak80T244RTRsUm92eDlGWnJJV0c0YUxYeTU1N2dwU3c3VEk3UzVPWUoyT1ZaTDF0clE?oc=5' target='_blank'>벤처기업협회, 아기유니콘 도쿄 연계 프로그램 통해 MOU 4건 등 성과 달성 - beSUCCESS</a>
-                    <span class="meta">beSUCCESS | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTFBxSmNxMWpJeTZ1c1RQU0NfRThTT2QzbkZuRGxSNzFjM0pvczJUWDc2b0lXcHBBaGpzUC04ZHpjbkxXMUJpY2U1MEtSQ080a01acmRnR0M3NjR6eWQxZGthYUgzU0tsNUt2WEhsaDNPYm1FRkk?oc=5' target='_blank'>삼성 라이프사이언스펀드, 미국 바이오벤처 카토그래피바이오사이언스에 투자 - 비즈니스포스트</a>
-                    <span class="meta">비즈니스포스트 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFBrWWJSM0ZhdTIxcmZidGx2N2tyZDRaR3NNSmhESGgwMUoyYXp5UG5VX3lNZUpkYVNSaVotSGF0NUJXQ3VoRlhiVS1wS0cxMDJ6a1JZWmpvOGJBdzNiYzd6Q293VmVUb2ZF?oc=5' target='_blank'>하나금융, '소셜벤처 유니버시티' 5기 모집 - fetv.co.kr</a>
-                    <span class="meta">fetv.co.kr | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE5wMTRyYm1CQzhiSFRmcWZraGpKLVBqUzFlNkd6U0JJWUZWWHNfZDkwdWh0YmlHLVdmQm5QT1liM1BBMTlaa2R6eVZYRmJDd0JGUmVMM1ZLanBxT1pIbW5qcU1MUEQ0S3M3eW1PYW8tVm3SAXRBVV95cUxNcm9fS1p6bWVUMjdDQ1dCQjlmYV9SaFJybWt6RksxYm5HSk00NVAtOHRwcHpfNUhUUUNLZ1hoM1RMOGp2V0RwYWd6bkNZOEVTUHhFMHdYUXlXODN0TFdRMWUzVnlfWmlwQTJyV0RFLXJSV2NXVQ?oc=5' target='_blank'>중소 금투업계도 ‘모험자본’ 시동···비상장·벤처기업에 온기 돌까 - 이뉴스투데이</a>
-                    <span class="meta">이뉴스투데이 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE9yQWJ5Zzl1SGxxQlc4ekRMMmk3emZRYmNyRGdxVVNERGJXWjZhYkhodG1qOWVsUVdQYnAxbEV0RE5KTGFoLXVMNFhYU1ZwVGdTcm80TDlkTzFYSy1IYVkyRFdQYzFpVVZTUUE?oc=5' target='_blank'>서울 동북권 최초의 AI 특화 벤처보육시설 출범한다 - 조세일보</a>
-                    <span class="meta">조세일보 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE1RVkxGRjkzT3czNnpnSERIcjZwamd5VndPWnVxbGlFbjRWdldzdVZuZ01uZ1AtcDIyTDRqa2RKdUdFT2QxS0oyY3hObTRPQkxSbHlvVmNuM3ZhVzZ0VUpXTTdtQWY1Nk5pc1Foei1B?oc=5' target='_blank'>[OBS 인섬 뉴스] '동심 가득' 영종 씨사이드파크 키즈벤처 축제 - OBS경인TV</a>
-                    <span class="meta">OBS경인TV | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE9WTGZDZ2hfLWJxVGZFRE1GTkhBdFlzOVE2bWlmOEVBbEpDUmdZQ1Zwemhidml3b0hKU241ZXZSUklkejF3SjhyTUpUWHVUY0Y0VFM3OTVQWlVRdnFIakU1bkg5X2o2WWNf?oc=5' target='_blank'>하나금융, 청년창업 ‘소셜벤처 유니버시티’ 5기 모집...AI 창업 교육 강화 - 레디앙</a>
-                    <span class="meta">레디앙 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTFB4UmdvbDlPZzdEZmV4bmpaYjVpQ3JNdmhiclpjLVlPLWhjMUhndVNJSzZOTDFRZU9EZW9BNTJldzVhM2NmU0xUNmltMzhpUm9PbGxTNmUxWUt0SGVkWVMtcm1XLVJqcENydFl0WA?oc=5' target='_blank'>1조 8000억 규모 벤처펀드 선정…"벤처·스타트업에 적시 공급" - 대한민국 정책브리핑</a>
-                    <span class="meta">대한민국 정책브리핑 | Wed, 29 Apr 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5MUFhxVnU1SlJDcjFFZEVoTE5kQmRrRi1ReFZ2TFBPaWNXeWE1bTNMR2lUa0dVcmRtdnN0R01ORUdLRHh4bHlUclVTSHFiQTFlaDlKSEtveHcxcG56eC1iQ3JQb2J1ckVvdzBHOA?oc=5' target='_blank'>소셜벤처 스케일업 지원…SK, ‘임팩트부스터’ 출범 - IT비즈뉴스</a>
-                    <span class="meta">IT비즈뉴스 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMickFVX3lxTFBLbkEtaFVUS0dVMUdGLVZaYlhRV0h6UE84bS1vaV96VDI4elpzT3hkZlpYTEVldEY1OXJqOTZoRnpRTHZuUXUwVUwxSTh3cng4U3BJRjZWSk5lSFFyQURlLS1Xc3ZHa3FPdkFPN1NhTF9Xdw?oc=5' target='_blank'>[인터뷰] 김형곤 민주당 강남구청장 후보 "초고속 재건축·수서 벤처밸리로 경제 1번지 굳힌다" - 동방일보</a>
-                    <span class="meta">동방일보 | Sun, 10 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1aVjdpY1lydlNYNjk0dmk2NGFSU1BZNDNZU3lYV21QbDYyOXQzWmZIZ0ozdTdSTjVoRjFyY1FpWm5zeWt2V2VYSU1DRXhJZDAzUUlfNnNhWWdvZkR5bjJMWU1FWnphMnp20gFsQVVfeXFMT3E4V3dFalRUQ2QwaURoVnQyMGQzNjBZdWNvbFBXeU41aVFfY05FZkwtc1BBYkctaDlhWDkwLXQwLWt6cEZHbkJXSkFtRkI0TE9ndXlmYzRhNXRPeE50N0lpZXlTYm9hcnF2b05N?oc=5' target='_blank'>미래에셋캐피탈, 계열사 벤처펀드에 260억 출자 - 블로터</a>
-                    <span class="meta">블로터 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE1CVGh0VlZRYlVuaGxWb05RVlJQMll1REs5SHJnVVpXYWtHT19wV3pibHNUNGlyQkxSNllsVnZDb25mUW1jQVptVHJpMlFFdVdUU1JaNzd5eTlyYmxMSmJMWdIBeEFVX3lxTFBiMERyUlBxZ2xQZ3E2eS1jVHNGTXVqNTdsWmJwZmF6bHVFM2JrcHJOSFRaR19URkFza01DaG5mQVRySUloczEwbEtFRklyXzl0azMwaVJnYXRxTEt5RVJCbWFUeWdSSDJIcFI4SGFkOFZLbkNlakNvdw?oc=5' target='_blank'>하나증권, 전북벤처 혁신투자조합 3호 출자키로 - newsis.com</a>
-                    <span class="meta">newsis.com | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTE4xWm5WOEYzb2tNb3FjWWJweEZJRGg1ZE9NWjhuQ3ZWY3lCekkyaUhtR1I5WHhYMVJ2Yi1hNWdmTUFraV90T0FTa0hoWlh3Wk9lQ3dPM1pxWkIycUd2YkxoRTk3RHVfRnM?oc=5' target='_blank'>하나금융, 전국 30개 대학과 청년 창업 키운다… ‘소셜벤처 유니버시티’ 5기 모집 - 핸드메이커</a>
-                    <span class="meta">핸드메이커 | Fri, 08 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE55Ym9Pd0FPWS1xUC0yaWtYWVZ3bmxvbHNLOVU1aVRxSmYtRnpxdHQ1eWNLT2JldFltV3lvY3ZrNDU2OUxtWlFteUNDc3B6eGM?oc=5' target='_blank'>벤처협, 아기유니콘 8개사 日 비즈니스 매칭 지원 - 와우테일</a>
-                    <span class="meta">와우테일 | Thu, 07 May 2026</span>
-                </li>
-            
-                <li>
-                    <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE15OVdoZG5TYTB2bVllbkJDREhNTnFPS0JIc2wzakI3MllIWjJqS3FCTXFlLTZSUDExMGJzTlloWjBIejlaSjFieDFfOUg4ZGxWeVJ5emFabHh0RG0yTnp0WnJzRkFUY1VTUHVLSVJ3?oc=5' target='_blank'>하나금융, 청년 창업가 육성 위한 '하나 소셜벤처 유니버시티' 5기 모집 - 뉴스후플러스</a>
-                    <span class="meta">뉴스후플러스 | Thu, 07 May 2026</span>
-                </li>
-            
-            </ul>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VC Insight Dashboard</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h1 { color: #004a99; border-bottom: 3px solid #004a99; padding-bottom: 10px; font-size: 24px; }
+        .info { color: #666; font-size: 0.9em; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .count-badge { background: #004a99; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.8em; }
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .filter-btn {
+            padding: 6px 16px; border: 2px solid #004a99; border-radius: 20px;
+            background: white; color: #004a99; font-size: 0.9em; cursor: pointer;
+            font-family: 'Malgun Gothic', sans-serif; transition: all 0.2s;
+        }
+        .filter-btn:hover { background: #e8f0fe; }
+        .filter-btn.active { background: #004a99; color: white; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }
+        li:hover { background-color: #f9f9f9; }
+        li.hidden { display: none; }
+        a { text-decoration: none; color: #1a0dab; font-weight: bold; font-size: 1.05em; }
+        a:visited { color: #609; }
+        .meta { color: #006621; font-size: 0.85em; margin-top: 5px; display: flex; align-items: center; gap: 8px; }
+        .category-badge {
+            display: inline-block; padding: 1px 8px; border-radius: 10px;
+            font-size: 0.8em; font-weight: bold; color: white; white-space: nowrap;
+        }
+        .cat-VC       { background: #1976d2; }
+        .cat-투자유치  { background: #388e3c; }
+        .cat-IPO      { background: #f57c00; }
+        .cat-MA       { background: #7b1fa2; }
+        .cat-분할      { background: #c62828; }
+        .cat-신사업    { background: #00838f; }
+        .cat-기타      { background: #757575; }
+        .result-count { font-size: 0.85em; color: #888; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📰 VC Insight: "벤처" 뉴스</h1>
+        <div class="info">
+            <span>업데이트: 2026-05-12 00:24:12 | 기간: 최근 2주 (2026-04-28 ~ 2026-05-12)</span>
+            <span class="count-badge">전체 81건</span>
         </div>
-    </body>
-    </html>
-    
+
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterNews(this, '전체')">전체</button>
+            <button class="filter-btn" onclick="filterNews(this, 'VC')">VC</button>
+            <button class="filter-btn" onclick="filterNews(this, '투자유치')">투자유치</button>
+            <button class="filter-btn" onclick="filterNews(this, 'IPO')">IPO</button>
+            <button class="filter-btn" onclick="filterNews(this, 'M&A')">M&amp;A</button>
+            <button class="filter-btn" onclick="filterNews(this, '분할')">분할</button>
+            <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업</button>
+        </div>
+
+        <div class="result-count" id="result-count">전체 81건 표시 중</div>
+
+        <ul id="news-list">
+            
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiQkFVX3lxTE4zUnR0dVl5OFk0LUFWZzVPemlrWmdQb0k5OWVOOG5JazBFMC1aRklzU1J2OUhVRFNaenpEbndyX0xDUQ?oc=5' target='_blank'>“참가비 전액 지원” SOVAC 2026, 사회적 기업·소셜벤처 파트너 찾는다 - 브레이크뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    브레이크뉴스 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE1PU0wyUm8zaE1YNHVrdVQ5UUhnUU1tVk5jZ013YlhJclNxbHBzOVYzTzE5SVJhWXpOeGgtaXV1Tm9ia0Zsd3pDLXdDUmxtLXhzVHVR?oc=5' target='_blank'>듀켐바이오, 메디톡스벤처투자 출신 김승우 전무 영입 - 네이트</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    네이트 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE1McEFvMGhLTUJOMmRpU2x4ZDZoUUJ0eFFEd2xJY2tfdFFJckllTElWMVByQkhNeDNGWWlEeTdJRGh5UVd4TjNVcEczLVpHRVRNaXFvbnVubERINUcyY3oxUkpacUZ2Zw?oc=5' target='_blank'>디캠프, 딥테크 스타트업 ‘배치 8기’ 모집 - 벤처타임즈</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처타임즈 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE1FakY5OTV3bmEtVGwzaHFWenJUNmhvbm9YMlZPbTVGd0VWNTlDZGRwUm9mNzdreVRVXzE3WEc4S3ZrN29fV1BGdGFEeWd2b3A3eEt3?oc=5' target='_blank'>지역 벤처펀드 출자사업 달아오른다…비수도권 의무 투자에 관심 고조 - 네이트</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    네이트 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFBFNElyb3JNRE5vN0trdFpYVi1pVGNCQTh0azdtOHRuSkJEREp6RUxtNWp2ZTFpekhfck0xTG1qZkFweHczVnVkbGUzLVE2cmdTdFVyU3ZZbXRvcGFXMmgtRDI2aWNpQQ?oc=5' target='_blank'>티센바이오팜, 농식품부 ‘그린 유니콘 G-Corn’ 최종 선정 - 벤처타임즈</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처타임즈 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFAxdEpkYW1PdW1KUzliNGtCT3VSYlFMU1dXcXBDTFB4TVdyRzlwdFdBaUY3cDlfR0xmcldHOWU5TllKeG85enVsNjg2TlgybHd4am16eFBHUGZpRjh4R2xQZlI0MkFzZw?oc=5' target='_blank'>공차코리아, SKT ‘T day’ 프로모션 진행 - 벤처타임즈</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처타임즈 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiV0FVX3lxTE8zMnBPdkc2VGdybjlvMmN4M2NhWXBtdjg0eU9FUW9Wc1cwaUJzdklYbVlZWlNrTy1FVWc2R0QxZFJvVEEzRmZyanh4VXNkM0RhcWV2TkRkWQ?oc=5' target='_blank'>[AI서머리] 부산창경, 투자 유치 필요 스타트업 모집‧벤처기업협회, KOVA LP 아카데미 2기 모집 - 스타트업레시피</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    스타트업레시피 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTFBseDZINE1QbkY1QnVEamgwUENRY0FRaW9kSzdBMGN4c1kxeDFUejRPMmttOHlZb1JkOVpUelc0aXhzaXQtZzRvNzVZZ3liZVQ1NkZNRldJR21NbEpZQVpV?oc=5' target='_blank'>벤처協, '제2기 KOVA LP 아카데미' 참가자 모집 - 메트로신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    메트로신문 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE9hVUlzVHV1cGxlZTZlRy0wRmtoa2d2NHp4ZjdxYzZfMVdMOTNZY1RVd2FLdGxidjZhSjNhVEI0U1FDMGRrSF92N0lFYXAtb1k5eEhfTWxmSGJEWE1faXAxc0Nfdjh2Xy04UjZvdkJpZENQV2c?oc=5' target='_blank'>보원케미칼 주주 한국벤처투자, 보원케미칼 주식등의 수 34만5885주 감소…총 지분율 3.1% - 디지털투데이</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    디지털투데이 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE5Bc1lXbUt2Mi0yTk1vMHE2S24wYnd4dHU2NWQ0SEZqRXNMdnhDUV9KQm1ydER1QzBaQzd0M0lXTHpoaGVuc2piSXFwWnJjVF9TZzUxaHgtZEZBY1lEQmJmclF2Um02YmZQNzB3?oc=5' target='_blank'>벤처 글로벌, 글로벌 LNG 가격 급등 속 실적 주목받아 - Investing.com 한국어</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    Investing.com 한국어 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1HWGxMUkM2ZjEweEgtdmZERDdPMGo0MGllY1FFZmJEaDhkRUI0NmVYNWNUd1djcUFqTE5vOHdvX1lqUUIwVnVSdmtpdUsyZTJ5RkJwNlZRYWM2d3I2STlsLW00bkt5QjZvUG9FYw?oc=5' target='_blank'>5대 금융그룹, 벤처·스타트업 성장 지원에 1조 원 공급 - 대한민국 정책브리핑</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    대한민국 정책브리핑 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFA5Uk5Oa21lei1yNmpydXg3V0JHNm1oS3h5UXRTTzd3X2txYmhHNU51Tm5OcG1OSlJPUk5VYmhaeEtZV1hsNmRNQmtfSHk5ODhVd21IZmE3U1pMa0J2TlVkRmhoXzhmTHc0cEE?oc=5' target='_blank'>[공시] KBI메탈·두산테스나·미래에셋벤처투자·삼아알미늄·주성엔지니어링 '거래정지예고' 등...45건 - 뉴스티앤티</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    뉴스티앤티 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTFBqVzZoX1huMlZrdTRxTm5fcExZZ1NscnZjemZrc3E3RWE3QnViSllPYXpHLVVlTVlrYml6dVBUT2NtRjRRdEZPY254X3FvTVhJTkhQQjEzSTBEc2pYVWNrd2E3eHB6NldjYjdVWmdKSTdpQQ?oc=5' target='_blank'>우리금융, 벤처·창업 생태계 활성화 위해 중기부·금융위와 맞손 - 웹이코노미</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    웹이코노미 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE9MVXNHTHpnNjFNZDlDZl94UlcwLTRHNUJVR0RjTVBrbkxWUXdIOVZEcWNVdmlSUGZ2aTg2eVBsRlk3ZklrU2tqTDlQR0tXekNYaWtUbE9RSWR4Nk5CNWl4cE1yU0ZqWko5YjdvTHBfcGxsdw?oc=5' target='_blank'>중소벤처기업부, 지역특화발전특구, 민간 아이디어로 지역경제 새 도약 이끈다 - 프레스뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    프레스뉴스 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTFAtaWNtX1h1SlBiVG91d0IxZmgzcFFKQ3NjV1ZHdDdQdzBORlNQVG9oVnlyM2ZURmRPUUZvb1pPUDVDcmZ2dGRFYjFIcm8zTl9RV1ltZ2JBQm5vekU4LU9sOW5iN2lhdkJkSXp5bkFnbWx0VmM?oc=5' target='_blank'>중소벤처기업인증원, 전북신보 ESG 경영 수준진단 최고등급 부여 - 오늘경제</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    오늘경제 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTE9HWmxaU19IY0NWbGRiOUF1SDRndkhSMEdlSlZtcFRhRjJrOE1DaFFwVWRxMDhPTkpnVUFXTTV2TUJubzBlSHJnbllNSVIxUWxPWTZoYXJtaUdtQzVjd2p4cHpR?oc=5' target='_blank'>벤처캐피탈이 보는 주식시장 – 반도체 수요는 상방이 없다 - 티타임즈</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    티타임즈 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE9fM0JZU2JmTXJDUmVJSDFBaGRGcU8wN05fcGdMbHQxd1I4bVZjM0VlVUNrU3ZRZXZNeXRJVDhDY08wNnBZUW5ZenZzbWRZV0tHV3NJ?oc=5' target='_blank'>제17회 관광벤처사업, 예비관광벤처 20개사 선정 - 네이트</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    네이트 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE80eWg1YzFHM2F0VzVTUG5MTHBScFNPYWhFUFc0SC1oZ3dtRFp6MTdoOHA3N2ZvaHhEc2pMQ0lpNWtGbGF0dDViWDdZZkItTTU0bmpZb2xPWUN2bU5FQm00?oc=5' target='_blank'>2026년 글로벌기업 협업프로그램(추경) 창업기업 모집 - 벤처스퀘어</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처스퀘어 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMigAFBVV95cUxPaXVlbmZiVmExeGRYdHFyakZkYlpCTVlZM2E0eFEtLTRjeHRHMTFDdW1XdV9hU1NNdWJJbHFmeGtaYU1BSlFjN29TX1g3RzlEcnY3cklscG1ad3p4RFZHVmg3UGRwdGNheHA1YUdXMGFseGxseFJxTng1WWhneXlGdw?oc=5' target='_blank'>스톤브릿지벤처, 1분기 만 작년 이익 돌파…"구조적 성과"[마켓인] - 이데일리</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    이데일리 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE9OMmd2NnlPUWpxY0tIMjUxME0zcHNvdnJmX01oZWRnVEdEMzczTUJ5dnUxYlZrQ21LRW43YUlINVZuRjl5SE1vMXpRcGFIRzVQRmVyYi00MzI4RnItdHotdXJhWG0?oc=5' target='_blank'>[인터뷰] 이재관 "지역이 벤처 키워야…지자체 직접 투자 필요" - 서울경제TV</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    서울경제TV | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTFA2T0xiRjNiUHNrTXhhTDd2Z2ltRGQwdWRyTGducEpOYVhjUllKa1ZFX1A2QmQ0OUY1djdhTTU4TTQxQTI1OWotVGVKcXV5VU1OdEo2VENPaUFsX2xkNU9JaFdlWHc?oc=5' target='_blank'>대덕경제재단-전북벤처산업발전협의회, 소공인 상생 발전 위해 ‘맞손’ - ctnews.kr</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    ctnews.kr | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTFBiTlF5cGlLZWF4ZzNSZDBFeVpVNVduTzdiOXpNOUp5eDljSXBkRl9rcXVReDRBUzJIakZ2WDdFbGozRWVtMmZVR0QteHNuWnJGQVRoY3hTS1lTLTVNOWtOSTlfSnlNOWc0YnZOLdIBcEFVX3lxTE1MazBkcXhTU2lhMzQwYVlCZE9VSUpLUjRzN3pJSFd2V0ZVRi1pZFYya05EemN3TE8wMUxlWWUtUFYzNTlxcTRFZGVTSVVWbzlNMmxWSE5Gc1lDY0dlRkFzbUxmdG0xUXpfM2k3Q3JjZi0?oc=5' target='_blank'>전북벤처산업발전협-대덕경제재단, 소공인 지원 업무협약 - 전라일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전라일보 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE14bHhVMVVBOXFlTXBEN2d0czYycHZxMF9QZUNlcXI4WkxZT3RJRXFZdDJ3dW9DbGRFcTBpM25IMEg1UU1pNjFDZklnWTNta0RhV19UVnFTRXhtdHF6U1FLTnZsajYwX1d0N01r?oc=5' target='_blank'>전북벤처산업발전협의회·대덕경제재단, 소공인 지원 인프라 공유 협약 - 위즈뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    위즈뉴스 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5aYkNXLU1sajdzNXliaHpkSllqYU44ZXpHWFlWMWZXR1JhU3RuMGF0dmFSUmcxREtIYTFjci1HR3d5S01IZVU5ODBKWjJ0N0JMNkNuV3hJTzZyZFhFLXFvZ2ZFTWEtVEF0Zy1zbw?oc=5' target='_blank'>전남대 중소벤처기업부 한성숙 장관과 '모두의 창업' 청년 창업 토크콘서트 개최 - 베리타스알파</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    베리타스알파 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE81SWg1cmtlNDlQOXY1ejBHX0k0SVdTdVMxUXR1RDJfalFSWi1jaVI2aFRLREtnNk1KS212ZXBlRlBvSGc5cW1vV2tJVUxYSU4yUjlocDMwYlZBM0YwcXdB?oc=5' target='_blank'>2026 꿈터플러스 Dream-Camp 4기 - 벤처스퀘어</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처스퀘어 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE43dUJsNVNXdjdsQmRIcTFlMFNBaFRiaTk5V3RsOXpVUnFIRHZQZG9RbGxiQ09yREVCOFAtQV9xcFZxUjNZNDRFOU4xci1fd3d4MGp2MlVZcjhwVjdKQ0x0aEdLcE0?oc=5' target='_blank'>비마이마케터, ‘혁신성장유형’ 벤처기업확인서 취득 - 서울경제TV</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    서울경제TV | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE9fNFFMVFY1bFhTc3dfb0lldkl1cDF3RzJYVWpNZkJicTVUUlJWSGhBR3JLdUhfendYaEgzUk1OVVJ6UUwtSG5CVWhpZUZBZDhhZU92YUZQM01peE16V0tCcmZJZHo2RE5BOE1ETzR5azJ1bXfSAXdBVV95cUxOd3h5MnZjU2xsWjFNQUhTMDNzckFuRkwtTS11UXRrOW91Q0YtQWRnb0FqS1JSRS1pYkdvQ1dtN241M3BPVVFzSDI2a0RxRlotS2xSZ1lxYUNaa1lVTUpWVUU4SW1RSXBJZ1pnbXFWVzdobmxVdXBiVQ?oc=5' target='_blank'>경인전자, 벤처 인증 달고 ‘환골탈태’…스마트홈 시장의 숨은 지배자 - 핀포인트뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    핀포인트뉴스 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE5WZkp0UHc4bjlWcjZGTjJrb0xqMm50c1NMX3h0eTUxWFNZbXQ2QjhDT2F6T1V5Wm00VGJJcVBQSWJ0OWQ2OTFtZnZqNGJyR1JBSTR4bDJGOXlSODFZRmxvQktMa21oemstVXlPbw?oc=5' target='_blank'>[씨드투유니콘2030]⑬벤처 엑시트, IPO 너머 M&A 대동맥도 뚫어야 - ibrandnews.com</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    ibrandnews.com | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1fZGpWZUpkdWhpWXhVaDhOOXVaa3F2ZlN2RUluaEk2TGVZNEhtYTdlbDd5MmxodE5fVVEzajl0dEVOaENYYm5uR0o5NTBJSGVqNlUyNXg2Z0hnUFA0T1JYWjdxOEF6Qm43WmpMYw?oc=5' target='_blank'>부울경여성벤처협회·신용보증기금, 부산대어린이병원에 1200만원 후원 - 파이낸스투데이</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    파이낸스투데이 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMib0FVX3lxTE5pTHNVLUU0alpPSVlsVlR1N2VZaVc5MnNqb2Jwd0tWY0hjR2lXNExmRjlUZlBaSUNqcTNGYzlSRmFDY2s1WXluY0xaNlVTTzR2MlItUXRvRlpZTms5ck1NUnJMWEJXVjRvRTd6T0dzVQ?oc=5' target='_blank'>미래에셋벤처투자·아주IB투자, 강세...특히 아주IB투자 12% 상승 - 이코노뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    이코노뉴스 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5zdzZ3SE96WVUxRndFcWwwYmVEYW1HWEtuNHBZQ1RtUlBFbnBkRV9vYjVKR2hkNWhRak53VEt6U2xyUXJwT1R1SmI4QzRsOHM?oc=5' target='_blank'>[벤처캐피탈리스트] 한 번도 손실내지 않은 미스터 제로…LB의 박기호 - 딜사이트</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    딜사이트 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE5SZU56dE1KSEhpVzltbW1tSldLZGhxX0ZBamsxTEQ1TkFwbXhaZXJSNnREQUhrLTJIY0tOaVg2ZU1FREdqZkQ2WXRVbm9DNGVWelRjbGJDS3pkQXNTcjgw?oc=5' target='_blank'>「AI+ OpenData 챌린지」참여기업 모집공고 - 벤처스퀘어</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처스퀘어 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nblNTQVVHREl6YXUwYTlVTmpSNkxRNzl2SXRDQ3owWWhJNnhiNGRSSkJKM3lpOUxRTmVJemc0MmFONk94MkV2cXBaVEp3WjA?oc=5' target='_blank'>페이브먼트 ‘셀레트립’, 초기관광벤처 선정… 한국관광공사와 협력 본격화 - 와우테일</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    와우테일 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE83UXNWOGVJNlprdG5LUFFKUEp0ODM4YXhEbmlvYVFkWFZlY2xTYy02NVNHaVd6RUt1cXREN29KNXJXbnZwYnNJcDdLWEMyZw?oc=5' target='_blank'>페이브먼트 '셀레트립', 초기관광벤처 선정…K-콘텐츠 기반 관광 플랫폼 육성 본격화 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE8ydnhjLUNKcFdvVDVmeHN6bzdWVG4xeUx1QTlPSEpxb0x4bEROV2FDaVhlbE5JR1hPcUlqQktvUFk4OS1KbzR0TzNvX0w0QQ?oc=5' target='_blank'>페이브먼트 '셀레트립', 초기관광벤처 선정…KTO와 협력 확대 본격화 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE14RUh2UW5scElydUduZ25HVUlYUGl4ZDFPTlJnVnFnbjd6dUtZRjA3Q1JZV2M5SnhHSVRVMWV1Wk5KNTk1emthUXY4dTdBUTdCemszb2RXWExwMTZrQVRrNnJvNHlWdw?oc=5' target='_blank'>중기부, ‘모두의 창업’ 첫 합격자 130명 발표 - 벤처타임즈</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    벤처타임즈 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE8tODdhSlIzbTRBXzA0NE9Wb1o4Z3dNS3BsTnA4U1lYcGhrV1ByS2VkY2Q5TmtlaFhoYU9NQ0FwWmZOTFEtYTZzOXhwcW1ENTlOb3NWRy1Wa1NfUmpFU2NnVlFlVVhYZmoza01LbNIBcEFVX3lxTE9XeHFKb3A4T3BVTXZnOE5rWTk0MDVDQ3RZdzJ3RmQxdG9fNkM0S0xFLXY2MmhwM20zcmh1cmpVMWVBcFRMZ08ySFdsYW41eElTOXNFRmxzaDFEYnVsZW9uRzNjdTF5REpEMmdtNVFEdTc?oc=5' target='_blank'>디티앤씨알오, 김봉태 부사장 영입···“바이오 벤처 IND 성공률 높인다” - 더바이오</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    더바이오 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFBDQWlWSXF4RDN3dldVRVRyTkZoTnQ1LUJ3UFJjVW13SldtQjZXNWdadUtRemZveUJyYkZuV1RUWllRTDdwNFNMZlB6UnBhdw?oc=5' target='_blank'>중소벤처기업부, K-스타트업 그랜드 챌린지 10년…“해외 스타트업 한국 정착과 성장 플랫폼으로 자리매김” - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMikAFBVV95cUxOYU9jYnVfbHZSOVl3aFVJeFg2VG5nQzFEYUhZclRYUVFEUndhQjJsdjhTa1FETmNtQjFkSVVVaVJ1aUppeXBDbkNlLXpPYlg1ZnB0Yk5VbDZNZDZ3VmN0cG9Jdl9oMmxzcWlyY0Jfam5kNm9ac2l1Qm9JU21hVGhrVl9aMExHYm9vWkhxVlk2UG_SAaQBQVVfeXFMT3RydzIwdW9CaTRjSXh4SnE5YzZsM3JQSHVzZjdTNWNMejlTcFhLUXJBVHlJQmtDd2RlVUMwMXMwYXpjVnlybllWQkpkREhvTUFDQTdTdmlaS0RYNG5BTUN6MThidWRHdk1vbDQ4MGQ2Zk9SRkRsQlc3dmhEdDlzSVYtSTYxZExROGQ3dG83SmxhRUJxajNrRlA5NkhwclVBWG5zVTY?oc=5' target='_blank'>AI 스타트업에 공공데이터 개방…중기부, 오픈데이터 챌린지 개최 - 조선비즈 - Chosunbiz</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    Chosunbiz | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE8xbWxHQURiVG9uMllFMEZGSzktV2JXMlA2bm9jNTFuNFB2NnZVQjJfMGcwU2podklScXh1WlZCYWFPQi11MVNfUF9mcHBRS3pJeFhocVpUSjhFUdIBX0FVX3lxTE52V3RIMjlLLXN3eFlJM1dXcGhTNVRuY0hsRWttRklJNGxoUHU4b2FzYlF1TDlyYXZmY2ZjTEkyT0ZfcjlxVVpNcWRYWEJGeTNQcm5JR0FISXE5YTAxcTgw?oc=5' target='_blank'>하나금융, 경희대와 ‘5기 소셜벤처 유니버시티’ - 경향신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    경향신문 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE9WTi0yX1VLSTVPZFE5WkZKc2RQbW9OVXhMRUFOTFJ5RWFlR2ZNcHpvbUZZdWRtRVA3QTNVZjhfVE9TYnNyekRSdXp5X0p2eDZHSXBVbWpHYXFXTVdQOEJnNHRHWlJGbHVUUWFjSHpB?oc=5' target='_blank'>17조 벤처펀드 만기 몰리는데…증권사 늘려도 ‘회수길’ 막혔다 - 아시아투데이</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    아시아투데이 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiS0FVX3lxTE9DQjhRNlhOSUFub3dqbjVtdV9EWVZCZlJLUmd0bzdPODlkV3dobjNYRC1oclJGLS0zX3g0Z0ZFNHlPU2l2RkY5OVRtNA?oc=5' target='_blank'>“경희대와 업무협약” 하나금융, ‘하나 소셜벤처 유니버시티’ 5기 모집 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTE9falg0dXVDQ3dGSDhGYV9aMkRiajltUmhtcVJvdEdkVl9DNkVsdlRRaV9kYjZpWC11a0RsaVlyNV85QUZwMXc?oc=5' target='_blank'>대신증권, 벤처투자부터 상장·채권 발행·M&A까지 전 생애 지원 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1WdU1LQlRlMnBmZ2kwZk5wcnl2eTFYMVhTZmhPalRQSUZsNlNFaW1ndW9ZRnhyOF9UekxKdW1VLWpMb0h3WHp2cS1qcHhic09GOW9YWThHOEZIZ1UzcVV6MFlFaEstcTh5?oc=5' target='_blank'>대구대, 중소벤처기업부와 ‘대경권 청년창업 토크콘서트’ 개최 - 대경일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    대경일보 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE10UUt0TjlYLXBQZjFkTzVYQWEyNmhnd3VlSGoxdHRvN1RFTnB0eFFXalBTaGRMc3RNenA3M0wwamZkSkFBSnZsVTJzZzlGNWd2NjR1RWxLRzdGS041ZE51UkN1MVJubWZKNk51WEVn0gFwQVVfeXFMTjVaNEU3NzlxbDNDdDd2anpFaEJoVlpyeDBsQ2xXR0pUb1dHbkdYQkhVU19VM0phYXZBM0hjN0xmVURiSld2VTZ0dzVSZmxKUmRINTNGRmlrcjlpMHZsSnhvaGhYdVhHNnFpZVVBVVNYTA?oc=5' target='_blank'>[공모] AI·PoC 분야 상생형 창업·벤처기업 지원사업 참여기업 모집 공고 - 한국도시환경헤럴드</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    한국도시환경헤럴드 | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE9PcG9oQ1V3S0xtWEY1MnBJQVN5THlHTXd3YkczZGlUWDJjQmdhSUViRDNESHZha1czS29sdGowcnpja01XVmE0X1RobmowVFBVdXFsMFlvMDJNRURxSmQzYXQtT0k?oc=5' target='_blank'>IPO 편중 벤처투자 회수시장 손본다…금투업계 1~2조 투입 검토 - 서울경제TV</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    서울경제TV | Sun, 10 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1NUk5oWWRET2wzNUltdWhrOWQ4LUJKVnB6cGc1RnR6QVN0clpxTDJHdDJWMVR4VmdGOHdTZG9Ic3lVb0RCaV9UbGlPdUtXdW9nZ1lKOWphX1A4LXJheFpHSmc3RmVtd1lmeUV5TA?oc=5' target='_blank'>[PICK! 이 안건] 정태호 등 10인 "벤처투자 범위에 명시적으로 소셜벤처기업 포함해야" - 전국매일신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전국매일신문 | Sat, 09 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9KcjZ4a3R3ZWRaVmxCUUlZc1hQaGF5SU5yakFEczV1SldlaGlZbGRCWFpLV2xLUGZuOTl2ekd5RktQNWZQR2V5dkNzVW8tbjRZakFTV253bEttT09YZGk0MU9MTG04R2hiakRN?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 모집…청년 창업을 지원한다 - 라이센스뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    라이센스뉴스 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE13VGtzZVk1b0F1WjVxa0lKMXVXeGNXckwyNWVGaUpxdG5WekJoQWtPMTIwMk0xVGtGdU0yR0h5TUlkeGtUZDItYUFFSWtCNmJUbXBZZk1KZ3B0Z2tRbGs1d2pKell6QWFaOTNycktES3RGZmc?oc=5' target='_blank'>하나금융 경희대와 '하나 소셜벤처 유니버시티' 5기 모집, 청년창업가 육성 - 비즈니스포스트</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    비즈니스포스트 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTFBpMW1iZGZ1ckZ0MUpDdF9PYzAzNkJjbTZ0UEY0QlBibWpfRmc1MjdSUDhiQm56eHpHSjN4d1paVTNrUE9xNHV3LUJJMGRZQjE0YmRlWXpYbTNUSnNuYjJ0TzdCc1gzMkE3b0VkSE1LLVFzSWs?oc=5' target='_blank'>미래에셋캐피탈, 계열사 미래에셋벤처투자 운용 조합에 약260억원 출자 - 디지털투데이</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    디지털투데이 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE01RzhERXZsVHc1d1cyNTdfZTYzMEdFdXBkQ2EtV0R3U0J4Mmg5RHI3T1Zyc2oyVlVjY3k5WGxYVzJ2c3RTSFRBbmVjSk9EZGo0eXl0SFd4R1drWWk5SGREd0ZEaEpFR0luOHhDck1EQ29jQnfSAXdBVV95cUxQdDEySThsdGQtQUp3YTJPQkQxTFlJRXBZWkFDcmljR1FpSDM4Rk9STGtuc2JRS3JNQWh0dzBYMWpUWmY0TC1QaGlsYTREX3l4QTU1eW11azBfbHI0d2NmUVdaR3h6YmVRNHFkNEYwWjBwdWdHeEtlaw?oc=5' target='_blank'>SK, 성장기 소셜벤처 돕는 육성 프로그램 ‘임팩트부스터’ 출범 - 스트레이트뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    스트레이트뉴스 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE4ySW5XSXhzQ2M4Wm1XWk1QVHNyMU1oM2Q5cVdMS1R5cFNpVEF1ZDZtaWRiaHB1WnI4UE12Q3JHMUZiTmJtODBXZFNydXlDZjA?oc=5' target='_blank'>중소벤처기업부 지원받는 차봇…"글로벌 시장 확대 속도낸다" - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFB1MUNUZl93NkJqdGpCYmlfOHE2dks3Tk5QU2VFMHlOQnQ1WUc4WlpfREVJMDBRTHZzbXNrNC16MVR2U21lbEZWWjJEazZwNUx2T190aEdB?oc=5' target='_blank'>전북은 벤처투자 '큰손'…3년만에 1조 시대 열었다 - DealSite경제TV</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    DealSite경제TV | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTE5pSXYtU3NUSHY5d3lyTG9nbTljQzR1aGxpWjQyTzdLTEN5YWt0M0JlbGlFOElmaWtOdE94bDVUQ2NPN2ZLdkV2VzhYSmgwUEE4dkJ1TEJ3?oc=5' target='_blank'>경희대-하나금융그룹, 하나 소셜벤처 유니버시티 업무 협약 - 중앙일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    중앙일보 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE9oeDZKbkFsQURiRGRuTmhxVVZlNFBUcks3dldxTk5zc2VHU3M1RzJTQXhmV3ZydVU5c3R0S3VaWXpvUnJUUTMxNEZ6QXBrLTBKajZDUV9aNFZ4dw?oc=5' target='_blank'>부울경여성벤처협회, 어린이날 맞아 ‘마리아모성원’에 1천만원 기탁 - 브릿지경제</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    브릿지경제 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBRaTVrcllOc2lKYm90NnlndWtyOWlKZlNvOFpxWmhHcU8tNldFQUkwV2JVQU0tRFl6WDRXR0stT09RbjNWajMxdEd2MFpQTEE?oc=5' target='_blank'>하나금융, '하나 소셜벤처 유니버시티' 5기 모집…청년 창업가 양성 및 지역 일자리 창출 앞장 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBtSG1qUlkybUljc2VDUkdpSlQ4QlFTWWNzcVBhYkZXZld0bnBrem9ZV0xXSUswRWRNN2pLWGNmT1V3QnVudjA3U3hnQlNYSk5CZ1ctMktubFZEakc5b3NJQTdVbDJJNnNxdHNZ0gFvQVVfeXFMTU1ybHVJcldrT2tuck9teUY3N2piR05pQWRuWF9aRjZLaXhwMjdVV2lsQWR3d1hjMkJjMjk5NlpqVVQyOXVGSzlvYWpZaDR0ckd0V2tUQ1pYbHUyaFctbnJpUmZaY3k0UER4NjhZUWQ0?oc=5' target='_blank'>제 기능 찾은 ‘생산적 금융’…정부, 침체된 벤처시장에 금융권 동원 - ntoday.co.kr</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    ntoday.co.kr | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBtX0FmTXFEcWRvclNPY0ZublNtUnNhQmZHVWZJOF9TMEVnZnpNREh0SjRuV1pha2xNeEd1eU1sTE1PTllyb2gwTmxqZWdzcExlcXFBUFlGYXV3NmpuUXZMaGh2T3dHbTDSAWtBVV95cUxNSXhHTGppVWdoMWtIWlppTnhJWURmVHhpcjc1aEtqQmpYdjdHZ3d2bkpxWE02RklQZktBUE5MbC1VaHg4dFBkVWYyT3FxN0V3T1JYZENaN2NsanZBVlRkMWg4ckRlbS1BVmozcw?oc=5' target='_blank'>[금융지주 벤처투자③] 하나금융, 그룹 차원 IB 딜 채널 구축 - 현대경제신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    현대경제신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTFBWWk1Fd2RCUGdXTTc5cGlDMUZ0TXlCanQ5ZEtVUkVvdWg3eEwtME1YYmFLdU00NFBDUnlFdEhxREQzcVpMMjhUWGl2dDBldEhVU3VCR0pQSm9pcHcyUHN4NVJ3?oc=5' target='_blank'>'12년새 7개' 바이오벤처 신약 상업화 활발…얼마나 팔렸나 - 데일리팜</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    데일리팜 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9iZnFjVHRCbEtUSFlJeUF3QWJGTUZfSEN0UHlFZEFZSDNIRFFVWmJ1ZUxRVVR6UDBZLVZtRVp2eE00RllsR1RlV1hXaVJiSi1Qd1lrRW56N1Fha2hKRmpOV2J6ZkpEcTRFVUJ30gFvQVVfeXFMTkxQSUFHTXhKUHJqZXpkQzNibjFkTC1hTWwzcVh3V05keS1GZ3QzNGxPMnhoWS1QNUZzWkRtYWFUODY4OXFEMG5lXzVidDB4S2t6Vl9wM19wS2lRQ0FNSEJHZDQ4ZWdzRUg1bU5IQWw0?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 5기 모집… 지역 창업 활성화 주도 - 한국보험신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    한국보험신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFBvVDBDRy1yaG1KaW96dHFoY3MyeENyTTZjQ3FZT0ZrODJVU3JCUTMtRXRrZmZ6U2JCRDJzcTNDZUFWeWR2OWNBNVBmU0tfanQxRUNKdW8wNjlUZUFuLWU4Q1B5LUw0ZGtl?oc=5' target='_blank'>‘하나 소셜벤처 유니버시티’ 5기 모집 - 환경일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    환경일보 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiUEFVX3lxTE9iM1lVcl9GYV8zU1JLSEdYQ3MwOEVQcHhINHRPVVd3RHBqcnZCLXp2MlRUUkxLM0pqU0ZpTW9tN2E2MDFPSTNfWmp6Q1B1dHZk?oc=5' target='_blank'>대학들과 함께 청년창업 지원… ‘하나 소셜벤처’ 5기 모집 시작 - 문화일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    문화일보 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTFA5V21OMmtIMXhoVi1zRlhJY1Y1SnVCQ1lrSktBRW9KUjE2MGo1aUFpV1lYMk1NT0ZLWGxVNWFRdGd6aG1oeUYwUXNWV1NDYjk4X2RNQXdKblBPY1MxU3BKV3dlNlE2NlYyak1Rc2p3?oc=5' target='_blank'>하나금융, 청년 창업가 발굴·육성 '소셜벤처 유니버시티' 5기 모집 - 중소기업신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    중소기업신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTE9CcHdSLVpmQ2YzSUw2alp4cnVYRG9zTDhNWk1MQ3NVQk0tRi1qbXhRQXpDTGM4YTc3QlpQS0dRMlh5WE8ycFNjWmpoT0RmQ1ExZXdHREdhRUNCTEcxTFh6RmNfWWhxdW52am1F?oc=5' target='_blank'>금융위 중소·벤처 자금 공급 중기특화 증권사 늘리고 인센티브 강화 - BBS불교방송</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    BBS불교방송 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE9RUkFna1F3S0hCUlZrOVpNT0VzaTkwVjRUaFFkNUFtTlZnb1NlVWJYTkdiRXh3OHBhd3Y4VVlMVmRhZHdOcEZVZnlYZXlmUQ?oc=5' target='_blank'>하나금융, AI 기반 창업 지원 강화…'하나 소셜벤처 유니버시티' 5기 모집 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMia0FVX3lxTFBmS1hGSW1vZi1pamVwc29zWnZSLWd5cnhoSkV1RWVrNXhlVkNEVldNbkhhTUlSdkZ1WWdRTzhtUVVLU05haklfNG9iN0dUaE92M0FOdnU0NUs4TF91RTZISTgyc1N0TTNLWUdB?oc=5' target='_blank'>하나금융, ‘하나 소셜벤처 유니버시티’ 5기 모집…전(全)주기 창업 지원 강화 - 백세시대</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    백세시대 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTFA2S0RvZTl2XzB1NE5YeTkwNllxX2JHYUM0ZWQ2dmFsQzlwbFlKbjhwNkotdERObHhlMVdrUUZ6Yld2eUZKcmg1cE9ZUTc4Zw?oc=5' target='_blank'>전북테크노파크, '중소·벤처기업 R&D 기술 사업화 지원사업' 2차 접수 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE51bXpMbnIxeXExWHd5ZzFES01GZTJ4YjZIcENUNUJzLUNCT2o4Y0t6RFZLY1ZwNk1hOHJXdU91SGUySTQwVVdjakFvT3ExUQ?oc=5' target='_blank'>[전화성의 기술창업 Targeting] 〈394〉 [AC협회장 주간록104] 벤처투자법 개정, K-벤처 생태계의 새 설계도 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiWEFVX3lxTE1aRi1NSnRSTG1HRVdTdnhFWGhpbGp0RXliMl84c19TLVphbzZWMmhvVUp6N3Y5bU9XVGs4d0hXbnVGVjVheHJPYTZvYzVkZkR2aVdZQ2EtMXo?oc=5' target='_blank'>[유지윤의 벤처직설] 창업은 정말 ‘쉬워져야’ 할까 - 뷰어스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    뷰어스 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5hLVF6YTRPekQ0bHc0RG9xaEZxUUQwQUV2UGtFbzdtMUQ3bE54THdnLWE0SU1jd1J1QUhKQzk5YVhTbzJ3VjNSelotUV9sQWM?oc=5' target='_blank'>창업도 수도권 집중…경부울 떠난 벤처기업 10곳 중 6곳 수도권행 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5iRDlNZmN3YWRfSzZZZ3pUNFdER2c1Rkt3Q09hemRIalY4bHFMbWVKd0dPNHhKNk0wZnNjR2dlRzJzOE5zUVM3b2xQdVRncTA?oc=5' target='_blank'>“강원권 떠난 벤처기업 10곳 중 8곳 수도권 이동” - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE9XUjd3Yi1oTm1HeUdQWDkwLTI1SDNFekRpSjNfTnZCTllodEtCME5tcVBBZ01xZ3hRcmNKUzVNSVBieG5GMUh6WWZZTUstQ1o0TmZIQ0FTZzd3UWdqMkVwczcxOGZ1M3VuNEE?oc=5' target='_blank'>KICPA서울지역투명성위원회-서울대 벤처경영기업가센터, 창업자 회계·세무 역량강화 업무협약 체결 - intn.co.kr</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    intn.co.kr | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTFAxLXl4cnYwWTd6RHlLWktKMGR0bFFSV0FuNUNlUFFhdV9nU3BEUjdUdDNRSVYzSkhtWnZoQkZuOUNfMV9LZk5YZWZteno1Z0F2enVWMzRZRThYOUtfVXJHSV92bGVjS1U5Mmc?oc=5' target='_blank'>로우파트너스, 한국벤처투자 모태펀드 '충청권 유일' 선정 - 헬로디디</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    헬로디디 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiXEFVX3lxTE9xSGRpcFNNLTRmaXZSOTBhazlMQ3NBdkJKR2RYTnFGb2Y3UHpITEYxLUVaRVluYk85eHBCNC12Z3Utb0ZCVkp6VnptVHppRjdzNEhObXdWVEFqQ2hF?oc=5' target='_blank'>벤처기업協 "AI 도입 선택 아닌 생존…벤처 81% 데이터 장벽 갇혀" - 뉴스1</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    뉴스1 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE45YW9DTFZ2bm1JdUJ0UGItVlFRdjJocy1jMDA1QVhQNEdXdm1xOVZqRjJwSEtxSHB1ZVpuWThSQVBQb0FWSlVJV3hiVFVqdGM?oc=5' target='_blank'>SK그룹, 소셜벤처 스케일업 돕는다…임팩트부스터 출범 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFA5V2lybmhjSjhlaGRhTGhlTXZhRkRRVDVFSHpFdHhJZDF6MzhNd0w1dGprZm1yWmhheEtYMHlQYXQ3X3hsZTZHaFZzeExBRGs?oc=5' target='_blank'>소셜벤처 도약 돕는 SK '임팩트부스터' 프로그램 출범 - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTE1DWmFTVXdYRzY4bzRIa18zQ0dWQV94WlUzVFdGZzY1R2p2NmN1aFNaN3RneUp6dU1zMVZQZUk0Zi1ncWd4ZkpGcDB1QUVwZHdGeWpQYjh3?oc=5' target='_blank'>하이닉스와 협업 기회 준다…SK, 소셜벤처 스케일업 지원 - 지디넷코리아</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    지디넷코리아 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMidEFVX3lxTE56bVNCTDdKaFAxTTJubGZjX1R5a2hJSGZLU0daNFF0RlJ3WG9oaVEzejlpVjN5ZWxZQTZhOVVqX1NTVDVONVFBZUJkMmFjTEZYWUgxQ3o2QkxsellRRmoxck4zM2RRbUs2R1Z5dWg3dEdvYlFf?oc=5' target='_blank'>창업·벤처기업 수도권 비중 57%…"지역 공동사업 체계 시급"(종합) - 연합뉴스 한민족센터</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    연합뉴스 한민족센터 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiVEFVX3lxTE5MUE5EOW5kVmVUUGctSmY4UWpFSUl1V0habmo2dTdTWC1yR1FxY3JRQV9RWnBCZmYyUjIwV2VTOE5mV0gzZVhEVlByUWxPLXJoTW9QRg?oc=5' target='_blank'>"창업과 벤처가 국가 성장 전략 핵심 축 돼야" - v.daum.net</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    v.daum.net | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE42bVM4aW0yczhzQ3NqS0ZBbHFSU19ZQjZpM0JvWXNCbkJBaHNoY2lkVjBhSGI2bWF1YlZDa3Y5MnVpQnZoMDNmWjg2bVlXSmJxdHpOZXQ1UVBXUmZJYnhhUF9uVzU?oc=5' target='_blank'>삼일PwC-벤처캐피탈협회, MOU…팁스·스케일업 팁스 기업 성장 지원 - 한국세정신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    한국세정신문 | Wed, 06 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiiAFBVV95cUxOdGNYbDlfYTBCZEJVaGFHajg0RzVqS1JhWWZkUi1VekdGcmhzaHNldVMxbzJOSjZ0SmJyRDYtYVk0bkU4YWUtdldSVXBhMFhoZGpIaEtjVVhRdmpqelpteVZyWmx2dkVra1NHaUtUaFJObjBCMkoyRHJ1MGdhaVhsRmdmeGFiYTZk?oc=5' target='_blank'>4월 벤처투자도 1兆 돌파… ‘AI 스타’에 뭉칫돈 - 조선일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    조선일보 | Wed, 06 May 2026
+                </span>
+            </li>
+        
+        </ul>
+    </div>
+
+    <script>
+        function filterNews(btn, category) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const items = document.querySelectorAll('#news-list li');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                if (category === '전체' || item.dataset.category === category) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            const label = category === '전체' ? '전체' : '[' + category + ']';
+            document.getElementById('result-count').textContent = label + ' ' + visibleCount + '건 표시 중';
+        }
+    </script>
+</body>
+</html>
