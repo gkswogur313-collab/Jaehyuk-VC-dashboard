@@ -37,7 +37,7 @@ def fetch_kvca():
                 elif raw_href.startswith('/'):
                     link = "https://www.kvca.or.kr" + raw_href
                 elif raw_href:
-                    link = "https://www.kvca.or.kr/" + raw_href
+                    link = "https://www.kvca.or.kr/Program/invest/" + raw_href
                 else:
                     link = base_url
                 lp = cols[1].text.strip()
