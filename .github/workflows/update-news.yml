@@ -25,7 +25,7 @@ jobs:
         run: pip install requests beautifulsoup4 lxml
 
       - name: 뉴스 수집 실행
-        run: python fetch_google_news.py
+        run: python crawl.py
 
       - name: 변경사항 커밋 & 푸시
         run: |
