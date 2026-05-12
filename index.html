@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VC Insight Dashboard</title>
+    <title>Venture Capital News</title>
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f7f6; color: #333; }
         .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
@@ -18,6 +18,14 @@
         }
         .filter-btn:hover { background: #e8f0fe; }
         .filter-btn.active { background: #004a99; color: white; }
+        .btn-count {
+            display: inline-block; background: rgba(0,74,153,0.12);
+            color: #004a99; border-radius: 10px; padding: 0 6px;
+            font-size: 0.8em; margin-left: 4px;
+        }
+        .filter-btn.active .btn-count {
+            background: rgba(255,255,255,0.3); color: white;
+        }
         ul { list-style: none; padding: 0; }
         li { margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }
         li:hover { background-color: #f9f9f9; }
@@ -35,32 +43,55 @@
         .cat-MA       { background: #7b1fa2; }
         .cat-분할      { background: #c62828; }
         .cat-신사업    { background: #00838f; }
-        .cat-기타      { background: #757575; }
         .result-count { font-size: 0.85em; color: #888; margin-bottom: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📰 VC Insight: "벤처 OR 스타트업 OR VC OR 투자유치 OR IPO OR 상장 OR 기업공개 OR M&A OR 인수합병 OR 인수 OR 합병 OR 분할 OR 신사업" 뉴스</h1>
+        <h1>📰 Venture Capital News</h1>
         <div class="info">
-            <span>업데이트: 2026-05-12 00:32:27 | 기간: 최근 2주 (2026-04-28 ~ 2026-05-12)</span>
+            <span>업데이트: 2026-05-12 00:37:53 | 기간: 최근 2주 (2026-04-28 ~ 2026-05-12)</span>
             <span class="count-badge">전체 98건</span>
         </div>
 
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterNews(this, '전체')">전체</button>
-            <button class="filter-btn" onclick="filterNews(this, 'VC')">VC</button>
-            <button class="filter-btn" onclick="filterNews(this, '투자유치')">투자유치</button>
-            <button class="filter-btn" onclick="filterNews(this, 'IPO')">IPO</button>
-            <button class="filter-btn" onclick="filterNews(this, 'M&A')">M&amp;A</button>
-            <button class="filter-btn" onclick="filterNews(this, '분할')">분할</button>
-            <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업</button>
+            <button class="filter-btn active" onclick="filterNews(this, '전체')">전체 <span class="btn-count" id="count-전체"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'VC')">VC <span class="btn-count" id="count-VC"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '투자유치')">투자유치 <span class="btn-count" id="count-투자유치"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'IPO')">IPO <span class="btn-count" id="count-IPO"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, 'M&A')">M&amp;A <span class="btn-count" id="count-MA"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '분할')">분할 <span class="btn-count" id="count-분할"></span></button>
+            <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업 <span class="btn-count" id="count-신사업"></span></button>
         </div>
 
         <div class="result-count" id="result-count">전체 98건 표시 중</div>
 
         <ul id="news-list">
             
+            <li data-category="M&A">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBOYzBGVTVmMGdhZnNnTEJwSlpuVjJhTjBucGp4YWt6M2VQM3VFMzVfVHd2ZkUwUTZMSEk2R1oxdjhHcTF4MDlvaUljNjJQVms?oc=5' target='_blank'>셀트리온, 프랑스 '지프레' 인수…약국 영업망 확대 - 딜사이트</a>
+                <span class="meta">
+                    <span class="category-badge cat-M&A">M&A</span>
+                    딜사이트 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="IPO">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTE9kTkhiNkpqb0xfRFZMWTZ5TVprNVJGeXRkVVh4MFl1NXQza25pb2NtVU1vQUQySWRNejYzVWVGVHFRRDFYSlE1Smx3ODdjZnNhTXpGNmFhUnFzR1lHZm0ydTNB?oc=5' target='_blank'>미래에셋운용, 'TIGER 구글밸류체인 ETF' 신규 상장 - 아시아경제</a>
+                <span class="meta">
+                    <span class="category-badge cat-IPO">IPO</span>
+                    아시아경제 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="M&A">
+                <a href='https://news.google.com/rss/articles/CBMiXkFVX3lxTE1Tbk1wRnlYZ0VkV19vVV9STVM3QzV5c3FiWmZfbTEwX3JuQXdhbTU3S29WNlNpWGoxWkdHLVlKZzVZY2sxOUJQRGlJWTA3UFQ5RVZHVHZhVTN2MHVQS2c?oc=5' target='_blank'>딜라이트룸, 글로벌 학습 앱 ‘노지’ 인수… 딜라이트허브 통한 글로벌 앱 M&A 확대 - 투데이안</a>
+                <span class="meta">
+                    <span class="category-badge cat-M&A">M&A</span>
+                    투데이안 | Tue, 12 May 2026
+                </span>
+            </li>
+        
             <li data-category="투자유치">
                 <a href='https://news.google.com/rss/articles/CBMidkFVX3lxTE0yT3NndGlhaDR6WWMtVHdqTWROUHFqVVpEVnVoNzlqdXlmZ2t6Wm1OZzVlb1NMeDVYQVREMnN4WThWdTJLbUZNSmhpWDF4M21YMWNhekZoTWd0SDNrSlMzX2NqYVp2dk1zc1NzajhYSVE3V01RdlE?oc=5' target='_blank'>올커넥, AI엔젤클럽 등 3곳서 투자유치 성공 - 약업신문</a>
                 <span class="meta">
@@ -82,14 +113,6 @@
                 <span class="meta">
                     <span class="category-badge cat-M&A">M&A</span>
                     뉴스웨이브 | Tue, 12 May 2026
-                </span>
-            </li>
-        
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMidEFVX3lxTE9fODZZRkxfQlNacUpGUnFlQzRNSmhOZ1Q3R3JBbklfNXNuQmtGeFBDYW4zY3lrblRXNk5Hay1PM0NGZ1FIVlhfRGp2VjVrelQ1Yk9QbHVFMDVRWmNkaFhVWGh5OEc4R0Qxc3h0SWhrVjBPVWE1?oc=5' target='_blank'>셀트리온, 프랑스 지프레 인수…‘대체조제 시대 대비’ 약국 영업망 확보 - 이투데이</a>
-                <span class="meta">
-                    <span class="category-badge cat-M&A">M&A</span>
-                    이투데이 | Tue, 12 May 2026
                 </span>
             </li>
         
@@ -181,14 +204,6 @@
                 </span>
             </li>
         
-            <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE1FakY5OTV3bmEtVGwzaHFWenJUNmhvbm9YMlZPbTVGd0VWNTlDZGRwUm9mNzdreVRVXzE3WEc4S3ZrN29fV1BGdGFEeWd2b3A3eEt3?oc=5' target='_blank'>지역 벤처펀드 출자사업 달아오른다…비수도권 의무 투자에 관심 고조 - 네이트</a>
-                <span class="meta">
-                    <span class="category-badge cat-VC">VC</span>
-                    네이트 | Tue, 12 May 2026
-                </span>
-            </li>
-        
             <li data-category="M&A">
                 <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTFA3ODJfcm5wU01tV0hoNjFpWUp1T2hTak9jbXlzXzhZMTZOdF9VakxxeC0xTzFrLTFWeC1oNndRVm13R3dUM2V2N0l1RUd1aFZfZVh5aWlQTEtHMEgwMk5ZUThvZUMzN2Ri?oc=5' target='_blank'>셀트리온, 프랑스 지프레 인수…유럽 약국 영업망·OTC 사업 확대 본격화 - ebn.co.kr</a>
                 <span class="meta">
@@ -266,14 +281,6 @@
                 <span class="meta">
                     <span class="category-badge cat-M&A">M&A</span>
                     매드타임스 | Mon, 11 May 2026
-                </span>
-            </li>
-        
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTFB6VThsTVZwWFUtSjQzUXFydG1FeWhFYVRGM3FHUmJRZW5pNGZCME5WRUdHTllBUW9ad2RQbFEyNG1Cb2FkUzkxX2RpbHdHS1NqLVVWVnNWMDA0RzcwRmZ5SjdiUjU5Z0pxZDhZam9wQXI2SmvSAXdBVV95cUxNUTJqckRBMHFCR1YxMGlUN0FiSk5zSll0ckJCckt0OWFoaXg3Mjc4dThlNkhOMnZkdjNSRjV2QThPajVRNVpKeUR2VGNlSi02UEY2V0t4X0pKUjliRHBpLVZhUzA5dHZpSk5WMHBmRjI0MGFEdHdHRQ?oc=5' target='_blank'>셀트리온, 프랑스 헬스케어 기업 '지프레' 인수 - 핀포인트뉴스</a>
-                <span class="meta">
-                    <span class="category-badge cat-M&A">M&A</span>
-                    핀포인트뉴스 | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -406,7 +413,7 @@
             </li>
         
             <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE9tR0p3NnVibWpVWVIzaTFVbmUtWW9xSkFnSGNKVjlTT2FEWHJzMjlxaDJ3aTlzVWtsaFlKNXlEN2RGbnlGUXprRVptRXp2WUJETkRrWGtYWEFCdjNUN2xXYkluc0J4N0RsdThYLXpNRjdDUQ?oc=5' target='_blank'>야놀자, GGT 인수금융 리파이낸싱 추진…대주단 교체도 검토 - 인베스트조선</a>
+                <a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxOaEUyaXZXSm5ncTdheFh0VHBhVHd3eDhQbXpvUTAwdXc2NmdiM09ESzVBc3k0VkhTeDF2d1ZjdzU3dWZIYi1oMHA5bVotWFBCT3RqSEFxcERvQTRZekZlZFpNTEJxWXZEc1A5eDB4ZnFHSWloRGNlbHFXeGZ2VkdmaGcybw?oc=5' target='_blank'>야놀자, GGT 인수금융 리파이낸싱 추진…대주단 교체도 검토 - 인베스트조선</a>
                 <span class="meta">
                     <span class="category-badge cat-M&A">M&A</span>
                     인베스트조선 | Mon, 11 May 2026
@@ -461,14 +468,6 @@
                 </span>
             </li>
         
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1YbzJZTlM1dEdFdzhVVEY3aE93SlNKQjlnRm9aanFHQ1BSeXdPQ3FvWlFEeEl0Ui1UUXpxcnQ0UHRQUktYRFozZHNkdHpnQkVNNE1ZcDE1LU1BMW5jaGltbjBuYTUtdGdv?oc=5' target='_blank'>“신주 없이 몸집 키웠다”…인카금융, 드림라이프 합병으로 초대형 GA 가속 - 보험매일</a>
-                <span class="meta">
-                    <span class="category-badge cat-M&A">M&A</span>
-                    보험매일 | Mon, 11 May 2026
-                </span>
-            </li>
-        
             <li data-category="IPO">
                 <a href='https://news.google.com/rss/articles/CBMikwFBVV95cUxOajVfM3NBTlJXbzF5T2xBYUltcFVJand6YmhFTk80dXkxYk8xS0Z1NWpqTk54TUtLV1BraDJ1djlrM3Y4em1jUWVFekxlV2lQM0xPX1QwVEd0Nl9rMGFod0ItZW1YNWdZUUltQ0J1d1I2VkxLOEp3ejdNVlFaSW5WQmFqQnprbjJ5c3Z3azI4VFdPMlU?oc=5' target='_blank'>[기업분석] 상장 화장품기업 2025년 이자비용 평균 32억 - 약업신문</a>
                 <span class="meta">
@@ -494,7 +493,7 @@
             </li>
         
             <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE9jU1NhZWswTVVUT1hzZlpnZFk1MncxekNxQjRMeWJSX1RlbUJiWDBLbEROTmVaZk53UEtzaVg5Sm5raEtzbGFyZzNfYnVkVUN3WWQ2NGQyWnBNUUxmZHVv?oc=5' target='_blank'>화장품신문 (Beautynury.com) :: [기업분석] 상장 화장품기업 2025년 이자비용 평균 32억 - 뷰티누리</a>
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE9ITTJ0a3pvRU9NT1dUdXdORGd0VlJod1dYMUlRMV9EU1hGVi0xc185bm5uQlVSNHk5azk1Zk5TMDlSRGNwalJxakxadm9WTkdvenZlTnVoTUw1Sjh2QUVV?oc=5' target='_blank'>화장품신문 (Beautynury.com) :: [기업분석] 상장 화장품기업 2025년 이자비용 평균 32억 - 뷰티누리</a>
                 <span class="meta">
                     <span class="category-badge cat-IPO">IPO</span>
                     뷰티누리 | Mon, 11 May 2026
@@ -582,10 +581,10 @@
             </li>
         
             <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiiAFBVV95cUxQVzUxLWlpejd1dGJQdllNTjlMeGN1ZTI5YS0yUlp5bG9DOXZ2VnVab0tmcVhxNEFGdlUtYXZneWpkLU9RTi0tbWk3X1JyQUVwR2NaeEtrSW85eldSa3RfZi1Fd1EwVndPcEMxald1Z0lBdG9RX19IcWd1c1ZtSUFDakZTclc5bnZ10gGcAUFVX3lxTE1qZzc2UEtWUDRYRW5CZENKb3EtNWlRZEJZRXFTQ3pWckhpcE4wYk1jenNESWlxS282c0hpaHNTSFFXOEJVR3JRSFhod3dPZDNmQWg2aGZPV195SWFLOWpvZDQ2bzlXTTk4ZEJRY0pxVnlzLUJRZ2VGcTVyOTZzdWtxYS1hNXk4Q1RRT1R4UzFrb2tUUHFxcUIyVG15cQ?oc=5' target='_blank'>글로벌 상장 기업, 비트코인 보유량 1년 새 60% 넘게 늘어 - 조선비즈 - Chosunbiz</a>
+                <a href='https://news.google.com/rss/articles/CBMigAFBVV95cUxQTFFJbkhlaW9YV2twNGM2UDhNUzN6MzBsQS1nWVFJT0Utc3hwMUVPSmlVTE5va1E4QVdIaExpXzd2ZHBjYkFJMEYwbWN4eGpScW1NTVBNRWJWdUhJem1YQ1ZPMkxTTkxNQWswYU5xOGoteS03MzB6aFdmanlFSzh0aw?oc=5' target='_blank'>글로벌 상장 기업, 비트코인 보유량 1년 새 60% 넘게 늘어 - 조선일보</a>
                 <span class="meta">
                     <span class="category-badge cat-IPO">IPO</span>
-                    Chosunbiz | Mon, 11 May 2026
+                    조선일보 | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -629,6 +628,14 @@
                 </span>
             </li>
         
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE1HWGxMUkM2ZjEweEgtdmZERDdPMGo0MGllY1FFZmJEaDhkRUI0NmVYNWNUd1djcUFqTE5vOHdvX1lqUUIwVnVSdmtpdUsyZTJ5RkJwNlZRYWM2d3I2STlsLW00bkt5QjZvUG9FYw?oc=5' target='_blank'>5대 금융그룹, 벤처·스타트업 성장 지원에 1조 원 공급 - 대한민국 정책브리핑</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    대한민국 정책브리핑 | Mon, 11 May 2026
+                </span>
+            </li>
+        
             <li data-category="M&A">
                 <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTE5EQUstRV9GcFFYZ0tZUE8zS1VEUVpDN1U0LXRhb3R5U1BWYmsyb0xTSUZkdE1idC1yYkx0bUpZWVduZ1JEbDFLa3Vfa092RGs0R19RRFA3bGE4dUEzajNB?oc=5' target='_blank'>MBK파트너스, 日 알루미늄업체 아르테미라 인수 - 뉴스1</a>
                 <span class="meta">
@@ -658,14 +665,6 @@
                 <span class="meta">
                     <span class="category-badge cat-M&A">M&A</span>
                     Chosunbiz | Mon, 11 May 2026
-                </span>
-            </li>
-        
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE1PNWtEVTJweVdJVXowTTFuckpra0t4eUt0bW1lMHRROG4xb2dyR3ZsZ1pXX0l1WC00dzF0M1pEa2g2ZWE2LU1OMzh3T3B5T3VMRzB1MEFuaDJ6d9IBVEFVX3lxTE9CYUZFdHVwVUxQeEdKcl9WUWQtZjB1YzYxckJUc1JhX25OLUVsS2VTNV90aENCNVZ2MzhNUE5kNjM4YlRvTlBvV05lOXZBaENKY1dnUw?oc=5' target='_blank'>MBK, 日 알루미늄업체 1.1조에 인수 - 한국경제</a>
-                <span class="meta">
-                    <span class="category-badge cat-M&A">M&A</span>
-                    한국경제 | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -710,7 +709,7 @@
             </li>
         
             <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiW0FVX3lxTFAxeUEtSXB4b2J1UnVjTG83V2k2UmlzT1JxQ3VNbloxWXFXNVg2VzgyS0ZqSUw1NFA4QzRPejFLTTRfel80MTRNZzlKUHZFSW5zeklMb1VTcU1GU2vSAWBBVV95cUxPQmxtNEZHOGZMVlBYczdWZ3FCLW1hbkpRUTR1ZUsxM1NkRXhOZ1lVbDAzejBPVzFxQi0xcWkyek0weWE5MTRuRGk4LS1PRDFhSDdLSG5vZHltcmN1OE0xMzc?oc=5' target='_blank'>아이벡스메디칼시스템즈, 코스닥 상장 예비심사 신청 - 연합뉴스</a>
+                <a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE9CbG00Rkc4ZkxWUFhzN1ZncUItbWFuSlFRNHVlSzEzU2RFeE5nWVVsMDN6ME9XMXFCLTFxaTJ6TTB5YTkxNG5EaTgtLU9EMWFIN0tIbm9keW1yY3U4TTEzN9IBYEFVX3lxTE9CbG00Rkc4ZkxWUFhzN1ZncUItbWFuSlFRNHVlSzEzU2RFeE5nWVVsMDN6ME9XMXFCLTFxaTJ6TTB5YTkxNG5EaTgtLU9EMWFIN0tIbm9keW1yY3U4TTEzNw?oc=5' target='_blank'>아이벡스메디칼시스템즈, 코스닥 상장 예비심사 신청 - 연합뉴스</a>
                 <span class="meta">
                     <span class="category-badge cat-IPO">IPO</span>
                     연합뉴스 | Mon, 11 May 2026
@@ -722,22 +721,6 @@
                 <span class="meta">
                     <span class="category-badge cat-신사업">신사업</span>
                     전자신문 | Mon, 11 May 2026
-                </span>
-            </li>
-        
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE1BUWVqU183WVhFamNvdUU5SHFiUEpkeTIzbG5Pc2p1elJzUWpYOFNqVlBYR1dwRmZfcUxlbnBtaFhtUmI4bENyYUE3YkpSTERMeG8tVTlqcS1mMlNEWVFtNWxTQnpReTFlM3BtTjQ1Z0dfUQ?oc=5' target='_blank'>'옛날통닭 프랜차이즈 신화' 가마치통닭, M&A 매물로 - 마켓인</a>
-                <span class="meta">
-                    <span class="category-badge cat-M&A">M&A</span>
-                    마켓인 | Mon, 11 May 2026
-                </span>
-            </li>
-        
-            <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE9OMmd2NnlPUWpxY0tIMjUxME0zcHNvdnJmX01oZWRnVEdEMzczTUJ5dnUxYlZrQ21LRW43YUlINVZuRjl5SE1vMXpRcGFIRzVQRmVyYi00MzI4RnItdHotdXJhWG0?oc=5' target='_blank'>[인터뷰] 이재관 "지역이 벤처 키워야…지자체 직접 투자 필요" - 서울경제TV</a>
-                <span class="meta">
-                    <span class="category-badge cat-VC">VC</span>
-                    서울경제TV | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -754,14 +737,6 @@
                 <span class="meta">
                     <span class="category-badge cat-IPO">IPO</span>
                     v.daum.net | Mon, 11 May 2026
-                </span>
-            </li>
-        
-            <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTFBZVW9URVhCbVBkcjdsbDFCQ19Lam50VmZ0UmlUN2N3UXlmY1BRWk5oYXR3NFlZQUs2dzg3R1FFcHIydjhNRDNWd3R5dlV1Y3cxMnZQUk1XQWlIZExfN1E5T9IBYEFVX3lxTFBZVW9URVhCbVBkcjdsbDFCQ19Lam50VmZ0UmlUN2N3UXlmY1BRWk5oYXR3NFlZQUs2dzg3R1FFcHIydjhNRDNWd3R5dlV1Y3cxMnZQUk1XQWlIZExfN1E5Tw?oc=5' target='_blank'>"아폴로, 상장 사모대출 펀드 매각 논의중" - 연합뉴스</a>
-                <span class="meta">
-                    <span class="category-badge cat-IPO">IPO</span>
-                    연합뉴스 | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -789,14 +764,6 @@
                 </span>
             </li>
         
-            <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE55akNyMjlxSlJyUnlaVVY2YVJoWlI4VHQtOUJHU1d3U0kzdThXNXNiY0YwTFRiYVRka24xSE14WUtoNzhiSFJYZTBEZHhKVlVmYW9VTXZBcmdTcjA4NkxjelVrWXlCMUxDc3hOTGwtb3ZRdw?oc=5' target='_blank'>로킷아메리카, 나스닥 상장 절차 구체화..미국 증권거래위원회 SEC S-1/A 제출 - 약업신문</a>
-                <span class="meta">
-                    <span class="category-badge cat-IPO">IPO</span>
-                    약업신문 | Mon, 11 May 2026
-                </span>
-            </li>
-        
             <li data-category="VC">
                 <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTFBPWmVPRmNOMnlmQlV1UTJJUFRvdEtNZWtpaEFkOVg4MWw4V1Y5VG5fVVIyTU9JcHJKNm9uTU9xNmF1MExmdUZOeDJDVUptYzAzYUdicjMyNlNsLVVxWFE2MUIxUjZITU16RlBpZw?oc=5' target='_blank'>디캠프 배치 8기 모집 '딥테크 스타트업' 밀착 지원 - 유니콘팩토리</a>
                 <span class="meta">
@@ -810,6 +777,14 @@
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
                     히트뉴스 | Mon, 11 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTFB4bEF0cGVKNzBrTnVKdkdPLVNsNGxiUHdiMGZxNjJ2NjNhSlA3ZU12bV9RdGtTM1FQbVZMbVRPQ2xBVW5wallDSnpZZEpiaU40czFHc01XTzZvdzVkZHNSRNIBYEFVX3lxTFB4bEF0cGVKNzBrTnVKdkdPLVNsNGxiUHdiMGZxNjJ2NjNhSlA3ZU12bV9RdGtTM1FQbVZMbVRPQ2xBVW5wallDSnpZZEpiaU40czFHc01XTzZvdzVkZHNSRA?oc=5' target='_blank'>[테크스냅] 방미통위, 위치정보 분야 스타트업 공모전 - 연합뉴스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    연합뉴스 | Mon, 11 May 2026
                 </span>
             </li>
         
@@ -845,10 +820,61 @@
                 </span>
             </li>
         
+            <li data-category="IPO">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE55MURsZ2c0NlBLa3pMMGwyclhRY2dmN1RjeTlPbHQwWDBFMVNZVHFOVEI3TGRNNG5BQ3B5VjU5c0RoSGdyM3BEa2VlaVl6MFpQXy1abUR6X0NzaHlBNDdoWjFRbUtWUQ?oc=5' target='_blank'>퓨리오사AI, '프리 IPO' 8500억으로 확대 - 디일렉</a>
+                <span class="meta">
+                    <span class="category-badge cat-IPO">IPO</span>
+                    디일렉 | Fri, 08 May 2026
+                </span>
+            </li>
+        
+            <li data-category="IPO">
+                <a href='https://news.google.com/rss/articles/CBMihwFBVV95cUxQcTlSWFVVUkROamR5UEpoNGpkSVJjRzlvdVBMYnBoNy1FQXpPdEsycWtCblp4NlBpZmJqTjJUNTlCaVBIb0FIbnYxZ0FlZUU3OG96OTRIZ1BUUW9YSWpLV1dPTGg4UmZOR1o3Y1FiZHRpRTlWWXhmbm9NVXRLRnJXcDVpbXlhaW_SAZsBQVVfeXFMT1NvaWYxeXA0WlRkLVlVTkFyVGlLZy1mSGdrYlRCVG9EX1otWDhzaWVtSzlUTkNXenNtSmtOMVUzbzBmOEZRaWJnZXJ1eFRMN1hMeGNqaXJNdmtwYjItT05vaUpwRzh6TzI5TG1rcl9qNk5kS1Qxa3IzU2VMNzZ4XzRLeG5nS3h0NndVVE1DQ3NNSXVQRWFHcXlVbUE?oc=5' target='_blank'>파두 사태로 상장 2년 늦어진 AI기업 마키나락스, 그만큼 FI들에 고수익 안겨줄까 - 조선비즈 - Chosunbiz</a>
+                <span class="meta">
+                    <span class="category-badge cat-IPO">IPO</span>
+                    Chosunbiz | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="분할">
+                <a href='https://news.google.com/rss/articles/CBMigAFBVV95cUxPcmlHN09Ramk1WXh0NEtMLS10M2JLWTJ6a2x1Vk42QTJkRVVUQURJSEh6OHh3VzhmMHZZY3VDaWtUMW5jZ01vWUJaZTd1a0QyLWgwNXY2TFJ6a3VaclRpSG9zQzRES2VLakZBTjh3V1djMVl3aTJlMFNMaXlhd19JRg?oc=5' target='_blank'>"하이닉스 한 주도 부담"…코스피 7000에 황제주 급증, 액면분할 기대감도 커졌다 - 조선일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-분할">분할</span>
+                    조선일보 | Thu, 07 May 2026
+                </span>
+            </li>
+        
+            <li data-category="M&A">
+                <a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxOaWpSeTN1RW5zYXRFQURtWlpLcE9ZTml5TjZmeW51YXhMSmtBWEZod000aFI3by1mUkFGbUtESHlZWUN3Z29PSnFJZGxEdWRoTmFVNHh3TDBLOGJkYlByeXRyWWpvNnlCQ1o3bHNMY1EweTlHYnlHNDJuNUN3R2NFMlNiUQ?oc=5' target='_blank'>업스테이지, 포털 ‘다음’ 인수 확정 - 조선일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-M&A">M&A</span>
+                    조선일보 | Wed, 06 May 2026
+                </span>
+            </li>
+        
         </ul>
     </div>
 
     <script>
+        // 페이지 로드 시 각 버튼 카운트 초기화
+        window.onload = function() {
+            const items = document.querySelectorAll('#news-list li');
+            const counts = {};
+            let total = 0;
+            items.forEach(item => {
+                const cat = item.dataset.category;
+                counts[cat] = (counts[cat] || 0) + 1;
+                total++;
+            });
+            document.getElementById('count-전체').textContent = total;
+            document.getElementById('count-VC').textContent = counts['VC'] || 0;
+            document.getElementById('count-투자유치').textContent = counts['투자유치'] || 0;
+            document.getElementById('count-IPO').textContent = counts['IPO'] || 0;
+            document.getElementById('count-MA').textContent = counts['M&A'] || 0;
+            document.getElementById('count-분할').textContent = counts['분할'] || 0;
+            document.getElementById('count-신사업').textContent = counts['신사업'] || 0;
+        };
+
         function filterNews(btn, category) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
