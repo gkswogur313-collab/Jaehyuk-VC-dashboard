@@ -5,7 +5,7 @@ import urllib.parse
 from email.utils import parsedate_to_datetime
 
 def fetch_google_news():
-    query = "벤처"
+    query = "벤처 OR 스타트업 OR VC OR 투자유치 OR IPO OR 상장 OR 기업공개 OR M&A OR 인수합병 OR 인수 OR 합병 OR 분할 OR 신사업"
 
     today = datetime.now()
     two_weeks_ago = today - timedelta(weeks=2)
