@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출자사업 — VC Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: #f8fafc; display: flex; min-height: 100vh; }
+
+        /* 사이드바 */
+        .sidebar {
+            width: 200px; min-height: 100vh; background: #1e293b;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            position: fixed; top: 0; left: 0; bottom: 0;
+        }
+        .sidebar-logo {
+            padding: 24px 20px 20px;
+            font-size: 15px; font-weight: bold; color: #fff;
+            border-bottom: 0.5px solid #334155; line-height: 1.4;
+        }
+        .sidebar-logo span { display: block; font-size: 10px; color: #64748b; font-weight: normal; margin-top: 2px; }
+        .sidebar-nav { padding: 12px 10px; flex: 1; }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 12px; border-radius: 7px;
+            font-size: 13px; color: #94a3b8;
+            text-decoration: none; margin-bottom: 2px;
+            transition: background 0.15s;
+        }
+        .nav-item:hover { background: #273449; color: #e2e8f0; }
+        .nav-item.active { background: #334155; color: #fff; }
+        .nav-icon { font-size: 16px; }
+        .sidebar-footer {
+            padding: 14px 20px; font-size: 10px; color: #475569;
+            border-top: 0.5px solid #334155;
+        }
+
+        /* 메인 */
+        .main { margin-left: 200px; flex: 1; padding: 32px 36px; }
+        .page-header { margin-bottom: 24px; }
+        .page-title { font-size: 22px; font-weight: bold; color: #0f172a; }
+        .page-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        /* 기관 탭 버튼 */
+        .tab-bar { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 20px; border-radius: 8px; border: 1.5px solid #cbd5e1;
+            background: #fff; color: #475569; font-size: 13px; font-weight: 500;
+            cursor: pointer; font-family: 'Malgun Gothic', sans-serif;
+            transition: all 0.15s;
+        }
+        .tab-btn:hover { border-color: #94a3b8; background: #f8fafc; }
+        .tab-btn.active { background: #1e293b; color: #fff; border-color: #1e293b; }
+        .tab-count {
+            display: inline-block; background: rgba(255,255,255,0.2);
+            border-radius: 999px; padding: 0 7px; font-size: 11px; margin-left: 4px;
+        }
+        .tab-btn:not(.active) .tab-count {
+            background: rgba(0,0,0,0.07); color: #64748b;
+        }
+
+        /* 패널 */
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* 패널 헤더 */
+        .panel-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .panel-title { font-size: 15px; font-weight: bold; color: #0f172a; }
+        .panel-link {
+            font-size: 12px; color: #3b82f6; text-decoration: none;
+        }
+        .panel-link:hover { text-decoration: underline; }
+        .panel-count { font-size: 12px; color: #94a3b8; }
+
+        /* 테이블 공통 */
+        .tbl-wrap {
+            background: #fff; border: 0.5px solid #e2e8f0;
+            border-radius: 10px; overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead { background: #f8fafc; }
+        th {
+            padding: 11px 14px; text-align: left; font-size: 12px;
+            color: #64748b; font-weight: 600; border-bottom: 0.5px solid #e2e8f0;
+        }
+        td { padding: 11px 14px; border-bottom: 0.5px solid #f1f5f9; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8fafc; }
+
+        .td-num { color: #94a3b8; width: 50px; text-align: center; }
+        .td-lp { width: 140px; color: #475569; font-size: 12px; }
+        .td-title a { color: #1e40af; text-decoration: none; line-height: 1.5; }
+        .td-title a:hover { text-decoration: underline; }
+        .td-title a:visited { color: #6d28d9; }
+        .td-date { width: 100px; color: #94a3b8; font-size: 12px; white-space: nowrap; }
+        .td-cat { width: 90px; }
+
+        .cat-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 999px;
+            font-size: 10px; font-weight: 600;
+            background: #eff6ff; color: #1d4ed8;
+        }
+
+        .update-info { font-size: 11px; color: #94a3b8; margin-top: 12px; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            VC Dashboard
+            <span>Venture Capital</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span> 대시보드</a>
+            <a href="news.html" class="nav-item"><span class="nav-icon">📰</span> 뉴스</a>
+            <a href="investment.html" class="nav-item active"><span class="nav-icon">💼</span> 출자사업</a>
+            <a href="calendar.html" class="nav-item"><span class="nav-icon">📅</span> 캘린더</a>
+        </nav>
+        <div class="sidebar-footer">업데이트: 2026-05-12 23:22:03</div>
+    </aside>
+
+    <main class="main">
+        <div class="page-header">
+            <div class="page-title">출자사업 공고</div>
+            <div class="page-sub">주요 기관의 출자사업 공고를 공고일 기준 최신순으로 정리합니다.</div>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this, 'all')">
+                전체 <span class="tab-count" id="cnt-all">30</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(this, 'kvca')">
+                한국벤처캐피탈협회 <span class="tab-count" id="cnt-kvca">10</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(this, 'kgrowth')">
+                한국성장금융 <span class="tab-count" id="cnt-kgrowth">10</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(this, 'kvic')">
+                한국벤처투자 <span class="tab-count" id="cnt-kvic">10</span>
+            </button>
+        </div>
+
+        <!-- 전체 탭 -->
+        <div class="panel active" id="panel-all">
+            <div class="panel-header">
+                <span class="panel-title">전체 공고</span>
+                <span class="panel-count">총 30건 · 공고일 최신순</span>
+            </div>
+            <div class="tbl-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px">번호</th>
+                            <th style="width:110px">기관</th>
+                            <th>공고명</th>
+                            <th style="width:100px">공고일</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr>
+                            <td class="td-num">1</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=810" target="_blank">[서초구청] 2026 서초AICT스타트업 2호 펀드 출자공고</a></td>
+                            <td class="td-date">2026-05-11</td>
+                        </tr><tr>
+                            <td class="td-num">2</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(보건복지부) 2026년 5월 수시 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-05-11</td>
+                        </tr><tr>
+                            <td class="td-num">3</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(보건복지부) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                            <td class="td-date">2026-05-07</td>
+                        </tr><tr>
+                            <td class="td-num">4</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(우주항공청 등) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                            <td class="td-date">2026-05-07</td>
+                        </tr><tr>
+                            <td class="td-num">5</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(교육부) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                            <td class="td-date">2026-05-07</td>
+                        </tr><tr>
+                            <td class="td-num">6</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1029&str_type=1&tab=1" target="_blank">【선정결과】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정 결과</a></td>
+                            <td class="td-date">2026-05-06</td>
+                        </tr><tr>
+                            <td class="td-num">7</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=807" target="_blank">2026년도 사립학교교직원연금공단 VC 블라인드펀드</a></td>
+                            <td class="td-date">2026-05-04</td>
+                        </tr><tr>
+                            <td class="td-num">8</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=809" target="_blank">『2026년 화성특례시 제1호 화성형 기본 임팩트펀드 투자조합』 운용 업무집행조합원 모집 공고</a></td>
+                            <td class="td-date">2026-04-30</td>
+                        </tr><tr>
+                            <td class="td-num">9</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=808" target="_blank">성남시 판교유니콘펀드 20,21호 업무집행조합원 모집공고</a></td>
+                            <td class="td-date">2026-04-30</td>
+                        </tr><tr>
+                            <td class="td-num">10</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=806" target="_blank">[세종테크노파크}「세종미래전략산업펀드」 업무집행조합원(운용사) 모집 공고</a></td>
+                            <td class="td-date">2026-04-30</td>
+                        </tr><tr>
+                            <td class="td-num">11</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1028&str_type=1&tab=1" target="_blank">【선정결과】「증권금융 K-Growth 펀드」 위탁운용사 서류심사 결과</a></td>
+                            <td class="td-date">2026-04-30</td>
+                        </tr><tr>
+                            <td class="td-num">12</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=805" target="_blank">경남-KDB 지역혁신 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">13</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=804" target="_blank">강원 전략산업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">14</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=803" target="_blank">부산 혁신 스케일업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">15</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=802" target="_blank">충남 기업성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">16</td>
+                            <td class="td-lp">한국벤처캐피탈협회</td>
+                            <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=801" target="_blank">부산 미래성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">17</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">경남-KDB 지역혁신 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">18</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">강원 전략산업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">19</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">부산 혁신 스케일업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">20</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">충남 기업성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">21</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">부산 미래성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">22</td>
+                            <td class="td-lp">한국벤처투자</td>
+                            <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(중기부 소관) 2026년 1차 정시 출자사업 선정 결과</a></td>
+                            <td class="td-date">2026-04-29</td>
+                        </tr><tr>
+                            <td class="td-num">23</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1027&str_type=1&tab=1" target="_blank">【선정결과】「2기 방산기술혁신펀드」 1차년도 위탁운용사 선정 결과</a></td>
+                            <td class="td-date">2026-04-28</td>
+                        </tr><tr>
+                            <td class="td-num">24</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1026&str_type=1&tab=1" target="_blank">【접수현황】「증권금융 K-Growth 펀드」위탁운용사 접수 현황</a></td>
+                            <td class="td-date">2026-04-20</td>
+                        </tr><tr>
+                            <td class="td-num">25</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1025&str_type=1&tab=1" target="_blank">【접수현황】「2026년 국민성장펀드(국민참여형)」위탁운용사 접수 현황</a></td>
+                            <td class="td-date">2026-04-17</td>
+                        </tr><tr>
+                            <td class="td-num">26</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1023&str_type=1&tab=1" target="_blank">【선정공고】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정계획 FAQ 게시</a></td>
+                            <td class="td-date">2026-04-15</td>
+                        </tr><tr>
+                            <td class="td-num">27</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1021&str_type=1&tab=1" target="_blank">【제출서식】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정 제출서류 및 서식</a></td>
+                            <td class="td-date">2026-04-10</td>
+                        </tr><tr>
+                            <td class="td-num">28</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1020&str_type=1&tab=1" target="_blank">【선정공고】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정계획 공고</a></td>
+                            <td class="td-date">2026-04-10</td>
+                        </tr><tr>
+                            <td class="td-num">29</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1018&str_type=1&tab=1" target="_blank">【선정공고】「증권금융 K-Growth 펀드」위탁운용사 선정계획 FAQ 게시</a></td>
+                            <td class="td-date">2026-04-03</td>
+                        </tr><tr>
+                            <td class="td-num">30</td>
+                            <td class="td-lp">한국성장금융</td>
+                            <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1016&str_type=1&tab=1" target="_blank">【제출서식】「증권금융 K-Growth 펀드」 제출서류 및 서식</a></td>
+                            <td class="td-date">2026-04-01</td>
+                        </tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- KVCA 탭 -->
+        <div class="panel" id="panel-kvca">
+            <div class="panel-header">
+                <span class="panel-title">한국벤처캐피탈협회 출자공고</span>
+                <a class="panel-link" href="https://www.kvca.or.kr/Program/invest/list.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2" target="_blank">원본 사이트 바로가기 →</a>
+            </div>
+            <div class="tbl-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>LP명</th>
+                            <th>공고명</th>
+                            <th style="width:100px">공고일</th>
+                            <th style="width:100px">신청기한</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr>
+                <td class="td-lp">서초구청</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=810" target="_blank">[서초구청] 2026 서초AICT스타트업 2호 펀드 출자공고</a></td>
+                <td class="td-date">2026-05-11</td>
+                <td class="td-date">2026-06-10</td>
+            </tr><tr>
+                <td class="td-lp">사립학교교직원연금공단</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=807" target="_blank">2026년도 사립학교교직원연금공단 VC 블라인드펀드</a></td>
+                <td class="td-date">2026-05-04</td>
+                <td class="td-date">2026-05-26</td>
+            </tr><tr>
+                <td class="td-lp">화성시</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=809" target="_blank">『2026년 화성특례시 제1호 화성형 기본 임팩트펀드 투자조합』 운용 업무집행조합원 모집 공고</a></td>
+                <td class="td-date">2026-04-30</td>
+                <td class="td-date">2026-05-15</td>
+            </tr><tr>
+                <td class="td-lp">성남시, 성남산업진흥원</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=808" target="_blank">성남시 판교유니콘펀드 20,21호 업무집행조합원 모집공고</a></td>
+                <td class="td-date">2026-04-30</td>
+                <td class="td-date">2026-05-27</td>
+            </tr><tr>
+                <td class="td-lp">세종테크노파크</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=806" target="_blank">[세종테크노파크}「세종미래전략산업펀드」 업무집행조합원(운용사) 모집 공고</a></td>
+                <td class="td-date">2026-04-30</td>
+                <td class="td-date">2026-05-20</td>
+            </tr><tr>
+                <td class="td-lp">한국벤처투자</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=805" target="_blank">경남-KDB 지역혁신 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+                <td class="td-date">2026-06-04</td>
+            </tr><tr>
+                <td class="td-lp">한국벤처투자</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=804" target="_blank">강원 전략산업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+                <td class="td-date">2026-06-04</td>
+            </tr><tr>
+                <td class="td-lp">한국벤처투자</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=803" target="_blank">부산 혁신 스케일업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+                <td class="td-date">2026-06-04</td>
+            </tr><tr>
+                <td class="td-lp">한국벤처투자</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=802" target="_blank">충남 기업성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+                <td class="td-date">2026-06-04</td>
+            </tr><tr>
+                <td class="td-lp">한국벤처투자</td>
+                <td class="td-title"><a href="https://www.kvca.or.krlistbody.html?a_gb=board&a_cd=8&a_item=0&sm=2_2_2&keyfield=&key=&page=1&po_no=801" target="_blank">부산 미래성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+                <td class="td-date">2026-06-04</td>
+            </tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 한국성장금융 탭 -->
+        <div class="panel" id="panel-kgrowth">
+            <div class="panel-header">
+                <span class="panel-title">한국성장금융 출자사업공고</span>
+                <a class="panel-link" href="https://www.kgrowth.or.kr/notice.asp" target="_blank">원본 사이트 바로가기 →</a>
+            </div>
+            <div class="tbl-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px">번호</th>
+                            <th>공고명</th>
+                            <th style="width:100px">작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr>
+                <td class="td-num">1</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1029&str_type=1&tab=1" target="_blank">【선정결과】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정 결과</a></td>
+                <td class="td-date">2026-05-06</td>
+            </tr><tr>
+                <td class="td-num">2</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1028&str_type=1&tab=1" target="_blank">【선정결과】「증권금융 K-Growth 펀드」 위탁운용사 서류심사 결과</a></td>
+                <td class="td-date">2026-04-30</td>
+            </tr><tr>
+                <td class="td-num">3</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1027&str_type=1&tab=1" target="_blank">【선정결과】「2기 방산기술혁신펀드」 1차년도 위탁운용사 선정 결과</a></td>
+                <td class="td-date">2026-04-28</td>
+            </tr><tr>
+                <td class="td-num">4</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1026&str_type=1&tab=1" target="_blank">【접수현황】「증권금융 K-Growth 펀드」위탁운용사 접수 현황</a></td>
+                <td class="td-date">2026-04-20</td>
+            </tr><tr>
+                <td class="td-num">5</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1025&str_type=1&tab=1" target="_blank">【접수현황】「2026년 국민성장펀드(국민참여형)」위탁운용사 접수 현황</a></td>
+                <td class="td-date">2026-04-17</td>
+            </tr><tr>
+                <td class="td-num">6</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1023&str_type=1&tab=1" target="_blank">【선정공고】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정계획 FAQ 게시</a></td>
+                <td class="td-date">2026-04-15</td>
+            </tr><tr>
+                <td class="td-num">7</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1021&str_type=1&tab=1" target="_blank">【제출서식】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정 제출서류 및 서식</a></td>
+                <td class="td-date">2026-04-10</td>
+            </tr><tr>
+                <td class="td-num">8</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1020&str_type=1&tab=1" target="_blank">【선정공고】「2026년 국민성장펀드(국민참여형)」위탁운용사 선정계획 공고</a></td>
+                <td class="td-date">2026-04-10</td>
+            </tr><tr>
+                <td class="td-num">9</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1018&str_type=1&tab=1" target="_blank">【선정공고】「증권금융 K-Growth 펀드」위탁운용사 선정계획 FAQ 게시</a></td>
+                <td class="td-date">2026-04-03</td>
+            </tr><tr>
+                <td class="td-num">10</td>
+                <td class="td-title"><a href="https://www.kgrowth.or.kr/notice_view.asp?page=1&search_colume=&search_text=&idx=1016&str_type=1&tab=1" target="_blank">【제출서식】「증권금융 K-Growth 펀드」 제출서류 및 서식</a></td>
+                <td class="td-date">2026-04-01</td>
+            </tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 한국벤처투자 탭 -->
+        <div class="panel" id="panel-kvic">
+            <div class="panel-header">
+                <span class="panel-title">한국벤처투자 출자사업공지</span>
+                <a class="panel-link" href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">원본 사이트 바로가기 →</a>
+            </div>
+            <div class="tbl-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px">번호</th>
+                            <th style="width:90px">카테고리</th>
+                            <th>제목</th>
+                            <th style="width:100px">날짜</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr>
+                <td class="td-num">1</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(보건복지부) 2026년 5월 수시 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-05-11</td>
+            </tr><tr>
+                <td class="td-num">2</td>
+                <td class="td-cat"><span class="cat-badge">접수현황</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(보건복지부) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                <td class="td-date">2026-05-07</td>
+            </tr><tr>
+                <td class="td-num">3</td>
+                <td class="td-cat"><span class="cat-badge">접수현황</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(우주항공청 등) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                <td class="td-date">2026-05-07</td>
+            </tr><tr>
+                <td class="td-num">4</td>
+                <td class="td-cat"><span class="cat-badge">접수현황</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(교육부) 2026년 2차 정시 출자사업 접수 현황</a></td>
+                <td class="td-date">2026-05-07</td>
+            </tr><tr>
+                <td class="td-num">5</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">경남-KDB 지역혁신 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr><tr>
+                <td class="td-num">6</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">강원 전략산업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr><tr>
+                <td class="td-num">7</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">부산 혁신 스케일업 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr><tr>
+                <td class="td-num">8</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">충남 기업성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr><tr>
+                <td class="td-num">9</td>
+                <td class="td-cat"><span class="cat-badge">출자계획</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">부산 미래성장 벤처펀드 2026년 출자사업 계획 공고</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr><tr>
+                <td class="td-num">10</td>
+                <td class="td-cat"><span class="cat-badge">선정결과</span></td>
+                <td class="td-title"><a href="https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice" target="_blank">모태펀드(중기부 소관) 2026년 1차 정시 출자사업 선정 결과</a></td>
+                <td class="td-date">2026-04-29</td>
+            </tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="update-info">마지막 업데이트: 2026-05-12 23:22:03</div>
+    </main>
+
+    <script>
+        function switchTab(btn, panel) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('panel-' + panel).classList.add('active');
+        }
+    </script>
+</body>
+</html>
