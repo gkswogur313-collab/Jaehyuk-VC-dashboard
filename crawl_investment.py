@@ -31,7 +31,15 @@ def fetch_kvca():
                     continue
                 found = True
                 title = a_tag.text.strip()
-                link = "https://www.kvca.or.kr" + a_tag['href'] if a_tag.get('href') else base_url
+href = a_tag.get('href', '')
+if href.startswith('http'):
+    link = href
+elif href.startswith('/'):
+    link = "https://www.kvca.or.kr" + href
+elif href:
+    link = "https://www.kvca.or.kr/" + href
+else:
+    link = base_url
                 lp = cols[1].text.strip()
                 date_str = cols[3].text.strip()
                 deadline = cols[4].text.strip() if len(cols) > 4 else ''
