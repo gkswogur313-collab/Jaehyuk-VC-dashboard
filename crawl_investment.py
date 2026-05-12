@@ -125,6 +125,17 @@ def parse_date(date_str):
             continue
     return datetime.min
 
+def all_rows(items):
+    rows = ''
+    for i, item in enumerate(items):
+        rows += f"""<tr>
+                            <td class="td-num">{i+1}</td>
+                            <td class="td-lp">{item['source_label']}</td>
+                            <td class="td-title"><a href="{item['link']}" target="_blank">{item['title']}</a></td>
+                            <td class="td-date">{item['date']}</td>
+                        </tr>"""
+    return rows
+
 def build_html(all_items, now_str):
     kvca = [i for i in all_items if i['source'] == 'KVCA']
     kgrowth = [i for i in all_items if i['source'] == 'KGROWTH']
@@ -326,14 +337,7 @@ def build_html(all_items, now_str):
                             <th style="width:100px">공고일</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {''.join(f"""<tr>
-                            <td class="td-num">{i+1}</td>
-                            <td class="td-lp">{item['source_label']}</td>
-                            <td class="td-title"><a href="{item['link']}" target="_blank">{item['title']}</a></td>
-                            <td class="td-date">{item['date']}</td>
-                        </tr>""" for i, item in enumerate(all_items))}
-                    </tbody>
+                    <tbody>{all_rows(all_items)}</tbody>
                 </table>
             </div>
         </div>
