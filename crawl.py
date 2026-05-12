@@ -23,12 +23,12 @@ def fetch_google_news():
 
     # 카테고리 키워드 정의
     categories = {
-        'VC':   ['VC', '스타트업', '벤처'],
-        'IPO':  ['IPO', '상장', '기업공개'],
-        'M&A':  ['M&A', '인수합병', '인수', '합병'],
+        'VC':    ['VC', '스타트업', '벤처'],
+        'IPO':   ['IPO', '상장', '기업공개'],
+        'M&A':   ['M&A', '인수합병', '인수', '합병'],
         '투자유치': ['투자유치'],
-        '분할':  ['분할'],
-        '신사업': ['신사업'],
+        '분할':   ['분할'],
+        '신사업':  ['신사업'],
     }
 
     def get_category(title):
@@ -87,14 +87,15 @@ def fetch_google_news():
     now = today.strftime('%Y-%m-%d %H:%M:%S')
     count = len(news_list)
 
-    # 뉴스 아이템 HTML 생성
+    # 뉴스 아이템 HTML 생성 (M&A → MA로 CSS 클래스명 변환)
     html_items = ""
     for news in news_list:
+        css_class = news['category'].replace('&', '')  # M&A → MA
         html_items += f"""
             <li data-category="{news['category']}">
                 <a href='{news["link"]}' target='_blank'>{news["title"]}</a>
                 <span class="meta">
-                    <span class="category-badge cat-{news['category']}">{news['category']}</span>
+                    <span class="category-badge cat-{css_class}">{news['category']}</span>
                     {news["source"]} | {news["pub_date_display"]}
                 </span>
             </li>
@@ -125,9 +126,7 @@ def fetch_google_news():
             color: #004a99; border-radius: 10px; padding: 0 6px;
             font-size: 0.8em; margin-left: 4px;
         }}
-        .filter-btn.active .btn-count {{
-            background: rgba(255,255,255,0.3); color: white;
-        }}
+        .filter-btn.active .btn-count {{ background: rgba(255,255,255,0.3); color: white; }}
         ul {{ list-style: none; padding: 0; }}
         li {{ margin-bottom: 12px; padding: 12px; border-bottom: 1px solid #eee; }}
         li:hover {{ background-color: #f9f9f9; }}
@@ -139,12 +138,12 @@ def fetch_google_news():
             display: inline-block; padding: 1px 8px; border-radius: 10px;
             font-size: 0.8em; font-weight: bold; color: white; white-space: nowrap;
         }}
-        .cat-VC       {{ background: #1976d2; }}
-        .cat-투자유치  {{ background: #388e3c; }}
-        .cat-IPO      {{ background: #f57c00; }}
-        .cat-MA       {{ background: #7b1fa2; }}
-        .cat-분할      {{ background: #c62828; }}
-        .cat-신사업    {{ background: #00838f; }}
+        .cat-VC      {{ background: #1976d2; }}
+        .cat-투자유치 {{ background: #388e3c; }}
+        .cat-IPO     {{ background: #f57c00; }}
+        .cat-MA      {{ background: #7b1fa2; }}
+        .cat-분할     {{ background: #c62828; }}
+        .cat-신사업   {{ background: #00838f; }}
         .result-count {{ font-size: 0.85em; color: #888; margin-bottom: 8px; }}
     </style>
 </head>
@@ -174,7 +173,6 @@ def fetch_google_news():
     </div>
 
     <script>
-        // 페이지 로드 시 각 버튼 카운트 초기화
         window.onload = function() {{
             const items = document.querySelectorAll('#news-list li');
             const counts = {{}};
