@@ -215,7 +215,7 @@ def fetch_google_news():
 </html>
 """
 
-    with open("index.html", "w", encoding="utf-8") as f:
+    with open("news.html", "w", encoding="utf-8") as f:
         f.write(html_template)
 
     print(f"완료: {count}건 저장 (최근 2주, 최신순, 카테고리 필터 적용)")
