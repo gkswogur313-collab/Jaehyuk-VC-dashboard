@@ -148,64 +148,94 @@ def fetch_kgrowth():
     return items
 
 def fetch_kvic():
-    """한국벤처투자 - 전체 페이지 수집"""
+    """한국벤처투자 - 전체 페이지 수집
+    - 링크: javascript:board_view(seq) 에서 seq 추출 -> 상세 URL 직접 조립
+    - 페이지: POST 방식으로 각 페이지 요청
+    """
+    import re as _re
     base_url = "https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice"
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers_get = {'User-Agent': 'Mozilla/5.0'}
+    headers_post = {
+        'User-Agent': 'Mozilla/5.0',
+        'Referer': base_url,
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
     items = []
-    page = 1
+    seen_nums = set()
 
-    while True:
-        url = f"{base_url}?page={page}"
-        try:
-            res = requests.get(url, headers=headers, timeout=10)
-            res.encoding = 'utf-8'
-            soup = BeautifulSoup(res.text, 'html.parser')
-            rows = soup.select('table tr')[1:]
+    def parse_kvic_page(soup):
+        rows = soup.select('table tr')[1:]
+        found = False
+        for row in rows:
+            cols = row.find_all('td')
+            if len(cols) < 4:
+                continue
+            num_text = cols[0].text.strip()
+            if not num_text.isdigit():
+                continue
+            if num_text in seen_nums:
+                continue
+            seen_nums.add(num_text)
+            found = True
+            category = cols[1].text.strip().replace('[', '').replace(']', '')
+            a_tag = cols[3].find('a')
+            title = a_tag.text.strip() if a_tag else cols[3].text.strip()
+            href = a_tag.get('href', '') if a_tag else ''
+            seq_match = _re.search(r'board_view\((\d+)\)', href)
+            if seq_match:
+                link = f"{base_url}/{seq_match.group(1)}"
+            else:
+                link = base_url
+            date_str = cols[4].text.strip() if len(cols) > 4 else ''
+            items.append({
+                'source': 'KVIC',
+                'source_label': '한국벤처투자',
+                'title': title,
+                'link': link,
+                'lp': '',
+                'date': date_str,
+                'deadline': '',
+                'category': category,
+            })
+        return found
 
-            found = False
-            for row in rows:
-                cols = row.find_all('td')
-                if len(cols) < 4:
-                    continue
-                num_text = cols[0].text.strip()
-                if not num_text.isdigit():
-                    continue
-                found = True
-                category = cols[1].text.strip()
-                a_tag = cols[3].find('a')
-                title = a_tag.text.strip() if a_tag else cols[3].text.strip()
-                href = a_tag['href'] if a_tag else ''
-                link = base_url if not href or href.startswith('javascript') else href
-                date_str = cols[4].text.strip() if len(cols) > 4 else ''
-                items.append({
-                    'source': 'KVIC',
-                    'source_label': '한국벤처투자',
-                    'title': title,
-                    'link': link,
-                    'lp': '',
-                    'date': date_str,
-                    'deadline': '',
-                    'category': category,
-                })
+    try:
+        # 1페이지 GET
+        res = requests.get(base_url, headers=headers_get, timeout=10)
+        res.encoding = 'utf-8'
+        soup = BeautifulSoup(res.text, 'html.parser')
+        parse_kvic_page(soup)
 
-            if not found:
+        # 총 페이지 수 파악
+        last_page = 1
+        last_btn = soup.find('a', title=lambda t: t and '마지막' in t)
+        if last_btn:
+            m = _re.search(r"goPage\('(\d+)'\)", str(last_btn))
+            if m:
+                last_page = int(m.group(1))
+        print(f"한국벤처투자 총 페이지: {last_page}")
+
+        # 2페이지부터 POST
+        for pg in range(2, last_page + 1):
+            try:
+                post_res = requests.post(
+                    base_url,
+                    headers=headers_post,
+                    data={'pageIndex': pg, 'searchCondition': '', 'searchKeyword': '', 'category': ''},
+                    timeout=10
+                )
+                post_res.encoding = 'utf-8'
+                post_soup = BeautifulSoup(post_res.text, 'html.parser')
+                found = parse_kvic_page(post_soup)
+                if not found:
+                    break
+                time.sleep(0.3)
+            except Exception as e:
+                print(f"한국벤처투자 페이지 {pg} 오류: {e}")
                 break
 
-            # 다음 페이지 존재 여부 확인
-            page_links = [a.text.strip() for a in soup.find_all('a') if a.text.strip().isdigit()]
-            max_page = max([int(p) for p in page_links if p.isdigit()], default=1)
-            if page >= max_page:
-                # next 블록 버튼 확인
-                next_btn = soup.find('a', string=lambda t: t and '다음' in t)
-                if not next_btn:
-                    break
-
-            page += 1
-            time.sleep(0.3)
-
-        except Exception as e:
-            print(f"한국벤처투자 페이지 {page} 오류: {e}")
-            break
+    except Exception as e:
+        print(f"한국벤처투자 오류: {e}")
 
     return items
 
