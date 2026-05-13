@@ -183,7 +183,7 @@ def fetch_kvic():
             href = a_tag.get('href', '') if a_tag else ''
             seq_match = _re.search(r'board_view\((\d+)\)', href)
             if seq_match:
-                link = f"{base_url}/{seq_match.group(1)}"
+                link = f"{base_url}?pageNo=1&searchCategory=&searchType=all&searchWord=&id={seq_match.group(1)}"
             else:
                 link = base_url
             date_str = cols[4].text.strip() if len(cols) > 4 else ''
