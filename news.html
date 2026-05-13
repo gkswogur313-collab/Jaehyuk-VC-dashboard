@@ -119,7 +119,7 @@
             </a>
         </nav>
         <div class="sidebar-footer">
-            업데이트: 2026-05-13 05:17:29
+            업데이트: 2026-05-13 05:26:57
         </div>
     </aside>
 
@@ -132,7 +132,7 @@
 
         <!-- 요약 카드 -->
         <div class="stat-row" id="stat-row">
-            <div class="stat-card"><div class="stat-num" id="stat-전체">94</div><div class="stat-lbl">전체</div></div>
+            <div class="stat-card"><div class="stat-num" id="stat-전체">93</div><div class="stat-lbl">전체</div></div>
             <div class="stat-card"><div class="stat-num" id="stat-VC">-</div><div class="stat-lbl">VC</div></div>
             <div class="stat-card"><div class="stat-num" id="stat-투자유치">-</div><div class="stat-lbl">투자유치</div></div>
             <div class="stat-card"><div class="stat-num" id="stat-IPO">-</div><div class="stat-lbl">IPO</div></div>
@@ -152,10 +152,42 @@
             <button class="filter-btn" onclick="filterNews(this, '신사업')">신사업 <span class="btn-count" id="count-신사업"></span></button>
         </div>
 
-        <div class="result-count" id="result-count">전체 94건 표시 중</div>
+        <div class="result-count" id="result-count">전체 93건 표시 중</div>
 
         <ul class="news-list" id="news-list">
             
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE1sZ1ZXdGRCTFZwQ0xOUy1ZdEIyUTZNWWxDc2pvcE02eXVJMlRYMUJhYkVRQWhTQXZndk9HdXlwQThfOWRsZm5pcnp2S05QRG1iRkZZeHlpZlhUclBwREF0YlhrV0ZkZjRNU3c?oc=5' target='_blank'>슈퍼브에이아이, '초격차 스타트업 1000+' 선정…”자율 관제 기술 고도화” - AI타임스</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    AI타임스 | Wed, 13 May 2026
+                </span>
+            </li>
+        
+            <li data-category="IPO">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE5mMmd1aXVwTlNqSUoxYktmZk1KVFVDY0kySGQydnF1aU5Yck9sNnR0SUxGZlBJd0RwTDdRdUpNcUZfeEI4akJablFlWGl5QQ?oc=5' target='_blank'>[ET특징주] 코스모로보틱스, 상장 사흘째 '上上上' - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-IPO">IPO</span>
+                    전자신문 | Wed, 13 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE5lY09NbG9aXzhPRV9CR201NnM3Qi1NVkNJWGQzaHlUV09qRUEtOHl2MmE0QnBicHpGUjB4ZnJDQlhsaVFhQnBSLVR4RkxBQQ?oc=5' target='_blank'>슈퍼브에이아이, 중기부 '2026 초격차 스타트업 프로젝트 1000+' 선정 - 전자신문</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    전자신문 | Wed, 13 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE1tTm8wN1RLeUJHM2owNWl4c2dNUWhyZFkza3BHVHFkWGYxX3lYSmNkbkNZYkhEOVdjMlpKckNKOV9aR1NXWnJCZXVGMnVZT3lMdGoteDQyTlZ3cWQweTNDLWxkVWFWNEtqOHBvOE0yMFc?oc=5' target='_blank'>씨엔티테크 육성 '페이브먼트', KTO 초기관광벤처 선정…콘텐츠 관광 협력 확대 - 신아일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    신아일보 | Wed, 13 May 2026
+                </span>
+            </li>
+        
             <li data-category="M&A">
                 <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vblJQZ1VEQ1pfdE01UUstalpWejhwaU1HQW1uUmduTjRmMFFFcGJ2UlNEMGRQN2lSbkRqU3ZNY21oMnZmUVB5RHJ3NkpyMFk?oc=5' target='_blank'>파라마운트 "WBD 합병하면 극장 배급 늘리겠다" - v.daum.net</a>
                 <span class="meta">
@@ -172,6 +204,14 @@
                 </span>
             </li>
         
+            <li data-category="분할">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE53a2FMTV9idThOZjQzNWRYLU9IYURpZ2dMLXotV1pnOGVmTE0wdXRFNWpoSmREYndOVFZxZk01SFA3Q0p6MDh2VkNTUTZuTmplYmkwVmZ3MDFlRUY5b3lPS0N2S1FTNzZSVG9rY0NJSGFWZ9IBdkFVX3lxTE1nNlFSbDVVZ0FJUVlZYmFFRUhSS0pHUTljcGRiVDZOVHY1eGhTRThHQTJyb3VpWXEwWUx6bG8wcmhOWWtOSUoyaW41aFBMQl9obVZ3UWhTWGN0N1pBdmJSUUVqVjNqeUZfNEdYOVVnbXNYM0N5QVE?oc=5' target='_blank'>‘1.4조 재산분할’ SK 최태원 직접 나오나···재판부 “당사자 함께 조정” - 시사저널e</a>
+                <span class="meta">
+                    <span class="category-badge cat-분할">분할</span>
+                    시사저널e | Wed, 13 May 2026
+                </span>
+            </li>
+        
             <li data-category="VC">
                 <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFBiemREOHZSMjdTbXdBSGtDblQtRXVnbEFQdUNsY1VrNUZrR05tc3lYbFNOdVM2S2dLODZ4bFNZNE54UTc3X3d2YlFTRGJVNlNrbWZwNGtn?oc=5' target='_blank'>디캠프-JR동일본, 국내 스타트업 일본 진출 돕는다 - 지디넷코리아</a>
                 <span class="meta">
@@ -181,7 +221,7 @@
             </li>
         
             <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiS0FVX3lxTE1SS0RfNGctX05yRWM2MHJvSHh0OGFlQ0dWMm5UWXdlWHplZ1JGNU5BSkxvcUR5NHdqamhSNjV0RU15Y0hBckw4UFdPdw?oc=5' target='_blank'>벤처·코스닥·VC 협회, 우량기업 코스닥 시장 잔류 및 혁신 생태계 수호 호소 - beSUCCESS</a>
+                <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTE9ET3RPc21pQ01Za3U4UEs3ejhWQnU3YkFUT3JYd081VDRJMkNPM3MxWmVjV1NVNU5uVWVOVkRVbHpQbHQ0RUE?oc=5' target='_blank'>벤처·코스닥·VC 협회, 우량기업 코스닥 시장 잔류 및 혁신 생태계 수호 호소 - beSUCCESS</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
                     beSUCCESS | Wed, 13 May 2026
@@ -293,7 +333,7 @@
             </li>
         
             <li data-category="분할">
-                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE1YM3NuWDhyYmNHbmJWY2tXVko0cGhudEpyUFBwS2FZdTNJUTE3Z2VHTmJnclQzckZ4VXMzR2dMTzZ2cEpMWHBTQVljaTZuaFkwVkZXNmNNTjBCVTMwZVhHVWtqSkhBSjhaNXlBaWxnbXYxd9IBckFVX3lxTE1YM3NuWDhyYmNHbmJWY2tXVko0cGhudEpyUFBwS2FZdTNJUTE3Z2VHTmJnclQzckZ4VXMzR2dMTzZ2cEpMWHBTQVljaTZuaFkwVkZXNmNNTjBCVTMwZVhHVWtqSkhBSjhaNXlBaWxnbXYxdw?oc=5' target='_blank'>최태원-노소영 재산분할 첫 조정… 추가 기일 열기로 - 법률신문</a>
+                <a href='https://news.google.com/rss/articles/CBMibkFVX3lxTE9YNWsyX1dHaTdLdXNLNExHM25aYW4zalFEa2NEbEtsOUZuempGUThsTEJXeGlicHc2ekNYZnFxNEFGbG9scjVzMnFqd0RhbUdzU0lVbzV4X1dHa0lIcFgxRzV0dURkdEh4dkttQTVR0gFyQVVfeXFMTVgzc25YOHJiY0duYlZja1dWSjRwaG50SnJQUHBLYVl1M0lRMTdnZUdOYmdyVDNyRnhVczNHZ0xPNnZwSkxYcFNBWWNpNm5oWTBWRlc2Y01OMEJVMzBlWEdVa2pKSEFKOFo1eUFpbGdtdjF3?oc=5' target='_blank'>최태원-노소영 재산분할 첫 조정… 추가 기일 열기로 - 법률신문</a>
                 <span class="meta">
                     <span class="category-badge cat-분할">분할</span>
                     법률신문 | Wed, 13 May 2026
@@ -388,27 +428,11 @@
                 </span>
             </li>
         
-            <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMi1gJBVV95cUxNWFk2MXZDVkd4bll2NEctRzRZdER4RURjNG82LTFGalRKSFdURnkxSEplVGZqQURneFlLWHItb3hPODFVSk5CZzcweVE3RE9MU1JUdVR6X1ZKNFNReW1jR2drRXdEd0g1dndsQU83cFRuY1g4Q2JJdXNoQVFFeUl4bTRleThwUExYdnhPX0gzMUpyYnlSdFdndHQxZHVCUmlTTXJ5MXpZbkI3cV9DS3FPLWg1V3I5T3dnTXJWTF8yMEVLZklwOHA3WERTbG00MktNRUx1ckR3ZExzOE9hY0RXN2pLM3NxbEUySDVnMzB6MHlhNzYyeGowUkhScVVRaXhIdTAxLUQtNGtnbU9BNTREalN2TXRYUmItUkw1VHBIeWZDNHdTRXhIb3RSTzVrdXV0S3FteDZ0UTloWlN5NHd4d3J5bW5wVGEyTS1rN29EQ3Vjbjk5QXc?oc=5' target='_blank'>"우주에 데이터센터 짓는다?" 구글·스페이스X, 초대형 IPO 앞두고 협의 중 - Benzinga</a>
-                <span class="meta">
-                    <span class="category-badge cat-IPO">IPO</span>
-                    Benzinga | Wed, 13 May 2026
-                </span>
-            </li>
-        
             <li data-category="VC">
                 <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE9lcEtLY1pINl9rWFlqRmlRVHpSYkpOWk0zblUwQmQ5UzViUzVZUUZnM3BUOG9NU20xWjFkeHdYcjg0YUpvX1dMZklhSWIyVTNyYmlHTDYtSG5hZXBWdHUzTVptNl8tZw?oc=5' target='_blank'>슈퍼브AI, 중기부 '2026 초격차 스타트업 프로젝트 1000+' 선정 - 디일렉</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
                     디일렉 | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="분할">
-                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFBTei01dEF6SVBEWHhUU19QNEZUQU9NZnd3cTViQUJ6VDlxZ0NxS01ZYndRYlJ0bmE1TGdQTndPVC1CcDJYNkNnT2Ywb0toNExQZGJuYlJ0djFiMTczOVQ1bnRyX1JEUdIBZkFVX3lxTFBTei01dEF6SVBEWHhUU19QNEZUQU9NZnd3cTViQUJ6VDlxZ0NxS01ZYndRYlJ0bmE1TGdQTndPVC1CcDJYNkNnT2Ywb0toNExQZGJuYlJ0djFiMTczOVQ1bnRyX1JEUQ?oc=5' target='_blank'>‘세기의 이혼’ 최태원-노소영 재산분할 합의 시도 ‘빈손’…추가 기일 열기로 - 동아일보</a>
-                <span class="meta">
-                    <span class="category-badge cat-분할">분할</span>
-                    동아일보 | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -461,10 +485,10 @@
             </li>
         
             <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiUkFVX3lxTE9mMkRXa3BaU1hqc1VSTEtEcW9wcUUyaUNNdEljR0RjTmFxcHk1YWZEZ29FT21QUDY2cmxKVGgxc0R4WGtNUzhEcjZGSVJaRHFZU0E?oc=5' target='_blank'>한국거래소의 'AX' 승부수, 스타트업 '페어랩스' 인수로 결실 맺나 - nocutnews.co.kr</a>
+                <a href='https://news.google.com/rss/articles/CBMiUkFVX3lxTE9mMkRXa3BaU1hqc1VSTEtEcW9wcUUyaUNNdEljR0RjTmFxcHk1YWZEZ29FT21QUDY2cmxKVGgxc0R4WGtNUzhEcjZGSVJaRHFZU0E?oc=5' target='_blank'>한국거래소의 'AX' 승부수, 스타트업 '페어랩스' 인수로 결실 맺나 - 노컷뉴스</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
-                    nocutnews.co.kr | Wed, 13 May 2026
+                    노컷뉴스 | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -489,14 +513,6 @@
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
                     전자신문 | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE5XMFRmdEZWaFVDdE1qWVItOGJzemRfVTBHMFFuU3dzVHA5Tm1kV005SUt2RTNiOTFYRDJENm8yYzRTeldFYWpHV0RIOVFNMFU?oc=5' target='_blank'>코스모로보틱스, 상장 3거래일 연속 상한가…'따따블' 이후 질주[특징주] - v.daum.net</a>
-                <span class="meta">
-                    <span class="category-badge cat-IPO">IPO</span>
-                    v.daum.net | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -525,10 +541,10 @@
             </li>
         
             <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMic0FVX3lxTE4yc0RjRGtJY2JUMkgwcDlCZ1NQZ3dOWmNTV2Nhbnlic1Y5aF9iZkVoTTNiTjBvOXc3U0dkQWJLLUNSMGp0OTBsQlRCYTR1ME11MjgtbGFSanlIMzFWOVpCR3BwRzdGMVhNVjFuWFV4RjZ3ZFE?oc=5' target='_blank'>앤트로픽, 오픈AI·구글도 쓰는 개발자도구 스타트업 인수 추진 - 연합뉴스 한민족센터</a>
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFAxMDdJSGR1MWo2NE16V2FPY015aWw1U0c2cDVkbVgybXB2RXowR1NHZWpBNllMTEdVMFdITVlYUlB3eGNWNmtDVnBuSDBjQTA?oc=5' target='_blank'>앤트로픽, 오픈AI·구글도 쓰는 개발자도구 스타트업 인수 추진 - v.daum.net</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
-                    연합뉴스 한민족센터 | Wed, 13 May 2026
+                    v.daum.net | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -605,10 +621,10 @@
             </li>
         
             <li data-category="분할">
-                <a href='https://news.google.com/rss/articles/CBMihwFBVV95cUxPd2ZRd1BOcGluR2lreGpEYWNPYmZtUGVKMWMxTnZBLVJKSTRtdHAyR3pwUm9GNHpXVWdLZ2o2ZlFrTVpTNjV1N2pVSy1PWUVKYzR4dGIycUxDT3RTSE84OE9ZRVhyTFhwR2ZiOS1LSUhyTmpNSDNlQUxVTWJvTDJVTHJzY255ZW8?oc=5' target='_blank'>‘세기의 이혼’ 재산 분할 조정 시작...노소영 출석·최태원 불출석 - chosun.com</a>
+                <a href='https://news.google.com/rss/articles/CBMihwFBVV95cUxPd2ZRd1BOcGluR2lreGpEYWNPYmZtUGVKMWMxTnZBLVJKSTRtdHAyR3pwUm9GNHpXVWdLZ2o2ZlFrTVpTNjV1N2pVSy1PWUVKYzR4dGIycUxDT3RTSE84OE9ZRVhyTFhwR2ZiOS1LSUhyTmpNSDNlQUxVTWJvTDJVTHJzY255ZW8?oc=5' target='_blank'>‘세기의 이혼’ 재산 분할 조정 시작...노소영 출석·최태원 불출석 - 조선일보</a>
                 <span class="meta">
                     <span class="category-badge cat-분할">분할</span>
-                    chosun.com | Wed, 13 May 2026
+                    조선일보 | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -633,14 +649,6 @@
                 <span class="meta">
                     <span class="category-badge cat-분할">분할</span>
                     v.daum.net | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiWkFVX3lxTE1DaE1Bckg0WjJGOWxwLXN2TnBYNUdDYWxIXzRoU0JGc0wxSnJrV1pFUmZ4TDhtOUtvVXUtYU43X0NGTnA5cnlRUXNmcnVrNHRjOWJVQnVTeER0d9IBX0FVX3lxTE9JOUxwb3NGUkN0ZVRlZy1NczAxQ2hpUGFDSHRzWkFVYnljQkdRUmtjWWZtVjJDZ3N3OVRQWUs0RUd0OVBQajBLX3EySEhyZi1TQkJnTEVDVkZkbVJrZU84?oc=5' target='_blank'>김수현 DS투자 센터장 “주주 간섭 싫으면 상장 안 했어야···총수기업에 혁신 요구하는 채찍이 될 것” - 경향신문</a>
-                <span class="meta">
-                    <span class="category-badge cat-IPO">IPO</span>
-                    경향신문 | Wed, 13 May 2026
                 </span>
             </li>
         
@@ -725,14 +733,6 @@
             </li>
         
             <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTE9WUkEtWWM5NFZmOXh1Rm84Mk1VUGdyb3hFUGdKbG5FTGhRM3pqM0RXVVFsOEkyN3hVeG8wc1Y4Xy1MeHU1ZGNFS19aV25ZQ3RGTVdSRF93?oc=5' target='_blank'>슈퍼브에이아이, 중기부 초격차 스타트업 낙점…"수동 관제 시대 끝낸다" - 지디넷코리아</a>
-                <span class="meta">
-                    <span class="category-badge cat-VC">VC</span>
-                    지디넷코리아 | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="VC">
                 <a href='https://news.google.com/rss/articles/CBMiaEFVX3lxTE1VRVJIQlhqeDJFR1luYmpGVlVOWTgwcUpFLUNBRVVwZnpENFdWOElQZlhjdzRyMllJVXpDUXBIV2k2dkY0TGplQXdLRkQxZTJNQjZiWTh1OER6WmxkOUE2dExnblptSl9J?oc=5' target='_blank'>아산나눔재단, '아산 비영리스타트업' 2026 도전트랙 참가팀 모집 - 라이프인</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
@@ -773,23 +773,7 @@
             </li>
         
             <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMi6AFBVV95cUxOQ3dKUE9SZk9jX0hFT1pFclVLaEZDWUM3Ykp0YndJN0Y4cS0wdzZzVzlJXzhaOGxiczctR2MzaGpWQ2NtRlNobjdMdmwwbWNYcmt2Y0U5OGQ3SnlVMENtTW12WjUtUkxNYk1GbWdaV244TDNiNGZJNU80OWRER0Z1ZmVQQl83X2hCemdXQW9iVzlSTDhRQllOVnB0U0QtdHlLeDVrdkdkeWhmVmkwa1VFckVhbkJvaXBqcHdvcVpNWnZ2SmZoM19tMHVEYm0tUkFISS1VWHVDZ3hvN0pQc2NtSGFyUmkxVzVy?oc=5' target='_blank'>‘Global ImpactPreneur’, 아태 지역 임팩트 스타트업 20개팀 선발…액셀러레이션 돌입 - UNDP</a>
-                <span class="meta">
-                    <span class="category-badge cat-VC">VC</span>
-                    UNDP | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="VC">
                 <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE1vMnRZQWZ4WmxjQzN3Nkhzd1V0TE1xaGtybVRPZnpQU2VGWmZuTkxDMlhoejBxeXZUaE94T1JrVFV5eEJMTmliT2d4NmRLeVJUWWF0WXpHNksxbm5YcWVubFVERjBBdw?oc=5' target='_blank'>스타트업 비저너리, 8억원 시드 투자 유치 - 벤처타임즈</a>
-                <span class="meta">
-                    <span class="category-badge cat-VC">VC</span>
-                    벤처타임즈 | Wed, 13 May 2026
-                </span>
-            </li>
-        
-            <li data-category="VC">
-                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTE9mVEVsUWFvZnhZUkR0V0h5aFBMckR2akZwX3UzckRjTVZmdnpIS2dpMFpadmRrcUZpUkZMMlVCc05xTXdKUG16Z2g0bW1NS2oxS0FRV0JQRkdOMHY2MHVfSmx0Nk1NUQ?oc=5' target='_blank'>슈퍼브에이아이, 중기부 '2026 초격차 스타트업 프로젝트 1000+' 선정 - 벤처타임즈</a>
                 <span class="meta">
                     <span class="category-badge cat-VC">VC</span>
                     벤처타임즈 | Wed, 13 May 2026
@@ -817,6 +801,14 @@
                 <span class="meta">
                     <span class="category-badge cat-MA">M&A</span>
                     한국경제 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="VC">
+                <a href='https://news.google.com/rss/articles/CBMiX0FVX3lxTFBpYzFaTkRmakdXOE55Yk1lSE0zNkt3cnpKOU9MSkoyQTlsbW1rRnBqTEFKWHR6SThUa3BOMkpCX3JvbDZmRHJJSi1kTzh1NzVTU3QxOWZDbnBrOGpmTTNZ?oc=5' target='_blank'>Global ImpactPreneur, 아태 지역 임팩트 스타트업 20개 팀 선발… 액셀러레이션 돌입 - 뉴스와이어</a>
+                <span class="meta">
+                    <span class="category-badge cat-VC">VC</span>
+                    뉴스와이어 | Tue, 12 May 2026
                 </span>
             </li>
         
@@ -861,10 +853,10 @@
             </li>
         
             <li data-category="IPO">
-                <a href='https://news.google.com/rss/articles/CBMiUkFVX3lxTE55dUwwc0xENmR4eDJpcDVXLThOQVhfZU1XTmZfck1uLTJkX1VDeDNzU3lVd2pqSmlseWVjVVdwaW5pLWNPdWV1T0Y0VDVFc3FyOVE?oc=5' target='_blank'>큰 게 온다…스페이스X 상장 임박, '우주 ETF'에 쏠린 기대 - nocutnews.co.kr</a>
+                <a href='https://news.google.com/rss/articles/CBMiUkFVX3lxTE55dUwwc0xENmR4eDJpcDVXLThOQVhfZU1XTmZfck1uLTJkX1VDeDNzU3lVd2pqSmlseWVjVVdwaW5pLWNPdWV1T0Y0VDVFc3FyOVE?oc=5' target='_blank'>큰 게 온다…스페이스X 상장 임박, '우주 ETF'에 쏠린 기대 - 노컷뉴스</a>
                 <span class="meta">
                     <span class="category-badge cat-IPO">IPO</span>
-                    nocutnews.co.kr | Tue, 12 May 2026
+                    노컷뉴스 | Tue, 12 May 2026
                 </span>
             </li>
         
@@ -884,14 +876,6 @@
                 </span>
             </li>
         
-            <li data-category="M&A">
-                <a href='https://news.google.com/rss/articles/CBMiakFVX3lxTE5rMHBDb1FUdzVDUGtJS1pMcDhZdUNMOWJ2UzU1RFBfazVHRlZjaVU3UFh5RU9zSGZMSFhVX3NQbThiRF95Rkx3ZTExd084R2JyZGNDcTJSTVNYcThtZmZjLXNqelZxZlR0dlE?oc=5' target='_blank'>셀트리온, 프랑스 헬스케어 기업 ‘지프레’ 인수 - 의학신문</a>
-                <span class="meta">
-                    <span class="category-badge cat-MA">M&A</span>
-                    의학신문 | Tue, 12 May 2026
-                </span>
-            </li>
-        
             <li data-category="IPO">
                 <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBEVXZGbDFfUFZvMk1nZ0Y3QlN5MmJ4aDVGMVdVd3VrNUlhNWtDVG9SWmsyNkJrc2tlNVlKSkF4OXJ0cHpxcXRLLTBLSkJuanc?oc=5' target='_blank'>“상장폐지 피하자” 동전주 병합 폭증… 주가 방치 기업들 ‘발등의 불’ - v.daum.net</a>
                 <span class="meta">
@@ -905,6 +889,14 @@
                 <span class="meta">
                     <span class="category-badge cat-분할">분할</span>
                     법률신문 | Tue, 12 May 2026
+                </span>
+            </li>
+        
+            <li data-category="IPO">
+                <a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFBwQ2w2X0RHMjJhTFpHLTNfNGIydWFNR1FYUVJrMWNHVDBTTTV6WGVxREdlaHhSOUFFcmNNQUtNLWk4TTQwV2JHTzNDeXo2Y0d6djQ0ckJ3?oc=5' target='_blank'>스페이스X, 상장 20일뒤 급등한다? “치고빠져라” 수익 전략 - 중앙일보</a>
+                <span class="meta">
+                    <span class="category-badge cat-IPO">IPO</span>
+                    중앙일보 | Sun, 10 May 2026
                 </span>
             </li>
         
