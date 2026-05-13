@@ -148,18 +148,10 @@ def fetch_kgrowth():
     return items
 
 def fetch_kvic():
-    """한국벤처투자 - 전체 페이지 수집
-    - 링크: javascript:board_view(seq) 에서 seq 추출 -> 상세 URL 직접 조립
-    - 페이지: POST 방식으로 각 페이지 요청
-    """
+    """한국벤처투자 - 전체 페이지 수집 (GET ?pageNo=N)"""
     import re as _re
     base_url = "https://www.kvic.or.kr/notice/kvic-notice/investment-business-notice"
-    headers_get = {'User-Agent': 'Mozilla/5.0'}
-    headers_post = {
-        'User-Agent': 'Mozilla/5.0',
-        'Referer': base_url,
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
+    headers = {'User-Agent': 'Mozilla/5.0'}
     items = []
     seen_nums = set()
 
@@ -183,7 +175,8 @@ def fetch_kvic():
             href = a_tag.get('href', '') if a_tag else ''
             seq_match = _re.search(r'board_view\((\d+)\)', href)
             if seq_match:
-                link = f"{base_url}?pageNo=1&searchCategory=&searchType=all&searchWord=&id={seq_match.group(1)}"
+                seq = seq_match.group(1)
+                link = f"{base_url}?pageNo=1&searchCategory=&searchType=all&searchWord=&id={seq}"
             else:
                 link = base_url
             date_str = cols[4].text.strip() if len(cols) > 4 else ''
@@ -200,13 +193,13 @@ def fetch_kvic():
         return found
 
     try:
-        # 1페이지 GET
-        res = requests.get(base_url, headers=headers_get, timeout=10)
+        # 1페이지로 총 페이지 수 파악
+        res = requests.get(base_url, headers=headers, timeout=10)
         res.encoding = 'utf-8'
         soup = BeautifulSoup(res.text, 'html.parser')
         parse_kvic_page(soup)
 
-        # 총 페이지 수 파악
+        # 마지막 페이지 번호 추출
         last_page = 1
         last_btn = soup.find('a', title=lambda t: t and '마지막' in t)
         if last_btn:
@@ -215,19 +208,16 @@ def fetch_kvic():
                 last_page = int(m.group(1))
         print(f"한국벤처투자 총 페이지: {last_page}")
 
-        # 2페이지부터 POST
+        # 2페이지부터 GET ?pageNo=N
         for pg in range(2, last_page + 1):
             try:
-                post_res = requests.post(
-                    base_url,
-                    headers=headers_post,
-                    data={'pageIndex': pg, 'searchCondition': '', 'searchKeyword': '', 'category': ''},
-                    timeout=10
-                )
-                post_res.encoding = 'utf-8'
-                post_soup = BeautifulSoup(post_res.text, 'html.parser')
-                found = parse_kvic_page(post_soup)
+                url = f"{base_url}?pageNo={pg}&searchCategory=&searchType=all&searchWord="
+                res = requests.get(url, headers=headers, timeout=10)
+                res.encoding = 'utf-8'
+                pg_soup = BeautifulSoup(res.text, 'html.parser')
+                found = parse_kvic_page(pg_soup)
                 if not found:
+                    print(f"한국벤처투자 {pg}페이지 데이터 없음, 종료")
                     break
                 time.sleep(0.3)
             except Exception as e:
@@ -362,6 +352,30 @@ def build_html(kvca, kgrowth, kvic, now_str):
             font-size: 10px; font-weight: 600; background: #eff6ff; color: #1d4ed8;
         }}
         .update-info {{ font-size: 11px; color: #94a3b8; margin-top: 12px; text-align: right; }}
+
+        /* 검색바 */
+        .search-bar {{ display: flex; gap: 8px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }}
+        .search-input {{
+            flex: 1; max-width: 400px; padding: 8px 14px;
+            border: 1.5px solid #cbd5e1; border-radius: 8px;
+            font-size: 13px; font-family: 'Malgun Gothic', sans-serif;
+            outline: none; transition: border-color 0.15s;
+        }}
+        .search-input:focus {{ border-color: #1e293b; }}
+        .search-btn {{
+            padding: 8px 16px; border-radius: 8px; border: 1.5px solid #1e293b;
+            background: #1e293b; color: #fff; font-size: 13px; cursor: pointer;
+            font-family: 'Malgun Gothic', sans-serif;
+        }}
+        .search-btn:hover {{ background: #334155; }}
+        .search-clear {{
+            padding: 8px 12px; border-radius: 8px; border: 1.5px solid #cbd5e1;
+            background: #fff; color: #64748b; font-size: 12px; cursor: pointer;
+            font-family: 'Malgun Gothic', sans-serif;
+        }}
+        .search-result-count {{ font-size: 12px; color: #94a3b8; margin-bottom: 10px; min-height: 18px; }}
+        tr.hidden {{ display: none; }}
+        .highlight {{ background: #fef9c3; border-radius: 2px; padding: 0 1px; }}
     </style>
 </head>
 <body>
@@ -394,6 +408,20 @@ def build_html(kvca, kgrowth, kvic, now_str):
                 한국벤처투자 <span class="tab-count">{len(kvic)}</span>
             </button>
         </div>
+
+        <!-- 검색바 -->
+        <div class="search-bar">
+            <input class="search-input" id="search-input" type="text"
+                placeholder="공고명, LP명 검색 (현재 탭 또는 전체 탭에서 적용)"
+                oninput="doSearch()" onkeydown="if(event.key==='Escape')clearSearch()">
+            <button class="search-btn" onclick="doSearch()">🔍 검색</button>
+            <button class="search-clear" id="search-clear" onclick="clearSearch()">✕ 초기화</button>
+            <label style="font-size:12px; color:#64748b; display:flex; align-items:center; gap:5px; cursor:pointer;">
+                <input type="checkbox" id="search-all" onchange="doSearch()">
+                전체 기관에서 검색
+            </label>
+        </div>
+        <div class="search-result-count" id="search-result-count"></div>
 
         <!-- KVCA -->
         <div class="panel active" id="panel-kvca">
@@ -459,11 +487,86 @@ def build_html(kvca, kgrowth, kvic, now_str):
     </main>
 
     <script>
+        var currentPanel = 'kvca';
+
         function switchTab(btn, panel) {{
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('panel-' + panel).classList.add('active');
+            currentPanel = panel;
+            doSearch();
+        }}
+
+        function doSearch() {{
+            var keyword = document.getElementById('search-input').value.trim().toLowerCase();
+            var searchAll = document.getElementById('search-all').checked;
+            var clearBtn = document.getElementById('search-clear');
+            var resultCount = document.getElementById('search-result-count');
+
+            // 초기화 버튼 표시
+            clearBtn.style.display = keyword ? 'inline-block' : 'none';
+
+            // 전체 검색 시 모든 패널 표시
+            if (searchAll && keyword) {{
+                document.querySelectorAll('.panel').forEach(p => p.classList.add('active'));
+            }} else {{
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('panel-' + currentPanel).classList.add('active');
+            }}
+
+            var totalVisible = 0;
+            var panelsToSearch = searchAll && keyword
+                ? document.querySelectorAll('.panel')
+                : [document.getElementById('panel-' + currentPanel)];
+
+            panelsToSearch.forEach(function(panel) {{
+                var rows = panel.querySelectorAll('tbody tr');
+                var panelVisible = 0;
+                rows.forEach(function(row) {{
+                    // 하이라이트 초기화
+                    row.querySelectorAll('.highlight').forEach(function(el) {{
+                        el.outerHTML = el.innerHTML;
+                    }});
+                    if (!keyword) {{
+                        row.classList.remove('hidden');
+                        panelVisible++;
+                        return;
+                    }}
+                    var titleTd = row.querySelector('.td-title');
+                    var lpTd = row.querySelector('.td-lp');
+                    var titleText = titleTd ? titleTd.textContent.toLowerCase() : '';
+                    var lpText = lpTd ? lpTd.textContent.toLowerCase() : '';
+                    if (titleText.includes(keyword) || lpText.includes(keyword)) {{
+                        row.classList.remove('hidden');
+                        panelVisible++;
+                        // 하이라이트 적용
+                        if (titleTd) {{
+                            var a = titleTd.querySelector('a');
+                            if (a) {{
+                                var re = new RegExp('(' + keyword.replace(/[.*+?^${{}}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                                a.innerHTML = a.textContent.replace(re, '<span class="highlight">$1</span>');
+                            }}
+                        }}
+                    }} else {{
+                        row.classList.add('hidden');
+                    }}
+                }});
+                totalVisible += panelVisible;
+            }});
+
+            if (keyword) {{
+                var scope = searchAll ? '전체 기관' : '현재 탭';
+                resultCount.textContent = scope + ' 검색 결과: ' + totalVisible + '건';
+            }} else {{
+                resultCount.textContent = '';
+            }}
+        }}
+
+        function clearSearch() {{
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-all').checked = false;
+            doSearch();
         }}
     </script>
 </body>
