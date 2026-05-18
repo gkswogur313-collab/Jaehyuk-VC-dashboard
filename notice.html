@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공지사항 — VC Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Malgun Gothic', sans-serif; background: #f8fafc; display: flex; min-height: 100vh; }
+
+/* ── 사이드바 (기존 동일) ── */
+.sidebar {
+  width: 200px; min-height: 100vh; background: #1e293b;
+  display: flex; flex-direction: column; flex-shrink: 0;
+  position: fixed; top: 0; left: 0; bottom: 0;
+}
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  font-size: 15px; font-weight: bold; color: #fff;
+  border-bottom: 0.5px solid #334155; line-height: 1.4;
+}
+.sidebar-logo span { display: block; font-size: 10px; color: #64748b; font-weight: normal; margin-top: 2px; }
+.sidebar-nav { padding: 12px 10px; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 13px; color: #94a3b8;
+  text-decoration: none; margin-bottom: 2px;
+  transition: background 0.15s;
+}
+.nav-item:hover { background: #273449; color: #e2e8f0; }
+.nav-item.active { background: #334155; color: #fff; }
+.nav-icon { font-size: 16px; }
+.nav-badge {
+  margin-left: auto; background: #3b82f6; color: #fff;
+  font-size: 10px; font-weight: bold; border-radius: 10px;
+  padding: 1px 6px; min-width: 20px; text-align: center;
+}
+.sidebar-footer {
+  padding: 14px 20px;
+  font-size: 10px; color: #475569;
+  border-top: 0.5px solid #334155;
+}
+
+/* ── 메인 ── */
+.main { margin-left: 200px; flex: 1; padding: 32px 36px; max-width: calc(100vw - 200px); }
+.page-header { margin-bottom: 20px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-title { font-size: 22px; font-weight: bold; color: #0f172a; }
+.page-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+/* ── 컨트롤 바 ── */
+.controls {
+  background: #fff; border: 0.5px solid #e2e8f0; border-radius: 10px;
+  padding: 14px 18px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.controls label { font-size: 12px; color: #64748b; white-space: nowrap; }
+.search-wrap { position: relative; flex: 1; min-width: 160px; max-width: 280px; }
+.search-wrap input {
+  width: 100%; padding: 7px 10px 7px 30px;
+  border: 0.5px solid #e2e8f0; border-radius: 7px;
+  font-size: 13px; font-family: 'Malgun Gothic', sans-serif;
+  background: #f8fafc; color: #0f172a; outline: none;
+}
+.search-wrap input:focus { border-color: #94a3b8; background: #fff; }
+.search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #94a3b8; }
+.ctrl-select {
+  padding: 7px 10px; border: 0.5px solid #e2e8f0; border-radius: 7px;
+  font-size: 12px; font-family: 'Malgun Gothic', sans-serif;
+  background: #f8fafc; color: #0f172a; cursor: pointer; outline: none;
+}
+.ctrl-select:focus { border-color: #94a3b8; }
+.ctrl-sep { width: 1px; height: 20px; background: #e2e8f0; flex-shrink: 0; }
+.filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  padding: 4px 11px; border-radius: 20px; font-size: 11px; font-weight: bold;
+  cursor: pointer; border: 0.5px solid #e2e8f0; background: #f1f5f9;
+  color: #64748b; transition: all 0.12s; white-space: nowrap;
+}
+.tag:hover { border-color: #94a3b8; color: #334155; }
+.tag.on { background: #1e293b; border-color: #1e293b; color: #fff; }
+
+/* ── 상태 바 ── */
+.status-bar {
+  font-size: 12px; color: #64748b; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; background: #fff;
+  border: 0.5px solid #e2e8f0; border-radius: 8px;
+}
+.spinner {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid #e2e8f0; border-top-color: #3b82f6;
+  animation: spin 0.7s linear infinite; display: none; flex-shrink: 0;
+}
+.spinner.on { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-bar { flex: 1; height: 4px; background: #e2e8f0; border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: #3b82f6; border-radius: 2px; transition: width 0.3s; width: 0%; }
+
+/* ── 테이블 카드 ── */
+.table-card {
+  background: #fff; border: 0.5px solid #e2e8f0; border-radius: 10px;
+  overflow: hidden; margin-bottom: 16px;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+thead tr { background: #f8fafc; }
+th {
+  padding: 10px 14px; text-align: left;
+  font-size: 11px; font-weight: bold; color: #94a3b8;
+  border-bottom: 0.5px solid #e2e8f0;
+  cursor: pointer; white-space: nowrap; user-select: none;
+}
+th:hover { color: #475569; }
+th .sort-icon { font-size: 10px; margin-left: 3px; opacity: 0.5; }
+th.sorted .sort-icon { opacity: 1; color: #3b82f6; }
+th:nth-child(1) { width: 56px; text-align: center; }
+th:nth-child(2) { width: 68px; }
+th:nth-child(3) { }
+th:nth-child(4) { width: 92px; }
+th:nth-child(5) { width: 70px; text-align: right; }
+td {
+  padding: 10px 14px; font-size: 13px;
+  border-bottom: 0.5px solid #f1f5f9; color: #334155;
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8fafc; }
+td.num { text-align: center; }
+td.views { text-align: right; color: #94a3b8; font-size: 12px; }
+td.date { color: #94a3b8; font-size: 12px; }
+td a {
+  color: #0f172a; text-decoration: none;
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+td a:hover { color: #3b82f6; text-decoration: underline; }
+
+/* 번호 칩 */
+.num-chip {
+  display: inline-block; padding: 2px 6px; border-radius: 5px;
+  font-size: 11px; background: #f1f5f9; color: #64748b;
+  font-family: monospace; min-width: 30px; text-align: center;
+}
+
+/* 구분 뱃지 */
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: bold; white-space: nowrap;
+}
+.badge-협회 { background: #eff6ff; color: #1d4ed8; }
+.badge-공지 { background: #f0fdf4; color: #15803d; }
+.badge-외부 { background: #f8fafc; color: #475569; border: 0.5px solid #e2e8f0; }
+.badge-공고 { background: #fffbeb; color: #b45309; }
+
+/* 고정공지 행 */
+tr.pinned td { background: #fffbeb; }
+tr.pinned:hover td { background: #fef3c7; }
+
+/* 빈 상태 */
+.empty-row td { text-align: center; padding: 40px; color: #94a3b8; font-size: 13px; }
+
+/* ── 페이지네이션 ── */
+.pagination {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; flex-wrap: wrap; gap: 10px;
+}
+.pgn-info { font-size: 12px; color: #94a3b8; }
+.pgn-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.pgn-btns button {
+  padding: 5px 10px; font-size: 12px; font-family: 'Malgun Gothic', sans-serif;
+  border: 0.5px solid #e2e8f0; border-radius: 6px;
+  background: #f8fafc; color: #64748b; cursor: pointer; min-width: 30px;
+}
+.pgn-btns button.active { background: #1e293b; border-color: #1e293b; color: #fff; font-weight: bold; }
+.pgn-btns button:hover:not(.active):not(:disabled) { background: #e2e8f0; }
+.pgn-btns button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    VC Dashboard
+    <span>Venture Capital</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">🏠</span> 대시보드
+    </a>
+    <a href="news.html" class="nav-item">
+      <span class="nav-icon">📰</span> 뉴스
+    </a>
+    <a href="investment.html" class="nav-item">
+      <span class="nav-icon">💼</span> 출자사업
+    </a>
+    <a href="calendar.html" class="nav-item">
+      <span class="nav-icon">📅</span> 캘린더
+    </a>
+    <a href="notice.html" class="nav-item active">
+      <span class="nav-icon">📋</span> 공지사항
+      <span class="nav-badge" id="nav-badge">…</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    VC Dashboard v1.0
+  </div>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div>
+      <div class="page-title">공지사항</div>
+      <div class="page-sub" id="page-sub">한국벤처캐피탈협회(KVCA) 공지사항</div>
+    </div>
+    <a href="https://www.kvca.or.kr/Program/board/list.html?a_gb=board&a_cd=5&a_item=0&sm=3_1" target="_blank"
+       style="font-size:12px;color:#3b82f6;text-decoration:none;">↗ KVCA 원문</a>
+  </div>
+
+  <!-- 컨트롤 바 -->
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="제목 검색..." oninput="applyFilters()">
+    </div>
+    <div class="ctrl-sep"></div>
+    <label>정렬</label>
+    <select id="sort-sel" class="ctrl-select" onchange="applyFilters()">
+      <option value="new">최신순</option>
+      <option value="old">오래된순</option>
+      <option value="views">조회수순</option>
+    </select>
+    <select id="page-size" class="ctrl-select" onchange="applyFilters()">
+      <option value="50">50건</option>
+      <option value="100">100건</option>
+    </select>
+    <div class="ctrl-sep"></div>
+    <div class="filter-tags">
+      <span class="tag on" data-cat="all"    onclick="setCat(this,'all')">전체</span>
+      <span class="tag"    data-cat="협회"   onclick="setCat(this,'협회')">협회</span>
+      <span class="tag"    data-cat="공지"   onclick="setCat(this,'공지')">공지</span>
+      <span class="tag"    data-cat="외부"   onclick="setCat(this,'외부')">외부</span>
+      <span class="tag"    data-cat="공고"   onclick="setCat(this,'공고')">공고</span>
+    </div>
+  </div>
+
+  <!-- 상태 바 -->
+  <div class="status-bar">
+    <div class="spinner on" id="spinner"></div>
+    <span id="status-msg">데이터를 불러오는 중입니다...</span>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  </div>
+
+  <!-- 테이블 -->
+  <div class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('no')">번호<span class="sort-icon" id="th-no">↕</span></th>
+            <th>구분</th>
+            <th onclick="sortBy('title')">제목<span class="sort-icon" id="th-title">↕</span></th>
+            <th onclick="sortBy('date')">등록일<span class="sort-icon" id="th-date">↓</span></th>
+            <th onclick="sortBy('views')">조회수<span class="sort-icon" id="th-views">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="5" class="empty-row">로딩 중...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <div class="pgn-info" id="pgn-info"></div>
+      <div class="pgn-btns" id="pgn-btns"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const BASE_URL = 'https://www.kvca.or.kr/Program/board/list.html?a_gb=board&a_cd=5&a_item=0&sm=3_1&page=';
+const TOTAL_PAGES = 49;
+const PROXY = 'https://api.allorigins.win/get?url=';
+
+let allData = [];
+let filtered = [];
+let curPage = 1;
+let pageSize = 50;
+let sortKey = 'date';
+let sortDir = -1;  /* -1 = 내림차순(최신순) */
+let catFilter = 'all';
+let searchQ = '';
+let loadedPages = 0;
+let isLoading = false;
+
+/* ─── HTML 파싱 ─── */
+function parseRows(html) {
+  const rows = [];
+  const tbodyM = html.match(/<tbody[\s\S]*?<\/tbody>/i);
+  if (!tbodyM) return rows;
+  const trs = tbodyM[0].match(/<tr[\s\S]*?<\/tr>/gi) || [];
+  for (const tr of trs) {
+    const tds = tr.match(/<td[\s\S]*?<\/td>/gi) || [];
+    if (tds.length < 4) continue;
+    const getText = s => s.replace(/<[^>]+>/g, '').trim();
+    const getHref = s => { const m = s.match(/href="([^"]+)"/i); return m ? m[1] : ''; };
+    const noRaw = getText(tds[0]);
+    const isPinned = noRaw.includes('[공지]');
+    const noNum = isPinned ? null : (parseInt(noRaw.replace(/\D/g,'')) || null);
+    const cat = getText(tds[1]).replace(/\s+/g,'') || '기타';
+    const titleHtml = tds[2] || '';
+    const title = getText(titleHtml).replace(/\s+/g,' ').trim();
+    const href = getHref(titleHtml);
+    const link = href.startsWith('http') ? href : 'https://www.kvca.or.kr' + href;
+    const date = getText(tds[3]).trim();
+    const views = parseInt((getText(tds[4])||'0').replace(/,/g,'')) || 0;
+    if (title && date) {
+      rows.push({ no: noNum, isPinned, cat, title, link, date, views });
+    }
+  }
+  return rows;
+}
+
+/* ─── 한 페이지 가져오기 ─── */
+async function fetchPage(p) {
+  try {
+    const url = PROXY + encodeURIComponent(BASE_URL + p);
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    const json = await res.json();
+    return parseRows(json.contents || '');
+  } catch { return []; }
+}
+
+/* ─── 전체 로딩 ─── */
+async function loadAll() {
+  isLoading = true;
+  document.getElementById('spinner').classList.add('on');
+  const BATCH = 5;
+  for (let start = 1; start <= TOTAL_PAGES; start += BATCH) {
+    const end = Math.min(start + BATCH - 1, TOTAL_PAGES);
+    const pages = Array.from({length: end - start + 1}, (_,i) => start + i);
+    const results = await Promise.all(pages.map(fetchPage));
+    for (const rows of results) { allData.push(...rows); loadedPages++; }
+    const pct = Math.round(loadedPages / TOTAL_PAGES * 100);
+    document.getElementById('progress').style.width = pct + '%';
+    document.getElementById('status-msg').textContent =
+      `로딩 중: ${loadedPages}/${TOTAL_PAGES} 페이지 (${allData.length.toLocaleString()}건) — ${pct}%`;
+    document.getElementById('nav-badge').textContent = allData.length;
+    applyFilters();
+  }
+  isLoading = false;
+  document.getElementById('spinner').classList.remove('on');
+  document.getElementById('status-msg').textContent =
+    `총 ${allData.length.toLocaleString()}건 로드 완료 · 마지막 업데이트: ${new Date().toLocaleString('ko-KR')}`;
+  document.getElementById('page-sub').textContent =
+    `한국벤처캐피탈협회(KVCA) 공지사항 — 총 ${allData.length.toLocaleString()}건`;
+  document.getElementById('nav-badge').textContent = allData.length;
+  applyFilters();
+}
+
+/* ─── 필터 & 정렬 적용 ─── */
+function applyFilters() {
+  searchQ = document.getElementById('search').value.toLowerCase().trim();
+  pageSize = parseInt(document.getElementById('page-size').value);
+  const sortSel = document.getElementById('sort-sel').value;
+  if (sortSel === 'new')   { sortKey = 'date';  sortDir = -1; }
+  else if (sortSel === 'old')  { sortKey = 'date';  sortDir =  1; }
+  else if (sortSel === 'views'){ sortKey = 'views'; sortDir = -1; }
+
+  filtered = allData.filter(r => {
+    if (catFilter !== 'all' && r.cat !== catFilter) return false;
+    if (searchQ && !r.title.toLowerCase().includes(searchQ)) return false;
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortKey === 'date')  return sortDir * (a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+    if (sortKey === 'views') return sortDir * (a.views - b.views);
+    if (sortKey === 'no')    return sortDir * ((a.no||0) - (b.no||0));
+    if (sortKey === 'title') return sortDir * a.title.localeCompare(b.title, 'ko');
+    return 0;
+  });
+
+  curPage = 1;
+  render();
+}
+
+/* ─── 컬럼 정렬 ─── */
+function sortBy(key) {
+  if (sortKey === key) { sortDir *= -1; }
+  else { sortKey = key; sortDir = (key === 'date' || key === 'views') ? -1 : 1; }
+  document.getElementById('sort-sel').value = '';
+  filtered.sort((a, b) => {
+    if (key === 'date')  return sortDir * (a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+    if (key === 'views') return sortDir * (a.views - b.views);
+    if (key === 'no')    return sortDir * ((a.no||0) - (b.no||0));
+    if (key === 'title') return sortDir * a.title.localeCompare(b.title, 'ko');
+    return 0;
+  });
+  ['no','title','date','views'].forEach(k => {
+    const el = document.getElementById('th-' + k);
+    if (!el) return;
+    el.textContent = k === sortKey ? (sortDir === -1 ? '↓' : '↑') : '↕';
+  });
+  curPage = 1;
+  render();
+}
+
+/* ─── 카테고리 필터 ─── */
+function setCat(el, cat) {
+  catFilter = cat;
+  document.querySelectorAll('.tag').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  applyFilters();
+}
+
+/* ─── 렌더링 ─── */
+function render() {
+  const tbody = document.getElementById('tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-row">결과가 없습니다.</td></tr>';
+    document.getElementById('pgn-info').textContent = '';
+    document.getElementById('pgn-btns').innerHTML = '';
+    return;
+  }
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / pageSize);
+  const start = (curPage - 1) * pageSize;
+  const slice = filtered.slice(start, start + pageSize);
+
+  tbody.innerHTML = slice.map(r => {
+    const noCell = r.isPinned
+      ? `<span class="num-chip" style="background:#fef3c7;color:#b45309;">고정</span>`
+      : `<span class="num-chip">${r.no ?? '-'}</span>`;
+    const badge = `<span class="badge badge-${r.cat}">${r.cat}</span>`;
+    return `<tr class="${r.isPinned ? 'pinned' : ''}">
+      <td class="num">${noCell}</td>
+      <td>${badge}</td>
+      <td style="max-width:0"><a href="${r.link}" target="_blank" title="${r.title.replace(/"/g,'&quot;')}">${r.title}</a></td>
+      <td class="date">${r.date}</td>
+      <td class="views">${r.views.toLocaleString()}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('pgn-info').textContent =
+    `${start + 1}–${Math.min(start + pageSize, total)} / 총 ${total.toLocaleString()}건`;
+
+  /* 페이지 버튼 */
+  let html = `<button onclick="goPage(${curPage - 1})" ${curPage === 1 ? 'disabled' : ''}>‹</button>`;
+  const maxBtn = 7;
+  let lo = Math.max(1, curPage - 3), hi = Math.min(totalPages, lo + maxBtn - 1);
+  if (hi - lo < maxBtn - 1) lo = Math.max(1, hi - maxBtn + 1);
+  for (let i = lo; i <= hi; i++) {
+    html += `<button class="${i === curPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += `<button onclick="goPage(${curPage + 1})" ${curPage === totalPages ? 'disabled' : ''}>›</button>`;
+  document.getElementById('pgn-btns').innerHTML = html;
+}
+
+function goPage(p) {
+  const maxPage = Math.ceil(filtered.length / pageSize);
+  if (p < 1 || p > maxPage) return;
+  curPage = p;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+loadAll();
+</script>
+</body>
+</html>
