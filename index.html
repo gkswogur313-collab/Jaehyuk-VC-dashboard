@@ -1,123 +1,125 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대시보드 — VC Dashboard</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Malgun Gothic', sans-serif; background: #f8fafc; display: flex; min-height: 100vh; }
-
-        /* 사이드바 */
-        .sidebar {
-            width: 200px; min-height: 100vh; background: #1e293b;
-            display: flex; flex-direction: column; flex-shrink: 0;
-            position: fixed; top: 0; left: 0; bottom: 0;
-        }
-        .sidebar-logo {
-            padding: 24px 20px 20px;
-            font-size: 15px; font-weight: bold; color: #fff;
-            border-bottom: 0.5px solid #334155; line-height: 1.4;
-        }
-        .sidebar-logo span { display: block; font-size: 10px; color: #64748b; font-weight: normal; margin-top: 2px; }
-        .sidebar-nav { padding: 12px 10px; flex: 1; }
-        .nav-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 12px; border-radius: 7px;
-            font-size: 13px; color: #94a3b8;
-            text-decoration: none; margin-bottom: 2px;
-            transition: background 0.15s;
-        }
-        .nav-item:hover { background: #273449; color: #e2e8f0; }
-        .nav-item.active { background: #334155; color: #fff; }
-        .nav-icon { font-size: 16px; }
-        .sidebar-footer {
-            padding: 14px 20px;
-            font-size: 10px; color: #475569;
-            border-top: 0.5px solid #334155;
-        }
-
-        /* 메인 */
-        .main { margin-left: 200px; flex: 1; padding: 32px 36px; }
-        .page-header { margin-bottom: 28px; }
-        .page-title { font-size: 22px; font-weight: bold; color: #0f172a; }
-        .page-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
-
-        /* 바로가기 카드 */
-        .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
-        .shortcut-card {
-            background: #fff; border: 0.5px solid #e2e8f0; border-radius: 12px;
-            padding: 22px 20px; text-decoration: none; color: #0f172a;
-            transition: box-shadow 0.15s, border-color 0.15s; display: block;
-        }
-        .shortcut-card:hover { border-color: #94a3b8; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .shortcut-icon { font-size: 28px; margin-bottom: 10px; }
-        .shortcut-name { font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
-        .shortcut-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
-
-        /* 준비중 배너 */
-        .coming-soon {
-            background: #f1f5f9; border: 0.5px dashed #cbd5e1; border-radius: 10px;
-            padding: 32px; text-align: center; color: #94a3b8; font-size: 13px;
-        }
-        .coming-soon strong { display: block; font-size: 15px; color: #64748b; margin-bottom: 6px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대시보드 — VC Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Malgun Gothic', sans-serif; background: #f8fafc; display: flex; min-height: 100vh; }
+/* 사이드바 */
+.sidebar {
+  width: 200px; min-height: 100vh; background: #1e293b;
+  display: flex; flex-direction: column; flex-shrink: 0;
+  position: fixed; top: 0; left: 0; bottom: 0;
+}
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  font-size: 15px; font-weight: bold; color: #fff;
+  border-bottom: 0.5px solid #334155; line-height: 1.4;
+}
+.sidebar-logo span { display: block; font-size: 10px; color: #64748b; font-weight: normal; margin-top: 2px; }
+.sidebar-nav { padding: 12px 10px; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 13px; color: #94a3b8;
+  text-decoration: none; margin-bottom: 2px;
+  transition: background 0.15s;
+}
+.nav-item:hover { background: #273449; color: #e2e8f0; }
+.nav-item.active { background: #334155; color: #fff; }
+.nav-icon { font-size: 16px; }
+.sidebar-footer {
+  padding: 14px 20px;
+  font-size: 10px; color: #475569;
+  border-top: 0.5px solid #334155;
+}
+/* 메인 */
+.main { margin-left: 200px; flex: 1; padding: 32px 36px; }
+.page-header { margin-bottom: 28px; }
+.page-title { font-size: 22px; font-weight: bold; color: #0f172a; }
+.page-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+/* 바로가기 카드 */
+.shortcut-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
+.shortcut-card {
+  background: #fff; border: 0.5px solid #e2e8f0; border-radius: 12px;
+  padding: 22px 20px; text-decoration: none; color: #0f172a;
+  transition: box-shadow 0.15s, border-color 0.15s; display: block;
+}
+.shortcut-card:hover { border-color: #94a3b8; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.shortcut-icon { font-size: 28px; margin-bottom: 10px; }
+.shortcut-name { font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
+.shortcut-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+/* 준비중 배너 */
+.coming-soon {
+  background: #f1f5f9; border: 0.5px dashed #cbd5e1; border-radius: 10px;
+  padding: 32px; text-align: center; color: #94a3b8; font-size: 13px;
+}
+.coming-soon strong { display: block; font-size: 15px; color: #64748b; margin-bottom: 6px; }
+</style>
 </head>
 <body>
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    VC Dashboard
+    <span>Venture Capital</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="index.html" class="nav-item active">
+      <span class="nav-icon">🏠</span> 대시보드
+    </a>
+    <a href="news.html" class="nav-item">
+      <span class="nav-icon">📰</span> 뉴스
+    </a>
+    <a href="investment.html" class="nav-item">
+      <span class="nav-icon">💼</span> 출자사업
+    </a>
+    <a href="calendar.html" class="nav-item">
+      <span class="nav-icon">📅</span> 캘린더
+    </a>
+    <a href="notice.html" class="nav-item">
+      <span class="nav-icon">📋</span> 공지사항
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    VC Dashboard v1.0
+  </div>
+</aside>
 
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            VC Dashboard
-            <span>Venture Capital</span>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="index.html" class="nav-item active">
-                <span class="nav-icon">🏠</span> 대시보드
-            </a>
-            <a href="news.html" class="nav-item">
-                <span class="nav-icon">📰</span> 뉴스
-            </a>
-            <a href="investment.html" class="nav-item">
-                <span class="nav-icon">💼</span> 출자사업
-            </a>
-            <a href="calendar.html" class="nav-item">
-                <span class="nav-icon">📅</span> 캘린더
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            VC Dashboard v1.0
-        </div>
-    </aside>
+<main class="main">
+  <div class="page-header">
+    <div class="page-title">대시보드</div>
+    <div class="page-sub">VC Dashboard에 오신 것을 환영합니다.</div>
+  </div>
 
-    <main class="main">
-        <div class="page-header">
-            <div class="page-title">대시보드</div>
-            <div class="page-sub">VC Dashboard에 오신 것을 환영합니다.</div>
-        </div>
+  <div class="shortcut-grid">
+    <a href="news.html" class="shortcut-card">
+      <div class="shortcut-icon">📰</div>
+      <div class="shortcut-name">뉴스</div>
+      <div class="shortcut-desc">최근 2주 VC/스타트업 뉴스를 카테고리별로 확인</div>
+    </a>
+    <a href="investment.html" class="shortcut-card">
+      <div class="shortcut-icon">💼</div>
+      <div class="shortcut-name">출자사업</div>
+      <div class="shortcut-desc">출자사업 현황 및 관련 정보 관리</div>
+    </a>
+    <a href="calendar.html" class="shortcut-card">
+      <div class="shortcut-icon">📅</div>
+      <div class="shortcut-name">캘린더</div>
+      <div class="shortcut-desc">일정 및 주요 이벤트 관리</div>
+    </a>
+    <a href="notice.html" class="shortcut-card">
+      <div class="shortcut-icon">📋</div>
+      <div class="shortcut-name">공지사항</div>
+      <div class="shortcut-desc">KVCA 벤처캐피탈협회 공지사항 2402건 전체 조회</div>
+    </a>
+  </div>
 
-        <div class="shortcut-grid">
-            <a href="news.html" class="shortcut-card">
-                <div class="shortcut-icon">📰</div>
-                <div class="shortcut-name">뉴스</div>
-                <div class="shortcut-desc">최근 2주 VC/스타트업 뉴스를 카테고리별로 확인</div>
-            </a>
-            <a href="investment.html" class="shortcut-card">
-                <div class="shortcut-icon">💼</div>
-                <div class="shortcut-name">출자사업</div>
-                <div class="shortcut-desc">출자사업 현황 및 관련 정보 관리</div>
-            </a>
-            <a href="calendar.html" class="shortcut-card">
-                <div class="shortcut-icon">📅</div>
-                <div class="shortcut-name">캘린더</div>
-                <div class="shortcut-desc">일정 및 주요 이벤트 관리</div>
-            </a>
-        </div>
-
-        <div class="coming-soon">
-            <strong>🚧 대시보드 준비 중</strong>
-            주요 지표 요약, 최신 뉴스 미리보기 등이 여기에 추가될 예정입니다.
-        </div>
-    </main>
-
+  <div class="coming-soon">
+    <strong>🚧 대시보드 준비 중</strong>
+    주요 지표 요약, 최신 뉴스 미리보기 등이 여기에 추가될 예정입니다.
+  </div>
+</main>
 </body>
 </html>
