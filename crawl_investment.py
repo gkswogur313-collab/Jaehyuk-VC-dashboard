@@ -45,10 +45,8 @@ def fetch_kvca():
                     'title': title, 'link': link, 'lp': lp,
                     'date': date_str, 'deadline': deadline, 'category': '',
                 })
+            # ✅ 수정: 데이터가 없으면 종료 (페이지번호 기반 종료 제거)
             if not found:
-                break
-            paging_nums = [int(a.text.strip()) for a in soup.find_all('a') if a.text.strip().isdigit()]
-            if not paging_nums or page >= max(paging_nums):
                 break
             page += 1
             time.sleep(0.3)
@@ -87,10 +85,8 @@ def fetch_kgrowth():
                     'title': title, 'link': link, 'lp': '',
                     'date': date_str, 'deadline': '', 'category': '',
                 })
+            # ✅ 수정: 데이터가 없으면 종료 (str(page+1) not in page_links 조건 제거)
             if not found:
-                break
-            page_links = [a.text.strip() for a in soup.find_all('a') if a.text.strip().isdigit()]
-            if str(page + 1) not in page_links:
                 break
             page += 1
             time.sleep(0.3)
@@ -229,7 +225,6 @@ JS_CODE = """
                 var rows = panel.querySelectorAll('tbody tr');
                 var panelVisible = 0;
                 rows.forEach(function(row) {
-                    // 하이라이트 초기화
                     row.querySelectorAll('.highlight').forEach(function(el) {
                         var text = document.createTextNode(el.textContent);
                         el.parentNode.replaceChild(text, el);
